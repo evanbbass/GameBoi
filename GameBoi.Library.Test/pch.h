@@ -5,5 +5,6 @@
 
 #pragma once
 
-#include <cstdint>
-#include <string>
+// Headers for CppUnitTest
+#include "CppUnitTest.h"
+

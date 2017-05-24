@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Windows", "GameBoi.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Library", "GameBoi.Library\GameBoi.Library.vcxproj", "{8463DC84-458B-413A-A748-C0BC36743727}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Library.Test", "GameBoi.Library.Test\GameBoi.Library.Test.vcxproj", "{9A0E1ACB-94AA-4520-99B7-99326A08243F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{8463DC84-458B-413A-A748-C0BC36743727}.Release|x64.Build.0 = Release|x64
 		{8463DC84-458B-413A-A748-C0BC36743727}.Release|x86.ActiveCfg = Release|Win32
 		{8463DC84-458B-413A-A748-C0BC36743727}.Release|x86.Build.0 = Release|Win32
+		{9A0E1ACB-94AA-4520-99B7-99326A08243F}.Debug|x64.ActiveCfg = Debug|x64
+		{9A0E1ACB-94AA-4520-99B7-99326A08243F}.Debug|x64.Build.0 = Debug|x64
+		{9A0E1ACB-94AA-4520-99B7-99326A08243F}.Debug|x86.ActiveCfg = Debug|Win32
+		{9A0E1ACB-94AA-4520-99B7-99326A08243F}.Debug|x86.Build.0 = Debug|Win32
+		{9A0E1ACB-94AA-4520-99B7-99326A08243F}.Release|x64.ActiveCfg = Release|x64
+		{9A0E1ACB-94AA-4520-99B7-99326A08243F}.Release|x64.Build.0 = Release|x64
+		{9A0E1ACB-94AA-4520-99B7-99326A08243F}.Release|x86.ActiveCfg = Release|Win32
+		{9A0E1ACB-94AA-4520-99B7-99326A08243F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,49 +3,83 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4201)
-struct Registers
+namespace GameBoi
 {
-	union
+	struct Registers
 	{
-		struct
-		{
-			uint8_t F;
-			uint8_t A;
-		};
-		uint16_t AF;
-	};
+		Registers();
 
-	union
-	{
-		struct
+		union
 		{
-			uint8_t C;
-			uint8_t B;
+			struct
+			{
+				uint8_t F;
+				uint8_t A;
+			};
+			struct
+			{
+				uint8_t Flags;
+				uint8_t Accumulator;
+			};
+			uint16_t AF;
 		};
-		uint16_t BC;
-	};
 
-	union
-	{
-		struct
+		union
 		{
-			uint8_t E;
-			uint8_t D;
+			struct
+			{
+				uint8_t C;
+				uint8_t B;
+			};
+			uint16_t BC;
 		};
-		uint16_t DE;
-	};
 
-	union
-	{
-		struct
+		union
 		{
-			uint8_t L;
-			uint8_t H;
+			struct
+			{
+				uint8_t E;
+				uint8_t D;
+			};
+			uint16_t DE;
 		};
-		uint16_t HL;
-	};
 
-	uint16_t SP;
-	uint16_t PC;
-};
+		union
+		{
+			struct
+			{
+				uint8_t L;
+				uint8_t H;
+			};
+			uint16_t HL;
+		};
+
+		uint16_t SP;
+		uint16_t PC;
+
+		void Reset();
+
+		bool GetZeroFlag() const;
+		void SetZeroFlag();
+		void ClearZeroFlag();
+
+		bool GetSubtractFlag() const;
+		void SetSubtractFlag();
+		void ClearSubtractFlag();
+
+		bool GetHalfCarryFlag() const;
+		void SetHalfCarryFlag();
+		void ClearHalfCarryFlag();
+
+		bool GetCarryFlag() const;
+		void SetCarryFlag();
+		void ClearCarryFlag();
+
+	private:
+		static const uint8_t ZERO_FLAG = 0b10000000;
+		static const uint8_t SUBTRACT_FLAG = 0b01000000;
+		static const uint8_t HALF_CARRY_FLAG = 0b00100000;
+		static const uint8_t CARRY_FLAG = 0b00010000;
+	};
+}
 #pragma warning(pop)

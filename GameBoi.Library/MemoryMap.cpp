@@ -1,28 +1,28 @@
 #include "pch.h"
-#include "Memory.h"
+#include "MemoryMap.h"
 
 namespace GameBoi
 {
-	Memory::Memory()
+	MemoryMap::MemoryMap()
 	{
 		Reset();
 	}
 
-	void Memory::Reset()
+	void MemoryMap::Reset()
 	{
 		mCart.Reset();
 		memset(mVideoRAM, 0, sizeof(mVideoRAM));
 		memset(mSwitchableRAM, 0, sizeof(mSwitchableRAM));
 		memset(mWorkingRAM, 0, sizeof(mWorkingRAM));
-		memset(mWorkingRAMEcho, 0, sizeof(mWorkingRAMEcho));
+		//memset(mWorkingRAMEcho, 0, sizeof(mWorkingRAMEcho));
 		memset(mOAM, 0, sizeof(mOAM));
-		memset(UNUSABLE0, 0, sizeof(UNUSABLE0));
+		//memset(UNUSABLE0, 0, sizeof(UNUSABLE0));
 		memset(mIO, 0, sizeof(mIO));
-		memset(UNUSABLE1, 0, sizeof(UNUSABLE1));
+		//memset(UNUSABLE1, 0, sizeof(UNUSABLE1));
 		memset(mInternalRAM, 0, sizeof(mInternalRAM));
 	}
 
-	uint8_t& Memory::operator[](uint16_t address)
+	uint8_t& MemoryMap::operator[](uint16_t address)
 	{
 		if (address < CARTRIDGE_END)
 		{
@@ -60,37 +60,33 @@ namespace GameBoi
 		{
 			throw std::exception("Unusable memory!");
 		}
-		else if (address < INTERNAL_RAM_END)
+		else // if (address < INTERNAL_RAM_END) - this will be to the end of addressable space
 		{
 			return mInternalRAM[address - INTERNAL_RAM_START];
 		}
-		else
-		{
-			throw std::exception("Address out of range!");
-		}
 	}
 
-	uint8_t Memory::operator[](uint16_t address) const
+	uint8_t MemoryMap::operator[](uint16_t address) const
 	{
-		return const_cast<Memory&>(*this)[address];
+		return const_cast<MemoryMap&>(*this)[address];
 	}
 
-	uint8_t Memory::ReadByte(uint16_t address) const
+	uint8_t MemoryMap::ReadByte(uint16_t address) const
 	{
 		return (*this)[address];
 	}
 
-	uint16_t Memory::ReadWord(uint16_t address) const
+	uint16_t MemoryMap::ReadWord(uint16_t address) const
 	{
 		return ((*this)[address + 1] << 8) | (*this)[address];
 	}
 
-	void Memory::WriteByte(uint16_t address, uint8_t value)
+	void MemoryMap::WriteByte(uint16_t address, uint8_t value)
 	{
 		(*this)[address] = value;
 	}
 
-	void Memory::WriteWord(uint16_t address, uint16_t value)
+	void MemoryMap::WriteWord(uint16_t address, uint16_t value)
 	{
 		(*this)[address] = value & 0x00FF;
 		(*this)[address + 1] = (value & 0xFF00) >> 8;

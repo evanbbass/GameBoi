@@ -1,17 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Cartridge.cpp" />
-    <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="Cartridge.cpp">
+      <Filter>Hardware\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryMap.cpp">
+      <Filter>Hardware\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Registers.cpp">
+      <Filter>Hardware\Registers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Cartridge.h" />
-    <ClInclude Include="Memory.h" />
-    <ClInclude Include="Registers.h" />
+    <ClInclude Include="Cartridge.h">
+      <Filter>Hardware\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryMap.h">
+      <Filter>Hardware\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Registers.h">
+      <Filter>Hardware\Registers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\README.md" />
+    <Filter Include="Hardware">
+      <UniqueIdentifier>{ac61e29d-3cb4-4d22-b512-e9baca36cd7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hardware\Memory">
+      <UniqueIdentifier>{c31687a6-52f6-43d8-afc8-2586fd00ac19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{5b4ad85f-7b7e-4227-af17-e3c4d211ee36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hardware\Registers">
+      <UniqueIdentifier>{4e53dfd0-2560-412a-8351-1f5ec821d4fd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>
