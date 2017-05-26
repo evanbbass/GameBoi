@@ -10,16 +10,13 @@ namespace GameBoi
 
 	void MemoryMap::Reset()
 	{
-		mCart.Reset();
-		memset(mVideoRAM, 0, sizeof(mVideoRAM));
-		memset(mSwitchableRAM, 0, sizeof(mSwitchableRAM));
-		memset(mWorkingRAM, 0, sizeof(mWorkingRAM));
-		//memset(mWorkingRAMEcho, 0, sizeof(mWorkingRAMEcho));
-		memset(mOAM, 0, sizeof(mOAM));
-		//memset(UNUSABLE0, 0, sizeof(UNUSABLE0));
-		memset(mIO, 0, sizeof(mIO));
-		//memset(UNUSABLE1, 0, sizeof(UNUSABLE1));
-		memset(mInternalRAM, 0, sizeof(mInternalRAM));
+		mCart.SetSwitchableBankIndex(1);
+		mVideoRAM.fill(0);
+		mSwitchableRAM.fill(0);
+		mWorkingRAM.fill(0);
+		mOAM.fill(0);
+		mIO.fill(0);
+		mInternalRAM.fill(0);
 	}
 
 	uint8_t& MemoryMap::operator[](uint16_t address)

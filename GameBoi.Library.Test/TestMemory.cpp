@@ -104,7 +104,6 @@ namespace GameBoiLibraryTest
 			Assert::AreEqual(value, constMem[internalRamIndex]);
 
 			mem.Reset();
-			Assert::AreEqual(zero, mem[cartridgeIndex]);
 			Assert::AreEqual(zero, mem[vramIndex]);
 			Assert::AreEqual(zero, mem[sramIndex]);
 			Assert::AreEqual(zero, mem[wramIndex]);
@@ -173,7 +172,6 @@ namespace GameBoiLibraryTest
 			Assert::AreEqual(value, constMem.ReadByte(internalRamIndex));
 
 			mem.Reset();
-			Assert::AreEqual(zero, mem.ReadByte(cartridgeIndex));
 			Assert::AreEqual(zero, mem.ReadByte(vramIndex));
 			Assert::AreEqual(zero, mem.ReadByte(sramIndex));
 			Assert::AreEqual(zero, mem.ReadByte(wramIndex));
@@ -261,7 +259,6 @@ namespace GameBoiLibraryTest
 			Assert::IsTrue(value == constMem.ReadWord(internalRamIndex));
 
 			mem.Reset();
-			Assert::IsTrue(zero == mem.ReadWord(cartridgeIndex));
 			Assert::IsTrue(zero == mem.ReadWord(vramIndex));
 			Assert::IsTrue(zero == mem.ReadWord(sramIndex));
 			Assert::IsTrue(zero == mem.ReadWord(wramIndex));

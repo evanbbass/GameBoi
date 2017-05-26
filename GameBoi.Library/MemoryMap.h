@@ -78,15 +78,15 @@ namespace GameBoi
 		void WriteWord(uint16_t address, uint16_t value);
 
 	private:
-		Cartridge mCart;							// 0x0000 - 0x7FFF
-		uint8_t mVideoRAM[VRAM_SIZE];				// 0x8000 - 0x9FFF
-		uint8_t mSwitchableRAM[SRAM_SIZE];			// 0xA000 - 0xBFFF
-		uint8_t mWorkingRAM[WRAM_SIZE];				// 0xC000 - 0xDFFF
-		//uint8_t mWorkingRAMEcho[WRAM_ECHO_SIZE];	// 0xE000 - 0xFDFF
-		uint8_t mOAM[OAM_SIZE];						// 0xFE00 - 0xFE9F
-		//uint8_t UNUSABLE0[UNUSABLE0_SIZE];		// 0xFEA0 - 0xFEFF
-		uint8_t mIO[IO_SIZE];						// 0xFF00 - 0xFF4B
-		//uint8_t UNUSABLE1[UNUSABLE1_SIZE];		// 0xFF4C - 0xFF7F
-		uint8_t mInternalRAM[INTERNAL_RAM_SIZE];	// 0xFF80 - 0xFFFF
+		Cartridge mCart;										// 0x0000 - 0x7FFF
+		std::array<uint8_t, VRAM_SIZE> mVideoRAM;				// 0x8000 - 0x9FFF
+		std::array<uint8_t, SRAM_SIZE> mSwitchableRAM;			// 0xA000 - 0xBFFF
+		std::array<uint8_t, WRAM_SIZE> mWorkingRAM;				// 0xC000 - 0xDFFF
+		//std::array<uint8_t, WRAM_ECHO_SIZE> mWorkingRAMEcho;	// 0xE000 - 0xFDFF
+		std::array<uint8_t, OAM_SIZE> mOAM;						// 0xFE00 - 0xFE9F
+		//std::array<uint8_t, UNUSABLE0_SIZE> UNUSABLE0;		// 0xFEA0 - 0xFEFF
+		std::array<uint8_t, IO_SIZE> mIO;						// 0xFF00 - 0xFF4B
+		//std::array<uint8_t, UNUSABLE1_SIZE> UNUSABLE1;		// 0xFF4C - 0xFF7F
+		std::array<uint8_t, INTERNAL_RAM_SIZE> mInternalRAM;	// 0xFF80 - 0xFFFF
 	};
 }

@@ -65,6 +65,8 @@ namespace GameBoiLibraryTest
 
 			reg.A = value2_h;
 			reg.F = value2_l;
+			Assert::IsTrue(value2_h == reg.Accumulator);
+			Assert::IsTrue(value2_l == reg.Flags);
 			Assert::IsTrue(value2 == reg.AF);
 
 			reg.B = value2_h;
