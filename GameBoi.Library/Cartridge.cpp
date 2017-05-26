@@ -6,7 +6,7 @@ using namespace std;
 
 namespace GameBoi
 {
-	map<int32_t, int32_t> RomSizeMap =
+	const map<int32_t, int32_t> RomSizeMap =
 	{
 		{ 0x00, 2 },
 		{ 0x01, 4 },
@@ -44,6 +44,7 @@ namespace GameBoi
 		// read title of game
 		{
 			rom.seekg(0x134);
+			// title goes from byte 0x134 to byte 0x142, inclusive
 			const uint8_t gameNameSize = 0x142 - 0x134 + 1;
 			char gameName[gameNameSize + 1] { 0 };
 			rom.read(gameName, gameNameSize);
@@ -78,7 +79,7 @@ namespace GameBoi
 			rom.seekg(0x148);
 			uint8_t romSizeKey;
 			rom.read(reinterpret_cast<char*>(&romSizeKey), 1);
-			int32_t numRomBanks = RomSizeMap[romSizeKey];
+			int32_t numRomBanks = RomSizeMap.at(romSizeKey);
 
 			// check the file size against the number of rom banks
 			if (fileSize != BANK_SIZE * numRomBanks)
@@ -121,7 +122,7 @@ namespace GameBoi
 		{
 			return mBanks[0][address];
 		}
-		else if (address < 0x8000)
+		else if (address < (BANK_SIZE * 2))
 		{
 			return mBanks[mSwitchableBankIndex][address - BANK_SIZE];
 		}
