@@ -39,6 +39,7 @@ namespace GameBoi
 		{
 			throw exception("Input file not valid.");
 		}
+		streamoff fileSize = rom.tellg();
 
 		// read title of game
 		{
@@ -68,9 +69,7 @@ namespace GameBoi
 		// read cartridge type
 		{
 			rom.seekg(0x147);
-			uint8_t type;
-			rom.read(reinterpret_cast<char*>(&type), 1);
-			mCartType = static_cast<CartridgeType>(type);
+			rom.read(reinterpret_cast<char*>(&mCartType), 1);
 		}
 
 		// read rom size and load rom
@@ -82,8 +81,6 @@ namespace GameBoi
 			int32_t numRomBanks = RomSizeMap[romSizeKey];
 
 			// check the file size against the number of rom banks
-			rom.seekg(0, ios::end);
-			size_t fileSize = rom.tellg();
 			if (fileSize != BANK_SIZE * numRomBanks)
 			{
 				throw exception("File size mismatch!");
