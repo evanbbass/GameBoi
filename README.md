@@ -7,4 +7,4 @@ Game Boy Emulator
 * [Alternate Opcode Chart](http://pastraiser.com/cpu/gameboy/gameboy_opcodes.html)
 
 ## Dev Diaries
-Check out my [Dev Diaries](DevDiaries.md)!
+Check out my [Dev Diaries](docs/DevDiaries.md)!
