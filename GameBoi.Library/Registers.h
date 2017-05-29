@@ -8,6 +8,7 @@ namespace GameBoi
 	struct Registers
 	{
 		Registers();
+		~Registers() = default;
 
 		union
 		{

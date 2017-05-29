@@ -139,11 +139,31 @@ namespace GameBoi
 
 	void Cartridge::SetSwitchableBankIndex(uint32_t index)
 	{
-		if (index < 1 || index > mBanks.size())
+		if (index < 1 || index >= mBanks.size())
 		{
 			throw exception("Index not valid.");
 		}
 
 		mSwitchableBankIndex = index;
+	}
+
+	string Cartridge::GetGameTitle() const
+	{
+		return mGameTitle;
+	}
+
+	Cartridge::CartridgeType Cartridge::GetCartrideType() const
+	{
+		return mCartType;
+	}
+
+	bool Cartridge::GetColorSupport() const
+	{
+		return mColorSupport;
+	}
+
+	bool Cartridge::GetSuperSupport() const
+	{
+		return mSuperSupport;
 	}
 }

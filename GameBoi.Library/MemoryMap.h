@@ -53,6 +53,7 @@ namespace GameBoi
 		const static uint16_t UNUSABLE1_END = INTERNAL_RAM_START;
 		const static uint32_t INTERNAL_RAM_END = 0x10000; // end of addressable space
 
+		const static uint16_t BIOS_SIZE = 0x100;
 		const static uint16_t CARTRIDGE_SIZE = CARTRIDGE_END - CARTRIDGE_START;
 		const static uint16_t VRAM_SIZE = VRAM_END - VRAM_START;
 		const static uint16_t SRAM_SIZE = SRAM_END - SRAM_START;
@@ -66,18 +67,22 @@ namespace GameBoi
 
 	public:
 		MemoryMap();
+		~MemoryMap() = default;
 
 		void Reset();
-
-		uint8_t& operator[](uint16_t address);
-		uint8_t operator[](uint16_t address) const;
 
 		uint8_t ReadByte(uint16_t address) const;
 		uint16_t ReadWord(uint16_t address) const;
 		void WriteByte(uint16_t address, uint8_t value);
 		void WriteWord(uint16_t address, uint16_t value);
 
+		Cartridge& GetCartridge();
+		const Cartridge& GetCartridge() const;
+
 	private:
+		bool mIsInBIOS;
+		const static std::array<uint8_t, BIOS_SIZE> sBIOS;		// 0x0000 - 0x0100 if in BIOS
+
 		Cartridge mCart;										// 0x0000 - 0x7FFF
 		std::array<uint8_t, VRAM_SIZE> mVideoRAM;				// 0x8000 - 0x9FFF
 		std::array<uint8_t, SRAM_SIZE> mSwitchableRAM;			// 0xA000 - 0xBFFF

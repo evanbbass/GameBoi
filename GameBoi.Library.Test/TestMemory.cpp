@@ -45,74 +45,6 @@ namespace GameBoiLibraryTest
 			Assert::AreEqual(zero, cart[bank1Index]);
 		}
 
-		TEST_METHOD(TestMemoryIndexOperator)
-		{
-			MemoryMap mem;
-
-			uint8_t zero = 0;
-
-			uint16_t cartridgeIndex = 0x1234;
-			uint16_t vramIndex = 0x8500;
-			uint16_t sramIndex = 0xA600;
-			uint16_t wramIndex = 0xC800;
-			uint16_t wramEchoIndex = 0xE100;
-			uint16_t oamIndex = 0xFE80;
-			uint16_t unusable0Index = 0xFEF0;
-			uint16_t ioIndex = 0xFF30;
-			uint16_t unusable1Index = 0xFF70;
-			uint16_t internalRamIndex = 0xFFF0;
-
-			Assert::AreEqual(zero, mem[cartridgeIndex]);
-			Assert::AreEqual(zero, mem[vramIndex]);
-			Assert::AreEqual(zero, mem[sramIndex]);
-			Assert::AreEqual(zero, mem[wramIndex]);
-			Assert::AreEqual(zero, mem[wramEchoIndex]);
-			Assert::AreEqual(zero, mem[oamIndex]);
-			Assert::ExpectException<exception>([&mem, unusable0Index] { mem[unusable0Index]; });
-			Assert::AreEqual(zero, mem[ioIndex]);
-			Assert::ExpectException<exception>([&mem, unusable1Index] { mem[unusable1Index]; });
-			Assert::AreEqual(zero, mem[internalRamIndex]);
-
-			uint8_t value = 0xAB;
-
-			mem[cartridgeIndex] = value;
-			mem[vramIndex] = value;
-			mem[sramIndex] = value;
-			mem[wramIndex] = value;
-			mem[wramEchoIndex] = value;
-			mem[oamIndex] = value;
-			mem[ioIndex] = value;
-			mem[internalRamIndex] = value;
-
-			Assert::AreEqual(value, mem[cartridgeIndex]);
-			Assert::AreEqual(value, mem[vramIndex]);
-			Assert::AreEqual(value, mem[sramIndex]);
-			Assert::AreEqual(value, mem[wramIndex]);
-			Assert::AreEqual(value, mem[wramEchoIndex]);
-			Assert::AreEqual(value, mem[oamIndex]);
-			Assert::AreEqual(value, mem[ioIndex]);
-			Assert::AreEqual(value, mem[internalRamIndex]);
-
-			const MemoryMap& constMem = mem;
-			Assert::AreEqual(value, constMem[cartridgeIndex]);
-			Assert::AreEqual(value, constMem[vramIndex]);
-			Assert::AreEqual(value, constMem[sramIndex]);
-			Assert::AreEqual(value, constMem[wramIndex]);
-			Assert::AreEqual(value, constMem[wramEchoIndex]);
-			Assert::AreEqual(value, constMem[oamIndex]);
-			Assert::AreEqual(value, constMem[ioIndex]);
-			Assert::AreEqual(value, constMem[internalRamIndex]);
-
-			mem.Reset();
-			Assert::AreEqual(zero, mem[vramIndex]);
-			Assert::AreEqual(zero, mem[sramIndex]);
-			Assert::AreEqual(zero, mem[wramIndex]);
-			Assert::AreEqual(zero, mem[wramEchoIndex]);
-			Assert::AreEqual(zero, mem[oamIndex]);
-			Assert::AreEqual(zero, mem[ioIndex]);
-			Assert::AreEqual(zero, mem[internalRamIndex]);
-		}
-
 		TEST_METHOD(TestMemoryReadWriteByte)
 		{
 			MemoryMap mem;
@@ -149,7 +81,9 @@ namespace GameBoiLibraryTest
 			mem.WriteByte(wramIndex, value);
 			mem.WriteByte(wramEchoIndex, value);
 			mem.WriteByte(oamIndex, value);
+			Assert::ExpectException<exception>([&mem, unusable0Index, value] { mem.WriteByte(unusable0Index, value); });
 			mem.WriteByte(ioIndex, value);
+			Assert::ExpectException<exception>([&mem, unusable1Index, value] { mem.WriteByte(unusable1Index, value); });
 			mem.WriteByte(internalRamIndex, value);
 
 			Assert::AreEqual(value, mem.ReadByte(cartridgeIndex));
@@ -219,7 +153,9 @@ namespace GameBoiLibraryTest
 			mem.WriteWord(wramIndex, value);
 			mem.WriteWord(wramEchoIndex, value);
 			mem.WriteWord(oamIndex, value);
+			Assert::ExpectException<exception>([&mem, unusable0Index, value] { mem.WriteWord(unusable0Index, value); });
 			mem.WriteWord(ioIndex, value);
+			Assert::ExpectException<exception>([&mem, unusable1Index, value] { mem.WriteWord(unusable1Index, value); });
 			mem.WriteWord(internalRamIndex, value);
 
 			Assert::IsTrue(value == mem.ReadWord(cartridgeIndex));
@@ -276,14 +212,14 @@ namespace GameBoiLibraryTest
 			uint16_t wramEchoIndex = wramIndex + 0x2000;
 
 			uint8_t value1 = 0xAB;
-			mem[wramIndex] = value1;
-			Assert::AreEqual(value1, mem[wramIndex]);
-			Assert::AreEqual(value1, mem[wramEchoIndex]);
+			mem.WriteByte(wramIndex, value1);
+			Assert::AreEqual(value1, mem.ReadByte(wramIndex));
+			Assert::AreEqual(value1, mem.ReadByte(wramEchoIndex));
 
 			uint8_t value2 = 0xCD;
-			mem[wramEchoIndex] = value2;
-			Assert::AreEqual(value2, mem[wramIndex]);
-			Assert::AreEqual(value2, mem[wramEchoIndex]);
+			mem.WriteByte(wramEchoIndex, value2);
+			Assert::AreEqual(value2, mem.ReadByte(wramIndex));
+			Assert::AreEqual(value2, mem.ReadByte(wramEchoIndex));
 		}
 	};
 }

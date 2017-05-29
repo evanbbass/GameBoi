@@ -42,6 +42,7 @@ namespace GameBoi
 	public:
 		Cartridge();
 		explicit Cartridge(const std::string& filename);
+		~Cartridge() = default;
 
 		void ReadFromFile(const std::string& filename);
 		void Reset();
@@ -50,6 +51,11 @@ namespace GameBoi
 		uint8_t operator[](uint16_t address) const;
 
 		void SetSwitchableBankIndex(uint32_t index);
+
+		std::string GetGameTitle() const;
+		CartridgeType GetCartrideType() const;
+		bool GetColorSupport() const;
+		bool GetSuperSupport() const;
 
 	private:
 		// Cartridge has 32k of address space and can have multiple 16kB ROM banks

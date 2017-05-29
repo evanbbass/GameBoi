@@ -150,12 +150,14 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CPU.h" />
     <ClInclude Include="MemoryMap.h" />
     <ClInclude Include="Cartridge.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Registers.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CPU.cpp" />
     <ClCompile Include="MemoryMap.cpp" />
     <ClCompile Include="Cartridge.cpp" />
     <ClCompile Include="pch.cpp">
