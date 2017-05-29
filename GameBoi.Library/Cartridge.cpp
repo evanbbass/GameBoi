@@ -82,7 +82,7 @@ namespace GameBoi
 			int32_t numRomBanks = RomSizeMap.at(romSizeKey);
 
 			// check the file size against the number of rom banks
-			if (fileSize != BANK_SIZE * numRomBanks)
+			if (static_cast<size_t>(fileSize) != BANK_SIZE * numRomBanks)
 			{
 				throw exception("File size mismatch!");
 			}

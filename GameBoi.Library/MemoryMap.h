@@ -76,6 +76,7 @@ namespace GameBoi
 		void WriteByte(uint16_t address, uint8_t value);
 		void WriteWord(uint16_t address, uint16_t value);
 
+		void LoadCartridgeFromFile(const std::string& fileName);
 		Cartridge& GetCartridge();
 		const Cartridge& GetCartridge() const;
 

@@ -10,10 +10,13 @@
     <ClCompile Include="MemoryMap.cpp">
       <Filter>Hardware\Memory</Filter>
     </ClCompile>
-    <ClCompile Include="Registers.cpp">
-      <Filter>Hardware\Registers</Filter>
-    </ClCompile>
     <ClCompile Include="CPU.cpp">
+      <Filter>Hardware\CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="GameBoy.cpp">
+      <Filter>Hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="Registers.cpp">
       <Filter>Hardware\CPU</Filter>
     </ClCompile>
   </ItemGroup>
@@ -27,10 +30,13 @@
     <ClInclude Include="MemoryMap.h">
       <Filter>Hardware\Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Registers.h">
-      <Filter>Hardware\Registers</Filter>
-    </ClInclude>
     <ClInclude Include="CPU.h">
+      <Filter>Hardware\CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBoy.h">
+      <Filter>Hardware</Filter>
+    </ClInclude>
+    <ClInclude Include="Registers.h">
       <Filter>Hardware\CPU</Filter>
     </ClInclude>
   </ItemGroup>
@@ -43,9 +49,6 @@
     </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{5b4ad85f-7b7e-4227-af17-e3c4d211ee36}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Hardware\Registers">
-      <UniqueIdentifier>{4e53dfd0-2560-412a-8351-1f5ec821d4fd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Hardware\CPU">
       <UniqueIdentifier>{4f713738-5388-406b-9de9-53b84a9d2bf6}</UniqueIdentifier>

@@ -145,6 +145,11 @@ namespace GameBoi
 		WriteByte(address + 1, (value & 0xFF00) >> 8);
 	}
 
+	void MemoryMap::LoadCartridgeFromFile(const string& fileName)
+	{
+		mCart.ReadFromFile(fileName);
+	}
+
 	Cartridge& MemoryMap::GetCartridge()
 	{
 		return mCart;
