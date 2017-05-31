@@ -1,6 +1,7 @@
 #pragma once
 #include "MemoryMap.h"
 #include "Registers.h"
+#include <map>
 
 namespace GameBoi
 {
@@ -19,9 +20,13 @@ namespace GameBoi
 		MemoryMap& GetMemoryMap();
 		const MemoryMap& GetMemoryMap() const;
 
+		static std::string GetDisassembly(uint8_t opcode, uint16_t operand = 0);
+
 	private:
 		Registers mRegisters;
 		MemoryMap& mMemory;
+
+		static const std::map<uint8_t, char*> sOpcodeDisassembly;
 
 		#pragma region  8-Bit Loads
 		void LD_B_n(uint8_t value);
