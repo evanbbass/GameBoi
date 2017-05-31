@@ -125,6 +125,60 @@ namespace GameBoi
 		// TODO
 
 		#pragma endregion
+
+		#pragma region 8-bit ALU
+
+		// TODO
+
+		#pragma endregion
+
+		#pragma region 16-bit ALU
+
+		// TODO
+
+		#pragma endregion
+
+		#pragma region Miscellaneous
+
+		// TODO
+
+		#pragma endregion
+
+		#pragma region Rotates & Shifts
+
+		// TODO
+
+		#pragma endregion
+
+		#pragma region Bit Opcodes
+
+		// TODO
+
+		#pragma endregion
+
+		#pragma region Jumps
+
+		// TODO
+
+		#pragma endregion
+
+		#pragma region Calls
+
+		// TODO
+
+		#pragma endregion
+
+		#pragma region Restarts
+
+		// TODO
+
+		#pragma endregion
+
+		#pragma region Returns
+
+		// TODO
+
+		#pragma endregion
 	};
 
 	CPU::CPU(MemoryMap& memory) :
