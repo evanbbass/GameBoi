@@ -27,6 +27,7 @@ namespace GameBoi
 		MemoryMap& mMemory;
 
 		static const std::map<uint8_t, char*> sOpcodeDisassembly;
+		static const std::map<uint8_t, char*> sOpcodeDisassembly_PrefixCB;
 
 		#pragma region  8-Bit Loads
 		void LD_B_n(uint8_t value);

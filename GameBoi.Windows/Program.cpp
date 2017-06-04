@@ -3,12 +3,16 @@
 
 #include "pch.h"
 #include <iostream>
+#include <fstream>
 #include "MemoryMap.h"
 #include "Registers.h"
 #include "CPU.h"
 
 using namespace std;
 using namespace GameBoi;
+
+void PrintOpcodes();
+void PrintOpcodeChartToFile(const string&);
 
 int main(int argc, char* argv[])
 {
@@ -23,27 +27,116 @@ int main(int argc, char* argv[])
 	//Cartridge red("C:\\Users\\ebass\\Downloads\\GB ROMs\\Pokemon - Red Version.gb");
 	//Cartridge gold("C:\\Users\\ebass\\Downloads\\GB ROMs\\Pokemon - Gold Version.gbc");
 
+	PrintOpcodeChartToFile("opcodes.csv");
+
+	return 0;
+}
+
+void PrintOpcodes()
+{
 	cout << "Found Opcodes:" << endl;
 	vector<uint8_t> unmappedOpcodes;
-	for (uint8_t opcode = 0; opcode < 0xFF; ++opcode)
+	vector<uint8_t> unmappedOpcodes_PrefixCB;
+	for (uint16_t i = 0; i < 0x100; ++i)
 	{
-		try
+		uint8_t opcode = static_cast<uint8_t>(i);
+		if (opcode == 0xCB)
 		{
-			cout << hex << "0x" << static_cast<int>(opcode) << ": " << CPU::GetDisassembly(opcode) << endl;
+			for (uint16_t j = 0; j < 0x100; ++j)
+			{
+				uint8_t operand = static_cast<uint8_t>(j);
+				try
+				{
+					cout << hex << "0xcb " << static_cast<int>(operand) << ": " << CPU::GetDisassembly(opcode, operand) << endl;
+				}
+				catch (...)
+				{
+					unmappedOpcodes_PrefixCB.push_back(operand);
+				}
+			}
 		}
-		catch(...)
+		else
 		{
-			unmappedOpcodes.push_back(opcode);
+			try
+			{
+				cout << hex << "0x" << static_cast<int>(opcode) << ": " << CPU::GetDisassembly(opcode) << endl;
+			}
+			catch (...)
+			{
+				unmappedOpcodes.push_back(opcode);
+			}
 		}
 	}
-	cout << 0xFF - unmappedOpcodes.size() << " total" << endl;
+	cout << dec << 0x200 - (unmappedOpcodes.size() + unmappedOpcodes_PrefixCB.size()) << " total" << endl;
 
 	cout << endl << "Unmapped Opcodes:" << endl;
 	for (uint8_t opcode : unmappedOpcodes)
 	{
 		cout << hex << "0x" << static_cast<int>(opcode) << endl;
 	}
-	cout << unmappedOpcodes.size() << " total" << endl;
+	cout << dec << (unmappedOpcodes.size() + unmappedOpcodes_PrefixCB.size()) << " total" << endl;
+}
 
-	return 0;
+void PrintOpcodeChartToFile(const string& filename)
+{
+	ofstream csv(filename);
+
+	if (csv.good())
+	{
+		csv << "Standard Instructions" << endl;
+		csv << ";x0;x1;x2;x3;x4;x5;x6;x7;x8;x9;xA;xB;xC;xD;xE;xF" << endl;
+		for (int i = 0; i <= 0xF; ++i)
+		{
+			csv << hex << uppercase << i << "x;";
+
+			for (int j = 0; j <= 0xF; ++j)
+			{
+				uint8_t opcode = static_cast<uint8_t>((i << 4) | j);
+				if (opcode == 0xCB)
+				{
+					csv << "PREFIX CB";
+				}
+				else
+				{
+					try
+					{
+						csv << CPU::GetDisassembly(opcode);
+					}
+					catch (...)
+					{
+						
+					}
+				}
+
+				csv << ";";
+			}
+
+			csv << endl;
+		}
+
+		csv << endl;
+		csv << "Extended Instructions (PREFIX CB)" << endl;
+		csv << ";x0;x1;x2;x3;x4;x5;x6;x7;x8;x9;xA;xB;xC;xD;xE;xF" << endl;
+		for (int i = 0; i <= 0xF; ++i)
+		{
+			csv << hex << uppercase << i << "x;";
+
+			for (int j = 0; j <= 0xF; ++j)
+			{
+				uint8_t operand = static_cast<uint8_t>((i << 4) | j);
+				try
+				{
+					csv << CPU::GetDisassembly(0xCB, operand);
+				}
+				catch (...)
+				{
+
+				}
+
+				csv << ";";
+			}
+
+			csv << endl;
+		}
+	}
 }
