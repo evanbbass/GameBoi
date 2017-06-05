@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Cartridge.h"
 #include <fstream>
+#include <sstream>
+#include "CPU.h"
 
 using namespace std;
 
@@ -15,9 +17,21 @@ namespace GameBoi
 		{ 0x04, 32 },
 		{ 0x05, 64 },
 		{ 0x06, 128 },
+		{ 0x07, 256 },
+		{ 0x08, 512 },
 		{ 0x52, 72 },
 		{ 0x53, 80 },
 		{ 0x54, 96 }
+	};
+
+	const map<int32_t, int32_t> RamSizeMap =
+	{
+		{ 0x00, 0 },
+		{ 0x01, 2 },
+		{ 0x02, 8 },
+		{ 0x03, 32 }, // 4 banks of 8kB
+		{ 0x04, 128 }, // 16 banks of 8kB
+		{ 0x05, 64 } // 8 banks of 8kB
 	};
 
 	Cartridge::Cartridge() :
@@ -56,7 +70,8 @@ namespace GameBoi
 			rom.seekg(0x143);
 			uint8_t colorSupport;
 			rom.read(reinterpret_cast<char*>(&colorSupport), 1);
-			mColorSupport = colorSupport == 0x80;
+			// 0x80 is color support, 0xC0 is color only
+			mColorSupport = colorSupport == 0x80 || colorSupport == 0xC0;
 		}
 
 		// read super game boy flag
@@ -116,7 +131,7 @@ namespace GameBoi
 		}
 	}
 
-	uint8_t& Cartridge::operator[](uint16_t address)
+	uint8_t Cartridge::ReadByte(uint16_t address) const
 	{
 		if (address < BANK_SIZE)
 		{
@@ -132,14 +147,40 @@ namespace GameBoi
 		}
 	}
 
-	uint8_t Cartridge::operator[](uint16_t address) const
+	uint16_t Cartridge::ReadWord(uint16_t address) const
 	{
-		return const_cast<Cartridge&>(*this)[address];
+		return (ReadByte(address + 1) << 8) | ReadByte(address);
+	}
+
+	void Cartridge::WriteByte(uint16_t address, uint8_t value)
+	{
+		if (address < BANK_SIZE)
+		{
+			mBanks[0][address] = value;
+		}
+		else if (address < (BANK_SIZE * 2))
+		{
+			mBanks[mSwitchableBankIndex][address - BANK_SIZE] = value;
+		}
+		else
+		{
+			throw exception("Address out of Cartridge range.");
+		}
+	}
+
+	void Cartridge::WriteWord(uint16_t address, uint16_t value)
+	{
+		WriteByte(address, value & 0x00FF);
+		WriteByte(address + 1, (value & 0xFF00) >> 8);
 	}
 
 	void Cartridge::SetSwitchableBankIndex(uint32_t index)
 	{
-		if (index < 1 || index >= mBanks.size())
+		if (index < 1)
+		{
+			index = 1;
+		}
+		else if (index >= mBanks.size())
 		{
 			throw exception("Index not valid.");
 		}
@@ -147,7 +188,7 @@ namespace GameBoi
 		mSwitchableBankIndex = index;
 	}
 
-	string Cartridge::GetGameTitle() const
+	const string& Cartridge::GetGameTitle() const
 	{
 		return mGameTitle;
 	}
@@ -165,5 +206,65 @@ namespace GameBoi
 	bool Cartridge::GetSuperSupport() const
 	{
 		return mSuperSupport;
+	}
+
+	string Cartridge::DisassembleRom(uint16_t startAddress, uint16_t length, uint32_t bankIndex) const
+	{
+		stringstream disassembly;
+
+		uint16_t programCounter = startAddress;
+		uint16_t endAddress = min(static_cast<uint16_t>(programCounter + length), static_cast<uint16_t>(BANK_SIZE));
+		array<uint8_t, BANK_SIZE> romBank = mBanks[bankIndex];
+
+		while (programCounter < endAddress)
+		{
+			disassembly << hex << "0x" << programCounter << ": ";
+
+			uint8_t opcode = romBank[programCounter++];
+			int32_t operandLength = -1;
+
+			try
+			{
+				operandLength = CPU::GetOperandLength(opcode);
+			}
+			catch (...)
+			{
+				disassembly << static_cast<int>(opcode) << "      \t" << "Undefined opcode";
+			}
+
+			if (operandLength == 0)
+			{
+				string dis = CPU::GetDisassembly(opcode);
+				disassembly << static_cast<int>(opcode) << "      \t" << dis;
+			}
+			else if (operandLength == 1)
+			{
+				uint8_t operand = romBank[programCounter++];
+				string dis = CPU::GetDisassembly(opcode, operand);
+				disassembly << static_cast<int>(opcode) << " " << static_cast<int>(operand) << "   \t" << dis;
+			}
+			else if (operandLength == 2)
+			{
+				uint8_t operand_l = romBank[programCounter++];
+				uint8_t operand_h = romBank[programCounter++];
+				uint16_t operand = (operand_h << 8) | operand_l;
+				string dis = CPU::GetDisassembly(opcode, operand);
+				disassembly << static_cast<int>(opcode) << " " << static_cast<int>(operand_l) << " " << static_cast<int>(operand_h) << "\t" << dis;
+			}
+
+			disassembly << endl;
+		}
+
+		return disassembly.str();
+	}
+
+	void Cartridge::DisassebleRomToFile(const string& filename, uint16_t startAddress, uint16_t length, uint32_t bankIndex) const
+	{
+		ofstream file(filename);
+
+		if (file.good())
+		{
+			file << DisassembleRom(startAddress, length, bankIndex) << endl;
+		}
 	}
 }

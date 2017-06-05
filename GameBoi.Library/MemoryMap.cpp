@@ -50,7 +50,7 @@ namespace GameBoi
 		}
 		else if (address < CARTRIDGE_END)
 		{
-			return mCart[address];
+			return mCart.ReadByte(address);
 		}
 		else if (address < VRAM_END)
 		{
@@ -99,7 +99,7 @@ namespace GameBoi
 	{
 		if (address < CARTRIDGE_END)
 		{
-			mCart[address] = value;
+			mCart.WriteByte(address, value);
 		}
 		else if (address < VRAM_END)
 		{

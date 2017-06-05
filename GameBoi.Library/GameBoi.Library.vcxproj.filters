@@ -39,6 +39,7 @@
     <ClInclude Include="Registers.h">
       <Filter>Hardware\CPU</Filter>
     </ClInclude>
+    <ClInclude Include="Instruction.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Hardware">

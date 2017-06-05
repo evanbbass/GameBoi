@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="CPU.h" />
     <ClInclude Include="GameBoy.h" />
+    <ClInclude Include="Instruction.h" />
     <ClInclude Include="MemoryMap.h" />
     <ClInclude Include="Cartridge.h" />
     <ClInclude Include="pch.h" />

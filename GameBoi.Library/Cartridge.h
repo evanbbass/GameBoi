@@ -47,15 +47,20 @@ namespace GameBoi
 		void ReadFromFile(const std::string& filename);
 		void Reset();
 
-		uint8_t& operator[](uint16_t address);
-		uint8_t operator[](uint16_t address) const;
+		uint8_t ReadByte(uint16_t address) const;
+		uint16_t ReadWord(uint16_t address) const;
+		void WriteByte(uint16_t address, uint8_t value);
+		void WriteWord(uint16_t address, uint16_t value);
 
 		void SetSwitchableBankIndex(uint32_t index);
 
-		std::string GetGameTitle() const;
+		const std::string& GetGameTitle() const;
 		CartridgeType GetCartrideType() const;
 		bool GetColorSupport() const;
 		bool GetSuperSupport() const;
+
+		std::string DisassembleRom(uint16_t startAddress, uint16_t length, uint32_t bankIndex = 0) const;
+		void DisassebleRomToFile(const std::string& filename, uint16_t startAddress, uint16_t length, uint32_t bankIndex = 0) const;
 
 	private:
 		// Cartridge has 32k of address space and can have multiple 16kB ROM banks
