@@ -21,28 +21,28 @@ namespace GameBoiLibraryTest
 			uint16_t bank1Index = 0x5678;
 			uint16_t outOfRangeIndex = 0x9ABC;
 
-			Assert::AreEqual(zero, cart[bank0Index]);
-			Assert::AreEqual(zero, cart[bank1Index]);
-			Assert::ExpectException<exception>([&cart, outOfRangeIndex] { cart[outOfRangeIndex]; });
+			Assert::AreEqual(zero, cart.ReadByte(bank0Index));
+			Assert::AreEqual(zero, cart.ReadByte(bank1Index));
+			Assert::ExpectException<exception>([&cart, outOfRangeIndex] { cart.ReadByte(outOfRangeIndex); });
 
 			uint8_t value = 0xFA;
-			cart[bank0Index] = value;
-			cart[bank1Index] = value;
+			cart.WriteByte(bank0Index, value);
+			cart.WriteByte(bank1Index, value);
 
-			Assert::AreEqual(value, cart[bank0Index]);
-			Assert::AreEqual(value, cart[bank1Index]);
+			Assert::AreEqual(value, cart.ReadByte(bank0Index));
+			Assert::AreEqual(value, cart.ReadByte(bank1Index));
 
 			const Cartridge& constCart = cart;
 			uint8_t value2 = 0xBC;
-			cart[bank0Index] = value2;
-			cart[bank1Index] = value2;
+			cart.WriteByte(bank0Index, value2);
+			cart.WriteByte(bank1Index, value2);
 
-			Assert::AreEqual(value2, constCart[bank0Index]);
-			Assert::AreEqual(value2, constCart[bank1Index]);
+			Assert::AreEqual(value2, constCart.ReadByte(bank0Index));
+			Assert::AreEqual(value2, constCart.ReadByte(bank1Index));
 
 			cart.Reset();
-			Assert::AreEqual(zero, cart[bank0Index]);
-			Assert::AreEqual(zero, cart[bank1Index]);
+			Assert::AreEqual(zero, cart.ReadByte(bank0Index));
+			Assert::AreEqual(zero, cart.ReadByte(bank1Index));
 		}
 
 		TEST_METHOD(TestMemoryReadWriteByte)
