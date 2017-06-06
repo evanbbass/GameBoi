@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "CPU.h"
-#include <iostream>
 
 using namespace std;
 
@@ -11,98 +10,98 @@ namespace GameBoi
 		#pragma region 8-bit Loads
 
 		// LD nn,n
-		{ 0x06, { "LD   B,$%02X", 1, 8, &UnimplementedInstruction } }, // e.g. LD B,$AB
-		{ 0x0E, { "LD   C,$%02X", 1, 8, &UnimplementedInstruction } }, // e.g. LD C,$AB
-		{ 0x16, { "LD   D,$%02X", 1, 8, &UnimplementedInstruction } }, // e.g. LD D,$AB
-		{ 0x1E, { "LD   E,$%02X", 1, 8, &UnimplementedInstruction } }, // e.g. LD E,$AB
-		{ 0x26, { "LD   H,$%02X", 1, 8, &UnimplementedInstruction } }, // e.g. LD H,$AB
-		{ 0x2E, { "LD   L,$%02X", 1, 8, &UnimplementedInstruction } }, // e.g. LD L,$AB
+		{ 0x06, { "LD   B,$%02X", 1, 8, &LD_B_n } }, // e.g. LD B,$AB
+		{ 0x0E, { "LD   C,$%02X", 1, 8, &LD_C_n } }, // e.g. LD C,$AB
+		{ 0x16, { "LD   D,$%02X", 1, 8, &LD_D_n } }, // e.g. LD D,$AB
+		{ 0x1E, { "LD   E,$%02X", 1, 8, &LD_E_n } }, // e.g. LD E,$AB
+		{ 0x26, { "LD   H,$%02X", 1, 8, &LD_H_n } }, // e.g. LD H,$AB
+		{ 0x2E, { "LD   L,$%02X", 1, 8, &LD_L_n } }, // e.g. LD L,$AB
 
 		// LD r1,r2
-		{ 0x7F, { "LD   A,A", 0, 4, &UnimplementedInstruction } },
-		{ 0x78, { "LD   A,B", 0, 4, &UnimplementedInstruction } },
-		{ 0x79, { "LD   A,C", 0, 4, &UnimplementedInstruction } },
-		{ 0x7A, { "LD   A,D", 0, 4, &UnimplementedInstruction } },
-		{ 0x7B, { "LD   A,E", 0, 4, &UnimplementedInstruction } },
-		{ 0x7C, { "LD   A,H", 0, 4, &UnimplementedInstruction } },
-		{ 0x7D, { "LD   A,L", 0, 4, &UnimplementedInstruction } },
-		{ 0x7E, { "LD   A,(HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0x40, { "LD   B,B", 0, 4, &UnimplementedInstruction } },
-		{ 0x41, { "LD   B,C", 0, 4, &UnimplementedInstruction } },
-		{ 0x42, { "LD   B,D", 0, 4, &UnimplementedInstruction } },
-		{ 0x43, { "LD   B,E", 0, 4, &UnimplementedInstruction } },
-		{ 0x44, { "LD   B,H", 0, 4, &UnimplementedInstruction } },
-		{ 0x45, { "LD   B,L", 0, 4, &UnimplementedInstruction } },
-		{ 0x46, { "LD   B,(HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0x48, { "LD   C,B", 0, 4, &UnimplementedInstruction } },
-		{ 0x49, { "LD   C,C", 0, 4, &UnimplementedInstruction } },
-		{ 0x4A, { "LD   C,D", 0, 4, &UnimplementedInstruction } },
-		{ 0x4B, { "LD   C,E", 0, 4, &UnimplementedInstruction } },
-		{ 0x4C, { "LD   C,H", 0, 4, &UnimplementedInstruction } },
-		{ 0x4D, { "LD   C,L", 0, 4, &UnimplementedInstruction } },
-		{ 0x4E, { "LD   C,(HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0x50, { "LD   D,B", 0, 4, &UnimplementedInstruction } },
-		{ 0x51, { "LD   D,C", 0, 4, &UnimplementedInstruction } },
-		{ 0x52, { "LD   D,D", 0, 4, &UnimplementedInstruction } },
-		{ 0x53, { "LD   D,E", 0, 4, &UnimplementedInstruction } },
-		{ 0x54, { "LD   D,H", 0, 4, &UnimplementedInstruction } },
-		{ 0x55, { "LD   D,L", 0, 4, &UnimplementedInstruction } },
-		{ 0x56, { "LD   D,(HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0x58, { "LD   E,B", 0, 4, &UnimplementedInstruction } },
-		{ 0x59, { "LD   E,C", 0, 4, &UnimplementedInstruction } },
-		{ 0x5A, { "LD   E,D", 0, 4, &UnimplementedInstruction } },
-		{ 0x5B, { "LD   E,E", 0, 4, &UnimplementedInstruction } },
-		{ 0x5C, { "LD   E,H", 0, 4, &UnimplementedInstruction } },
-		{ 0x5D, { "LD   E,L", 0, 4, &UnimplementedInstruction } },
-		{ 0x5E, { "LD   E,(HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0x60, { "LD   H,B", 0, 4, &UnimplementedInstruction } },
-		{ 0x61, { "LD   H,C", 0, 4, &UnimplementedInstruction } },
-		{ 0x62, { "LD   H,D", 0, 4, &UnimplementedInstruction } },
-		{ 0x63, { "LD   H,E", 0, 4, &UnimplementedInstruction } },
-		{ 0x64, { "LD   H,H", 0, 4, &UnimplementedInstruction } },
-		{ 0x65, { "LD   H,L", 0, 4, &UnimplementedInstruction } },
-		{ 0x66, { "LD   H,(HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0x68, { "LD   L,B", 0, 4, &UnimplementedInstruction } },
-		{ 0x69, { "LD   L,C", 0, 4, &UnimplementedInstruction } },
-		{ 0x6A, { "LD   L,D", 0, 4, &UnimplementedInstruction } },
-		{ 0x6B, { "LD   L,E", 0, 4, &UnimplementedInstruction } },
-		{ 0x6C, { "LD   L,H", 0, 4, &UnimplementedInstruction } },
-		{ 0x6D, { "LD   L,L", 0, 4, &UnimplementedInstruction } },
-		{ 0x6E, { "LD   L,(HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0x70, { "LD   (HL),B", 0, 8, &UnimplementedInstruction } },
-		{ 0x71, { "LD   (HL),C", 0, 8, &UnimplementedInstruction } },
-		{ 0x72, { "LD   (HL),D", 0, 8, &UnimplementedInstruction } },
-		{ 0x73, { "LD   (HL),E", 0, 8, &UnimplementedInstruction } },
-		{ 0x74, { "LD   (HL),H", 0, 8, &UnimplementedInstruction } },
-		{ 0x75, { "LD   (HL),L", 0, 8, &UnimplementedInstruction } },
-		{ 0x36, { "LD   (HL),$%02X", 1, 12, &UnimplementedInstruction } }, // e.g. LD (HL),$BC
+		{ 0x7F, { "LD   A,A", 0, 4, &LD_A_A } },
+		{ 0x78, { "LD   A,B", 0, 4, &LD_A_B } },
+		{ 0x79, { "LD   A,C", 0, 4, &LD_A_C } },
+		{ 0x7A, { "LD   A,D", 0, 4, &LD_A_D } },
+		{ 0x7B, { "LD   A,E", 0, 4, &LD_A_E } },
+		{ 0x7C, { "LD   A,H", 0, 4, &LD_A_H } },
+		{ 0x7D, { "LD   A,L", 0, 4, &LD_A_L } },
+		{ 0x7E, { "LD   A,(HL)", 0, 8, &LD_A_aHL } },
+		{ 0x40, { "LD   B,B", 0, 4, &LD_B_B } },
+		{ 0x41, { "LD   B,C", 0, 4, &LD_B_C } },
+		{ 0x42, { "LD   B,D", 0, 4, &LD_B_D } },
+		{ 0x43, { "LD   B,E", 0, 4, &LD_B_E } },
+		{ 0x44, { "LD   B,H", 0, 4, &LD_B_H } },
+		{ 0x45, { "LD   B,L", 0, 4, &LD_B_L } },
+		{ 0x46, { "LD   B,(HL)", 0, 8, &LD_B_aHL } },
+		{ 0x48, { "LD   C,B", 0, 4, &LD_C_B } },
+		{ 0x49, { "LD   C,C", 0, 4, &LD_C_C } },
+		{ 0x4A, { "LD   C,D", 0, 4, &LD_C_D } },
+		{ 0x4B, { "LD   C,E", 0, 4, &LD_C_E } },
+		{ 0x4C, { "LD   C,H", 0, 4, &LD_C_H } },
+		{ 0x4D, { "LD   C,L", 0, 4, &LD_C_L } },
+		{ 0x4E, { "LD   C,(HL)", 0, 8, &LD_C_aHL } },
+		{ 0x50, { "LD   D,B", 0, 4, &LD_D_B } },
+		{ 0x51, { "LD   D,C", 0, 4, &LD_D_C } },
+		{ 0x52, { "LD   D,D", 0, 4, &LD_D_D } },
+		{ 0x53, { "LD   D,E", 0, 4, &LD_D_E } },
+		{ 0x54, { "LD   D,H", 0, 4, &LD_D_H } },
+		{ 0x55, { "LD   D,L", 0, 4, &LD_D_L } },
+		{ 0x56, { "LD   D,(HL)", 0, 8, &LD_D_aHL } },
+		{ 0x58, { "LD   E,B", 0, 4, &LD_E_B } },
+		{ 0x59, { "LD   E,C", 0, 4, &LD_E_C } },
+		{ 0x5A, { "LD   E,D", 0, 4, &LD_E_D } },
+		{ 0x5B, { "LD   E,E", 0, 4, &LD_E_E } },
+		{ 0x5C, { "LD   E,H", 0, 4, &LD_E_H } },
+		{ 0x5D, { "LD   E,L", 0, 4, &LD_E_L } },
+		{ 0x5E, { "LD   E,(HL)", 0, 8, &LD_E_aHL } },
+		{ 0x60, { "LD   H,B", 0, 4, &LD_H_B } },
+		{ 0x61, { "LD   H,C", 0, 4, &LD_H_C } },
+		{ 0x62, { "LD   H,D", 0, 4, &LD_H_D } },
+		{ 0x63, { "LD   H,E", 0, 4, &LD_H_E } },
+		{ 0x64, { "LD   H,H", 0, 4, &LD_H_H } },
+		{ 0x65, { "LD   H,L", 0, 4, &LD_H_L } },
+		{ 0x66, { "LD   H,(HL)", 0, 8, &LD_H_aHL } },
+		{ 0x68, { "LD   L,B", 0, 4, &LD_L_B } },
+		{ 0x69, { "LD   L,C", 0, 4, &LD_L_C } },
+		{ 0x6A, { "LD   L,D", 0, 4, &LD_L_D } },
+		{ 0x6B, { "LD   L,E", 0, 4, &LD_L_E } },
+		{ 0x6C, { "LD   L,H", 0, 4, &LD_L_H } },
+		{ 0x6D, { "LD   L,L", 0, 4, &LD_L_L } },
+		{ 0x6E, { "LD   L,(HL)", 0, 8, &LD_L_aHL } },
+		{ 0x70, { "LD   (HL),B", 0, 8, &LD_aHL_B } },
+		{ 0x71, { "LD   (HL),C", 0, 8, &LD_aHL_C } },
+		{ 0x72, { "LD   (HL),D", 0, 8, &LD_aHL_D } },
+		{ 0x73, { "LD   (HL),E", 0, 8, &LD_aHL_E } },
+		{ 0x74, { "LD   (HL),H", 0, 8, &LD_aHL_H } },
+		{ 0x75, { "LD   (HL),L", 0, 8, &LD_aHL_L } },
+		{ 0x36, { "LD   (HL),$%02X", 1, 12, &LD_aHL_n } }, // e.g. LD (HL),$BC
 
 		// LD A,n
-		//{ 0x7F, { "LD   A,A", 0, 4, &UnimplementedInstruction } },
-		//{ 0x78, { "LD   A,B", 0, 4, &UnimplementedInstruction } },
-		//{ 0x79, { "LD   A,C", 0, 4, &UnimplementedInstruction } },
-		//{ 0x7A, { "LD   A,D", 0, 4, &UnimplementedInstruction } },
-		//{ 0x7B, { "LD   A,E", 0, 4, &UnimplementedInstruction } },
-		//{ 0x7C, { "LD   A,H", 0, 4, &UnimplementedInstruction } },
-		//{ 0x7D, { "LD   A,L", 0, 4, &UnimplementedInstruction } },
-		{ 0x0A, { "LD   A,(BC)", 0, 8, &UnimplementedInstruction } },
-		{ 0x1A, { "LD   A,(DE)", 0, 8, &UnimplementedInstruction } },
-		//{ 0x7E, { "LD   A,(HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0xFA, { "LD   A,($%04X)", 2, 16, &UnimplementedInstruction } }, // e.g. LD A,($1234)
-		{ 0x3E, { "LD   A,$%02X", 1, 8, &UnimplementedInstruction } }, // e.g. LD A,$AB
+		//{ 0x7F, { "LD   A,A", 0, 4, &LD_A_A } },
+		//{ 0x78, { "LD   A,B", 0, 4, &LD_A_B } },
+		//{ 0x79, { "LD   A,C", 0, 4, &LD_A_C } },
+		//{ 0x7A, { "LD   A,D", 0, 4, &LD_A_D } },
+		//{ 0x7B, { "LD   A,E", 0, 4, &LD_A_E } },
+		//{ 0x7C, { "LD   A,H", 0, 4, &LD_A_H } },
+		//{ 0x7D, { "LD   A,L", 0, 4, &LD_A_L } },
+		{ 0x0A, { "LD   A,(BC)", 0, 8, &LD_A_aBC } },
+		{ 0x1A, { "LD   A,(DE)", 0, 8, &LD_A_aDE } },
+		//{ 0x7E, { "LD   A,(HL)", 0, 8, &LD_A_aHL } },
+		{ 0xFA, { "LD   A,($%04X)", 2, 16, &LD_A_ann } }, // e.g. LD A,($1234)
+		{ 0x3E, { "LD   A,$%02X", 1, 8, &LD_A_n } }, // e.g. LD A,$AB
 
 		// LD n,A
-		//{ 0x7F, { "LD  A,A", 0, 4, &UnimplementedInstruction } },
-		{ 0x47, { "LD   B,A", 0, 4, &UnimplementedInstruction } },
-		{ 0x4F, { "LD   C,A", 0, 4, &UnimplementedInstruction } },
-		{ 0x57, { "LD   D,A", 0, 4, &UnimplementedInstruction } },
-		{ 0x5F, { "LD   E,A", 0, 4, &UnimplementedInstruction } },
-		{ 0x67, { "LD   H,A", 0, 4, &UnimplementedInstruction } },
-		{ 0x6F, { "LD   L,A", 0, 4, &UnimplementedInstruction } },
-		{ 0x02, { "LD   (BC),A", 0, 8, &UnimplementedInstruction } },
-		{ 0x12, { "LD   (DE),A", 0, 8, &UnimplementedInstruction } },
-		{ 0x77, { "LD   (HL),A", 0, 8, &UnimplementedInstruction } },
-		{ 0xEA, { "LD   ($%04X),A", 2, 16, &UnimplementedInstruction } }, // e.g. LD ($1234),A
+		//{ 0x7F, { "LD  A,A", 0, 4, &LD_A_A } },
+		{ 0x47, { "LD   B,A", 0, 4, &LD_B_A } },
+		{ 0x4F, { "LD   C,A", 0, 4, &LD_C_A } },
+		{ 0x57, { "LD   D,A", 0, 4, &LD_D_A } },
+		{ 0x5F, { "LD   E,A", 0, 4, &LD_E_A } },
+		{ 0x67, { "LD   H,A", 0, 4, &LD_H_A } },
+		{ 0x6F, { "LD   L,A", 0, 4, &LD_L_A } },
+		{ 0x02, { "LD   (BC),A", 0, 8, &LD_aBC_A } },
+		{ 0x12, { "LD   (DE),A", 0, 8, &LD_aDE_A } },
+		{ 0x77, { "LD   (HL),A", 0, 8, &LD_aHL_A } },
+		{ 0xEA, { "LD   ($%04X),A", 2, 16, &LD_ann_A } }, // e.g. LD ($1234),A
 
 		// LD A,($FF00+C) and reverse
 		{ 0xF2, { "LD   A,(C)", 0, 8, &UnimplementedInstruction } }, // also LD A,($FF00+C)
@@ -313,7 +312,7 @@ namespace GameBoi
 		{ 0x37, { "SCF", 0, 4, &UnimplementedInstruction } },
 
 		// NOP
-		{ 0x00, { "NOP", 0, 4, &UnimplementedInstruction } },
+		{ 0x00, { "NOP", 0, 4, &NOP } },
 
 		// HALT
 		{ 0x76, { "HALT", 0, 4, &UnimplementedInstruction } },
@@ -816,9 +815,31 @@ namespace GameBoi
 
 	void CPU::StepCPU()
 	{
-		//uint8_t opcode = mMemory.ReadByte(mRegisters.PC++);
-		//uint16_t operand = true ? 0 : true ? mMemory.ReadByte(mRegisters.PC) : mMemory.ReadWord(mRegisters.PC);
-		//mRegisters.PC += 0;
+		uint8_t opcode = 0x00;
+		try
+		{
+			opcode = mMemory.ReadByte(mRegisters.PC);
+			Instruction instruction = opcode != 0xCB ? sOpcodeDisassembly.at(opcode) : sOpcodeDisassembly_PrefixCB.at(opcode);
+			uint16_t operand = 0x0000;
+			if (instruction.OperandLength == 1)
+			{
+				operand = mMemory.ReadByte(mRegisters.PC);
+			}
+			else if (instruction.OperandLength == 2)
+			{
+				operand = mMemory.ReadWord(mRegisters.PC);
+			}
+
+			invoke(instruction.Function, this, operand);
+			mRegisters.PC += static_cast<uint16_t>(1 + instruction.OperandLength);
+			// increment clock cycles
+		}
+		catch (exception& ex)
+		{
+			char message[100];
+			sprintf_s(message, sizeof(message), "Error executing instruction 0x%02X at memory location 0x%04X:\n%s", opcode, mRegisters.PC, ex.what());
+			throw exception(message);
+		}
 	}
 
 	void CPU::Reset()
@@ -894,5 +915,403 @@ namespace GameBoi
 	void CPU::UnimplementedInstruction(uint16_t)
 	{
 		throw exception("Unimplemented instruction!");
+	}
+
+	void CPU::LD_B_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand);
+		mRegisters.B = n;
+	}
+
+	void CPU::LD_C_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand);
+		mRegisters.C = n;
+	}
+
+	void CPU::LD_D_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand);
+		mRegisters.D = n;
+	}
+
+	void CPU::LD_E_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand);
+		mRegisters.E = n;
+	}
+
+	void CPU::LD_H_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand);
+		mRegisters.H = n;
+	}
+
+	void CPU::LD_L_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand);
+		mRegisters.L = n;
+	}
+
+	void CPU::LD_A_A(uint16_t)
+	{
+		mRegisters.A = mRegisters.A;
+	}
+
+	void CPU::LD_A_B(uint16_t)
+	{
+		mRegisters.A = mRegisters.B;
+	}
+
+	void CPU::LD_A_C(uint16_t)
+	{
+		mRegisters.A = mRegisters.C;
+	}
+
+	void CPU::LD_A_D(uint16_t)
+	{
+		mRegisters.A = mRegisters.D;
+	}
+
+	void CPU::LD_A_E(uint16_t)
+	{
+		mRegisters.A = mRegisters.E;
+	}
+
+	void CPU::LD_A_H(uint16_t)
+	{
+		mRegisters.A = mRegisters.H;
+	}
+
+	void CPU::LD_A_L(uint16_t)
+	{
+		mRegisters.A = mRegisters.L;
+	}
+
+	void CPU::LD_A_aHL(uint16_t)
+	{
+		mRegisters.A = mMemory.ReadByte(mRegisters.HL);
+	}
+
+	void CPU::LD_B_B(uint16_t)
+	{
+		mRegisters.B = mRegisters.B;
+	}
+
+	void CPU::LD_B_C(uint16_t)
+	{
+		mRegisters.B = mRegisters.C;
+	}
+
+	void CPU::LD_B_D(uint16_t)
+	{
+		mRegisters.B = mRegisters.D;
+	}
+
+	void CPU::LD_B_E(uint16_t)
+	{
+		mRegisters.B = mRegisters.E;
+	}
+
+	void CPU::LD_B_H(uint16_t)
+	{
+		mRegisters.B = mRegisters.H;
+	}
+
+	void CPU::LD_B_L(uint16_t)
+	{
+		mRegisters.B = mRegisters.L;
+	}
+
+	void CPU::LD_B_aHL(uint16_t)
+	{
+		mRegisters.B = mMemory.ReadByte(mRegisters.HL);
+	}
+
+	void CPU::LD_C_B(uint16_t)
+	{
+		mRegisters.C = mRegisters.B;
+	}
+
+	void CPU::LD_C_C(uint16_t)
+	{
+		mRegisters.C = mRegisters.C;
+	}
+
+	void CPU::LD_C_D(uint16_t)
+	{
+		mRegisters.C = mRegisters.D;
+	}
+
+	void CPU::LD_C_E(uint16_t)
+	{
+		mRegisters.C = mRegisters.E;
+	}
+
+	void CPU::LD_C_H(uint16_t)
+	{
+		mRegisters.C = mRegisters.H;
+	}
+
+	void CPU::LD_C_L(uint16_t)
+	{
+		mRegisters.C = mRegisters.L;
+	}
+
+	void CPU::LD_C_aHL(uint16_t)
+	{
+		mRegisters.C = mMemory.ReadByte(mRegisters.HL);
+	}
+
+	void CPU::LD_D_B(uint16_t)
+	{
+		mRegisters.D = mRegisters.B;
+	}
+
+	void CPU::LD_D_C(uint16_t)
+	{
+		mRegisters.D = mRegisters.C;
+	}
+
+	void CPU::LD_D_D(uint16_t)
+	{
+		mRegisters.D = mRegisters.D;
+	}
+
+	void CPU::LD_D_E(uint16_t)
+	{
+		mRegisters.D = mRegisters.E;
+	}
+
+	void CPU::LD_D_H(uint16_t)
+	{
+		mRegisters.D = mRegisters.H;
+	}
+
+	void CPU::LD_D_L(uint16_t)
+	{
+		mRegisters.D = mRegisters.L;
+	}
+
+	void CPU::LD_D_aHL(uint16_t)
+	{
+		mRegisters.D = mMemory.ReadByte(mRegisters.HL);
+	}
+
+	void CPU::LD_E_B(uint16_t)
+	{
+		mRegisters.E = mRegisters.B;
+	}
+
+	void CPU::LD_E_C(uint16_t)
+	{
+		mRegisters.E = mRegisters.C;
+	}
+
+	void CPU::LD_E_D(uint16_t)
+	{
+		mRegisters.E = mRegisters.D;
+	}
+
+	void CPU::LD_E_E(uint16_t)
+	{
+		mRegisters.E = mRegisters.E;
+	}
+
+	void CPU::LD_E_H(uint16_t)
+	{
+		mRegisters.E = mRegisters.H;
+	}
+
+	void CPU::LD_E_L(uint16_t)
+	{
+		mRegisters.E = mRegisters.L;
+	}
+
+	void CPU::LD_E_aHL(uint16_t)
+	{
+		mRegisters.E = mMemory.ReadByte(mRegisters.HL);
+	}
+
+	void CPU::LD_H_B(uint16_t)
+	{
+		mRegisters.H = mRegisters.B;
+	}
+
+	void CPU::LD_H_C(uint16_t)
+	{
+		mRegisters.H = mRegisters.C;
+	}
+
+	void CPU::LD_H_D(uint16_t)
+	{
+		mRegisters.H = mRegisters.D;
+	}
+
+	void CPU::LD_H_E(uint16_t)
+	{
+		mRegisters.H = mRegisters.E;
+	}
+
+	void CPU::LD_H_H(uint16_t)
+	{
+		mRegisters.H = mRegisters.H;
+	}
+
+	void CPU::LD_H_L(uint16_t)
+	{
+		mRegisters.H = mRegisters.L;
+	}
+
+	void CPU::LD_H_aHL(uint16_t)
+	{
+		mRegisters.H = mMemory.ReadByte(mRegisters.HL);
+	}
+
+	void CPU::LD_L_B(uint16_t)
+	{
+		mRegisters.L = mRegisters.B;
+	}
+
+	void CPU::LD_L_C(uint16_t)
+	{
+		mRegisters.L = mRegisters.C;
+	}
+
+	void CPU::LD_L_D(uint16_t)
+	{
+		mRegisters.L = mRegisters.D;
+	}
+
+	void CPU::LD_L_E(uint16_t)
+	{
+		mRegisters.L = mRegisters.E;
+	}
+
+	void CPU::LD_L_H(uint16_t)
+	{
+		mRegisters.L = mRegisters.H;
+	}
+
+	void CPU::LD_L_L(uint16_t)
+	{
+		mRegisters.L = mRegisters.L;
+	}
+
+	void CPU::LD_L_aHL(uint16_t)
+	{
+		mRegisters.L = mMemory.ReadByte(mRegisters.HL);
+	}
+
+	void CPU::LD_aHL_B(uint16_t)
+	{
+		mMemory.WriteByte(mRegisters.HL, mRegisters.B);
+	}
+
+	void CPU::LD_aHL_C(uint16_t)
+	{
+		mMemory.WriteByte(mRegisters.HL, mRegisters.C);
+	}
+
+	void CPU::LD_aHL_D(uint16_t)
+	{
+		mMemory.WriteByte(mRegisters.HL, mRegisters.D);
+	}
+
+	void CPU::LD_aHL_E(uint16_t)
+	{
+		mMemory.WriteByte(mRegisters.HL, mRegisters.E);
+	}
+
+	void CPU::LD_aHL_H(uint16_t)
+	{
+		mMemory.WriteByte(mRegisters.HL, mRegisters.H);
+	}
+
+	void CPU::LD_aHL_L(uint16_t)
+	{
+		mMemory.WriteByte(mRegisters.HL, mRegisters.L);
+	}
+
+	void CPU::LD_aHL_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand);
+		mMemory.WriteByte(mRegisters.HL, n);
+	}
+
+	void CPU::LD_A_aBC(uint16_t)
+	{
+		mRegisters.A = mMemory.ReadByte(mRegisters.BC);
+	}
+
+	void CPU::LD_A_aDE(uint16_t)
+	{
+		mRegisters.A = mMemory.ReadByte(mRegisters.DE);
+	}
+
+	void CPU::LD_A_ann(uint16_t operand)
+	{
+		mRegisters.A = mMemory.ReadByte(operand);
+	}
+
+	void CPU::LD_A_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand);
+		mRegisters.A = n;
+	}
+
+	void CPU::LD_B_A(uint16_t)
+	{
+		mRegisters.B = mRegisters.A;
+	}
+
+	void CPU::LD_C_A(uint16_t)
+	{
+		mRegisters.C = mRegisters.A;
+	}
+
+	void CPU::LD_D_A(uint16_t)
+	{
+		mRegisters.D = mRegisters.A;
+	}
+
+	void CPU::LD_E_A(uint16_t)
+	{
+		mRegisters.E = mRegisters.A;
+	}
+
+	void CPU::LD_H_A(uint16_t)
+	{
+		mRegisters.H = mRegisters.A;
+	}
+
+	void CPU::LD_L_A(uint16_t)
+	{
+		mRegisters.L = mRegisters.A;
+	}
+
+	void CPU::LD_aBC_A(uint16_t)
+	{
+		mMemory.WriteByte(mRegisters.BC, mRegisters.A);
+	}
+
+	void CPU::LD_aDE_A(uint16_t)
+	{
+		mMemory.WriteByte(mRegisters.DE, mRegisters.A);
+	}
+
+	void CPU::LD_aHL_A(uint16_t)
+	{
+		mMemory.WriteByte(mRegisters.HL, mRegisters.A);
+	}
+
+	void CPU::LD_ann_A(uint16_t operand)
+	{
+		mMemory.WriteByte(operand, mRegisters.A);
+	}
+
+	void CPU::NOP(uint16_t)
+	{
+		// do nothing
 	}
 }

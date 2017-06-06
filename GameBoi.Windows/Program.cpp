@@ -7,6 +7,7 @@
 #include "MemoryMap.h"
 #include "Registers.h"
 #include "CPU.h"
+#include "GameBoy.h"
 
 using namespace std;
 using namespace GameBoi;
@@ -23,11 +24,27 @@ int main(int argc, char* argv[])
 	//Cartridge red("D:\\Users\\Evan\\Downloads\\Pokemon - Red Version (USA, Europe).gb");
 	//Cartridge gold("D:\\Users\\Evan\\Downloads\\Pokemon - Gold Version (USA, Europe).gbc");
 
-	Cartridge tetris("C:\\Users\\ebass\\Downloads\\GB ROMs\\Tetris (World).gb");
+	//Cartridge tetris("C:\\Users\\ebass\\Downloads\\GB ROMs\\Tetris (World).gb");
 	//Cartridge red("C:\\Users\\ebass\\Downloads\\GB ROMs\\Pokemon - Red Version.gb");
 	//Cartridge gold("C:\\Users\\ebass\\Downloads\\GB ROMs\\Pokemon - Gold Version.gbc");
 
-	tetris.DisassebleRomToFile("tetris.dis", 0x0000, 0x8000);
+	//tetris.DisassebleRomToFile("tetris.dis", 0x0000, 0x8000);
+
+	GameBoy gb;
+	gb.LoadCartridge("C:\\Users\\ebass\\Downloads\\GB ROMs\\Tetris (World).gb");
+
+	while (true)
+	{
+		try
+		{
+			gb.GetCPU().StepCPU();
+		}
+		catch (exception& ex)
+		{
+			cout << ex.what() << endl;
+			break;
+		}
+	}
 
 	return 0;
 }

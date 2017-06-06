@@ -32,5 +32,100 @@ namespace GameBoi
 		static const std::map<uint8_t, Instruction> sOpcodeDisassembly_PrefixCB;
 
 		void UnimplementedInstruction(uint16_t operand);
+
+		#pragma region  8-Bit Loads
+
+		// LD nn,n
+		void LD_B_n(uint16_t operand);
+		void LD_C_n(uint16_t operand);
+		void LD_D_n(uint16_t operand);
+		void LD_E_n(uint16_t operand);
+		void LD_H_n(uint16_t operand);
+		void LD_L_n(uint16_t operand);
+
+		// LD r1,r2
+		void LD_A_A(uint16_t operand);
+		void LD_A_B(uint16_t operand);
+		void LD_A_C(uint16_t operand);
+		void LD_A_D(uint16_t operand);
+		void LD_A_E(uint16_t operand);
+		void LD_A_H(uint16_t operand);
+		void LD_A_L(uint16_t operand);
+		void LD_A_aHL(uint16_t operand);
+		void LD_B_B(uint16_t operand);
+		void LD_B_C(uint16_t operand);
+		void LD_B_D(uint16_t operand);
+		void LD_B_E(uint16_t operand);
+		void LD_B_H(uint16_t operand);
+		void LD_B_L(uint16_t operand);
+		void LD_B_aHL(uint16_t operand);
+		void LD_C_B(uint16_t operand);
+		void LD_C_C(uint16_t operand);
+		void LD_C_D(uint16_t operand);
+		void LD_C_E(uint16_t operand);
+		void LD_C_H(uint16_t operand);
+		void LD_C_L(uint16_t operand);
+		void LD_C_aHL(uint16_t operand);
+		void LD_D_B(uint16_t operand);
+		void LD_D_C(uint16_t operand);
+		void LD_D_D(uint16_t operand);
+		void LD_D_E(uint16_t operand);
+		void LD_D_H(uint16_t operand);
+		void LD_D_L(uint16_t operand);
+		void LD_D_aHL(uint16_t operand);
+		void LD_E_B(uint16_t operand);
+		void LD_E_C(uint16_t operand);
+		void LD_E_D(uint16_t operand);
+		void LD_E_E(uint16_t operand);
+		void LD_E_H(uint16_t operand);
+		void LD_E_L(uint16_t operand);
+		void LD_E_aHL(uint16_t operand);
+		void LD_H_B(uint16_t operand);
+		void LD_H_C(uint16_t operand);
+		void LD_H_D(uint16_t operand);
+		void LD_H_E(uint16_t operand);
+		void LD_H_H(uint16_t operand);
+		void LD_H_L(uint16_t operand);
+		void LD_H_aHL(uint16_t operand);
+		void LD_L_B(uint16_t operand);
+		void LD_L_C(uint16_t operand);
+		void LD_L_D(uint16_t operand);
+		void LD_L_E(uint16_t operand);
+		void LD_L_H(uint16_t operand);
+		void LD_L_L(uint16_t operand);
+		void LD_L_aHL(uint16_t operand);
+		void LD_aHL_B(uint16_t operand);
+		void LD_aHL_C(uint16_t operand);
+		void LD_aHL_D(uint16_t operand);
+		void LD_aHL_E(uint16_t operand);
+		void LD_aHL_H(uint16_t operand);
+		void LD_aHL_L(uint16_t operand);
+		void LD_aHL_n(uint16_t operand);
+
+		// LD A,n
+		void LD_A_aBC(uint16_t operand);
+		void LD_A_aDE(uint16_t operand);
+		void LD_A_ann(uint16_t operand);
+		void LD_A_n(uint16_t operand);
+
+		// LD n,A
+		void LD_B_A(uint16_t operand);
+		void LD_C_A(uint16_t operand);
+		void LD_D_A(uint16_t operand);
+		void LD_E_A(uint16_t operand);
+		void LD_H_A(uint16_t operand);
+		void LD_L_A(uint16_t operand);
+		void LD_aBC_A(uint16_t operand);
+		void LD_aDE_A(uint16_t operand);
+		void LD_aHL_A(uint16_t operand);
+		void LD_ann_A(uint16_t operand);
+
+		#pragma endregion
+
+		#pragma region Miscellaneous
+
+		void NOP(uint16_t operand);
+
+		#pragma endregion
 	};
 }
