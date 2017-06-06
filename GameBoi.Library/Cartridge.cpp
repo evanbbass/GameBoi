@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include "CPU.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -208,20 +209,21 @@ namespace GameBoi
 		return mSuperSupport;
 	}
 
-	string Cartridge::DisassembleRom(uint16_t startAddress, uint16_t length, uint32_t bankIndex) const
+	string Cartridge::DisassembleRom(uint16_t startAddress, uint16_t length) const
 	{
 		stringstream disassembly;
+		disassembly << hex << uppercase << setfill('0');
 
 		uint16_t programCounter = startAddress;
-		uint16_t endAddress = min(static_cast<uint16_t>(programCounter + length), static_cast<uint16_t>(BANK_SIZE));
-		array<uint8_t, BANK_SIZE> romBank = mBanks[bankIndex];
+		uint16_t endAddress = programCounter + length;
 
 		while (programCounter < endAddress)
 		{
-			disassembly << hex << "0x" << programCounter << ": ";
+			disassembly << "0x" << setw(4) << programCounter << ": ";
 
-			uint8_t opcode = romBank[programCounter++];
+			uint8_t opcode = ReadByte(programCounter++);
 			int32_t operandLength = -1;
+			disassembly << setw(2) << static_cast<int>(opcode) << " ";
 
 			try
 			{
@@ -229,27 +231,28 @@ namespace GameBoi
 			}
 			catch (...)
 			{
-				disassembly << static_cast<int>(opcode) << "      \t" << "Undefined opcode";
+				disassembly << "       " << "Undefined opcode";
 			}
 
 			if (operandLength == 0)
 			{
 				string dis = CPU::GetDisassembly(opcode);
-				disassembly << static_cast<int>(opcode) << "      \t" << dis;
+				disassembly << "       " << dis;
 			}
 			else if (operandLength == 1)
 			{
-				uint8_t operand = romBank[programCounter++];
+				uint8_t operand = ReadByte(programCounter++);
 				string dis = CPU::GetDisassembly(opcode, operand);
-				disassembly << static_cast<int>(opcode) << " " << static_cast<int>(operand) << "   \t" << dis;
+				disassembly << setw(2) << static_cast<int>(operand) << "     " << dis;
 			}
 			else if (operandLength == 2)
 			{
-				uint8_t operand_l = romBank[programCounter++];
-				uint8_t operand_h = romBank[programCounter++];
-				uint16_t operand = (operand_h << 8) | operand_l;
+				uint16_t operand = ReadWord(programCounter);
+				programCounter += 2;
+				uint8_t operand_l = (operand & 0x00FF);
+				uint8_t operand_h = (operand & 0xFF00) >> 8;
 				string dis = CPU::GetDisassembly(opcode, operand);
-				disassembly << static_cast<int>(opcode) << " " << static_cast<int>(operand_l) << " " << static_cast<int>(operand_h) << "\t" << dis;
+				disassembly << setw(2) << static_cast<int>(operand_l) << " " << setw(2) << static_cast<int>(operand_h) << "  " << dis;
 			}
 
 			disassembly << endl;
@@ -258,13 +261,13 @@ namespace GameBoi
 		return disassembly.str();
 	}
 
-	void Cartridge::DisassebleRomToFile(const string& filename, uint16_t startAddress, uint16_t length, uint32_t bankIndex) const
+	void Cartridge::DisassebleRomToFile(const string& filename, uint16_t startAddress, uint16_t length) const
 	{
 		ofstream file(filename);
 
 		if (file.good())
 		{
-			file << DisassembleRom(startAddress, length, bankIndex) << endl;
+			file << DisassembleRom(startAddress, length);
 		}
 	}
 }

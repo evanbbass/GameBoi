@@ -27,8 +27,7 @@ int main(int argc, char* argv[])
 	//Cartridge red("C:\\Users\\ebass\\Downloads\\GB ROMs\\Pokemon - Red Version.gb");
 	//Cartridge gold("C:\\Users\\ebass\\Downloads\\GB ROMs\\Pokemon - Gold Version.gbc");
 
-	tetris.DisassebleRomToFile("tetris bank0.dis", 0x0150, 0x4000, 0);
-	//tetris.DisassebleRomToFile("tetris bank1.dis", 0x0000, 0x4000, 1);
+	tetris.DisassebleRomToFile("tetris.dis", 0x0000, 0x8000);
 
 	return 0;
 }

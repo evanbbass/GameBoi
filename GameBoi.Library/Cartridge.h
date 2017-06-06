@@ -59,8 +59,8 @@ namespace GameBoi
 		bool GetColorSupport() const;
 		bool GetSuperSupport() const;
 
-		std::string DisassembleRom(uint16_t startAddress, uint16_t length, uint32_t bankIndex = 0) const;
-		void DisassebleRomToFile(const std::string& filename, uint16_t startAddress, uint16_t length, uint32_t bankIndex = 0) const;
+		std::string DisassembleRom(uint16_t startAddress, uint16_t length) const;
+		void DisassebleRomToFile(const std::string& filename, uint16_t startAddress, uint16_t length) const;
 
 	private:
 		// Cartridge has 32k of address space and can have multiple 16kB ROM banks
