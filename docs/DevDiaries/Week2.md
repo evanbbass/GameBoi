@@ -1,5 +1,6 @@
 ## 6/03-6/04/2017
 [Related Commit](https://github.com/evanbbass/GameBoi/commit/6b0429b410fc939c95096aa4909de31ff38f2c3d)
+
 This update was targeted at getting the rest of the Game Boy's disassembly mapped out. I continued the format I'd been using, adding items to the map as follows:
 ```c++
 // LD n,nn
@@ -109,8 +110,11 @@ Obviously this won't print a true csv, since the delimiters are semicolons and n
 
 From that .csv file, I could import the table into Excel, work some formatting magic, and get a table looking very similar to the above link. That way I could more easily verify that my disassembly was correct.
 
+**NOTE TO SELF** Include a screenshot of the table here for reference
+
 ## 6/05/2017
 [Related Commit](https://github.com/evanbbass/GameBoi/commit/1613aef9fa821f615d31d61339d78a2a8ba53a62)
+
 This update was to begin the process of fully disassembling a ROM file. When I began writing the code to disasseble the ROM, I very soon realized a shortcoming of my existing map solution: Even if I wasn't going to be doing anything with the instruction, I still needed to know how long the operand is to be able to read and print the value correctly. As such, I had to perform the rather annoying task of changing the value type of the map and modifying every line in the map by hand (the alternative would be to simply make a new map for each attribute, but that would be significantly more annoying and far less readable).
 
 First I made a new very simple Instruction struct:
