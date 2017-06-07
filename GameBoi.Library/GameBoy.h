@@ -7,6 +7,7 @@ namespace GameBoi
 	{
 	public:
 		GameBoy();
+		explicit GameBoy(const std::string& cartridgeFileName);
 		~GameBoy() = default;
 
 		void LoadCartridge(const std::string& fileName);

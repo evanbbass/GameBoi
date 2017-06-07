@@ -120,6 +120,20 @@ namespace GameBoi
 		void LD_aHL_A(uint16_t operand);
 		void LD_ann_A(uint16_t operand);
 
+		// LD A,(C) and reverse
+		void LD_A_aC(uint16_t operand);
+		void LD_aC_A(uint16_t operand);
+
+		// LD A,(HL-/+) and variations
+		void LDD_A_aHL(uint16_t operand);
+		void LDD_aHL_A(uint16_t operand);
+		void LDI_A_aHL(uint16_t operand);
+		void LDI_aHL_A(uint16_t operand);
+
+		// LDH (n),A and reverse
+		void LD_an_A(uint16_t operand);
+		void LD_A_an(uint16_t operand);
+
 		#pragma endregion
 
 		#pragma region Miscellaneous

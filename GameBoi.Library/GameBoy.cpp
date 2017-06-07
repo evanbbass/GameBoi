@@ -5,8 +5,15 @@ using namespace std;
 
 namespace GameBoi
 {
-	GameBoy::GameBoy(): mCPU(mMemory)
+	GameBoy::GameBoy() :
+		mCPU(mMemory)
 	{
+	}
+
+	GameBoy::GameBoy(const string& cartridgeFileName) :
+		mCPU(mMemory)
+	{
+		LoadCartridge(cartridgeFileName);
 	}
 
 	void GameBoy::LoadCartridge(const string& fileName)

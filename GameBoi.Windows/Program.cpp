@@ -30,19 +30,19 @@ int main(int argc, char* argv[])
 
 	//tetris.DisassebleRomToFile("tetris.dis", 0x0000, 0x8000);
 
-	GameBoy gb;
-	gb.LoadCartridge("C:\\Users\\ebass\\Downloads\\GB ROMs\\Tetris (World).gb");
+	GameBoy gb("D:\\Users\\Evan\\Downloads\\Tetris (World).gb");
+	CPU& gbCpu = gb.GetCPU();
 
 	while (true)
 	{
 		try
 		{
-			gb.GetCPU().StepCPU();
+			gbCpu.StepCPU();
 		}
 		catch (exception& ex)
 		{
 			cout << ex.what() << endl;
-			break;
+			return -1;
 		}
 	}
 

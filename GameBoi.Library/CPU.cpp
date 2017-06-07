@@ -104,18 +104,18 @@ namespace GameBoi
 		{ 0xEA, { "LD   ($%04X),A", 2, 16, &LD_ann_A } }, // e.g. LD ($1234),A
 
 		// LD A,($FF00+C) and reverse
-		{ 0xF2, { "LD   A,(C)", 0, 8, &UnimplementedInstruction } }, // also LD A,($FF00+C)
-		{ 0xE2, { "LD   (C),A", 0, 8, &UnimplementedInstruction } },
+		{ 0xF2, { "LD   A,(C)", 0, 8, &LD_A_aC } }, // also LD A,($FF00+C)
+		{ 0xE2, { "LD   (C),A", 0, 8, &LD_aC_A } },
 
 		// LD A,(HL-) and variations
-		{ 0x3A, { "LD   A,(HL-)", 0, 8, &UnimplementedInstruction } }, // also LD A,(HLD) or LDD A,(HL)
-		{ 0x32, { "LD   (HL-),A", 0, 8, &UnimplementedInstruction } }, // also LD (HLD),A or LDD (HL),A
-		{ 0x2A, { "LD   A,(HL+)", 0, 8, &UnimplementedInstruction } }, // also LD A,(HLI) or LDI A,(HL)
-		{ 0x22, { "LD   (HL+),A", 0, 8, &UnimplementedInstruction } }, // also LD (HLI),A or LDI (HL),A
+		{ 0x3A, { "LD   A,(HL-)", 0, 8, &LDD_A_aHL } }, // also LD A,(HLD) or LDD A,(HL)
+		{ 0x32, { "LD   (HL-),A", 0, 8, &LDD_aHL_A } }, // also LD (HLD),A or LDD (HL),A
+		{ 0x2A, { "LD   A,(HL+)", 0, 8, &LDI_A_aHL } }, // also LD A,(HLI) or LDI A,(HL)
+		{ 0x22, { "LD   (HL+),A", 0, 8, &LDI_aHL_A } }, // also LD (HLI),A or LDI (HL),A
 
 		// LDH (n),A and reverse
-		{ 0xE0, { "LD   ($%02X),A", 1, 12, &UnimplementedInstruction } },
-		{ 0xF0, { "LD   A,($%02X)", 1, 12, &UnimplementedInstruction } },
+		{ 0xE0, { "LD   ($%02X),A", 1, 12, &LD_an_A } },
+		{ 0xF0, { "LD   A,($%02X)", 1, 12, &LD_A_an } },
 
 		#pragma endregion
 
@@ -910,408 +910,705 @@ namespace GameBoi
 		return str;
 	}
 
-	// ReSharper disable once CppMemberFunctionMayBeStatic
-	// ReSharper disable once CppMemberFunctionMayBeConst
 	void CPU::UnimplementedInstruction(uint16_t)
 	{
 		throw exception("Unimplemented instruction!");
 	}
 
+	/**
+	 * \brief Load one byte immediate value into register B
+	 */
 	void CPU::LD_B_n(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand);
 		mRegisters.B = n;
 	}
 
+	/**
+	 * \brief Load one byte immediate value into register C
+	 */
 	void CPU::LD_C_n(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand);
 		mRegisters.C = n;
 	}
 
+	/**
+	 * \brief Load one byte immediate value into register D
+	 */
 	void CPU::LD_D_n(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand);
 		mRegisters.D = n;
 	}
 
+	/**
+	 * \brief Load one byte immediate value into register E
+	 */
 	void CPU::LD_E_n(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand);
 		mRegisters.E = n;
 	}
 
+	/**
+	 * \brief Load one byte immediate value into register H
+	 */
 	void CPU::LD_H_n(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand);
 		mRegisters.H = n;
 	}
 
+	/**
+	 * \brief Load one byte immediate value into register L
+	 */
 	void CPU::LD_L_n(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand);
 		mRegisters.L = n;
 	}
 
+	/**
+	 * \brief Put A into register A
+	 */
 	void CPU::LD_A_A(uint16_t)
 	{
 		mRegisters.A = mRegisters.A;
 	}
 
+	/**
+	 * \brief Put B into register A
+	 */
 	void CPU::LD_A_B(uint16_t)
 	{
 		mRegisters.A = mRegisters.B;
 	}
 
+	/**
+	 * \brief Put C into register A
+	 */
 	void CPU::LD_A_C(uint16_t)
 	{
 		mRegisters.A = mRegisters.C;
 	}
 
+	/**
+	 * \brief Put D into register A
+	 */
 	void CPU::LD_A_D(uint16_t)
 	{
 		mRegisters.A = mRegisters.D;
 	}
 
+	/**
+	 * \brief Put E into register A
+	 */
 	void CPU::LD_A_E(uint16_t)
 	{
 		mRegisters.A = mRegisters.E;
 	}
 
+	/**
+	 * \brief Put H into register A
+	 */
 	void CPU::LD_A_H(uint16_t)
 	{
 		mRegisters.A = mRegisters.H;
 	}
 
+	/**
+	 * \brief Put L into register A
+	 */
 	void CPU::LD_A_L(uint16_t)
 	{
 		mRegisters.A = mRegisters.L;
 	}
 
+	/**
+	 * \brief Put value at memory location HL into register A
+	 */
 	void CPU::LD_A_aHL(uint16_t)
 	{
 		mRegisters.A = mMemory.ReadByte(mRegisters.HL);
 	}
 
+	/**
+	 * \brief Put B into register B
+	 */
 	void CPU::LD_B_B(uint16_t)
 	{
 		mRegisters.B = mRegisters.B;
 	}
 
+	/**
+	 * \brief Put C into register B
+	 */
 	void CPU::LD_B_C(uint16_t)
 	{
 		mRegisters.B = mRegisters.C;
 	}
 
+	/**
+	 * \brief Put D into register B
+	 */
 	void CPU::LD_B_D(uint16_t)
 	{
 		mRegisters.B = mRegisters.D;
 	}
 
+	/**
+	 * \brief Put E into register B
+	 */
 	void CPU::LD_B_E(uint16_t)
 	{
 		mRegisters.B = mRegisters.E;
 	}
 
+	/**
+	 * \brief Put H into register B
+	 */
 	void CPU::LD_B_H(uint16_t)
 	{
 		mRegisters.B = mRegisters.H;
 	}
 
+	/**
+	 * \brief Put L into register B
+	 */
 	void CPU::LD_B_L(uint16_t)
 	{
 		mRegisters.B = mRegisters.L;
 	}
 
+	/**
+	 * \brief Put value at memory location HL into register B
+	 */
 	void CPU::LD_B_aHL(uint16_t)
 	{
 		mRegisters.B = mMemory.ReadByte(mRegisters.HL);
 	}
 
+	/**
+	 * \brief Put B into register C
+	 */
 	void CPU::LD_C_B(uint16_t)
 	{
 		mRegisters.C = mRegisters.B;
 	}
 
+	/**
+	 * \brief Put C into register C
+	 */
 	void CPU::LD_C_C(uint16_t)
 	{
 		mRegisters.C = mRegisters.C;
 	}
 
+	/**
+	 * \brief Put D into register C
+	 */
 	void CPU::LD_C_D(uint16_t)
 	{
 		mRegisters.C = mRegisters.D;
 	}
 
+	/**
+	 * \brief Put E into register C
+	 */
 	void CPU::LD_C_E(uint16_t)
 	{
 		mRegisters.C = mRegisters.E;
 	}
 
+	/**
+	 * \brief Put H into register C
+	 */
 	void CPU::LD_C_H(uint16_t)
 	{
 		mRegisters.C = mRegisters.H;
 	}
 
+	/**
+	 * \brief Put L into register C
+	 */
 	void CPU::LD_C_L(uint16_t)
 	{
 		mRegisters.C = mRegisters.L;
 	}
 
+	/**
+	 * \brief Put value at memory location HL into register C
+	 */
 	void CPU::LD_C_aHL(uint16_t)
 	{
 		mRegisters.C = mMemory.ReadByte(mRegisters.HL);
 	}
 
+	/**
+	 * \brief Put B into register D
+	 */
 	void CPU::LD_D_B(uint16_t)
 	{
 		mRegisters.D = mRegisters.B;
 	}
 
+	/**
+	 * \brief Put C into register D
+	 */
 	void CPU::LD_D_C(uint16_t)
 	{
 		mRegisters.D = mRegisters.C;
 	}
 
+	/**
+	 * \brief Put D into register D
+	 */
 	void CPU::LD_D_D(uint16_t)
 	{
 		mRegisters.D = mRegisters.D;
 	}
 
+	/**
+	 * \brief Put E into register D
+	 */
 	void CPU::LD_D_E(uint16_t)
 	{
 		mRegisters.D = mRegisters.E;
 	}
 
+	/**
+	 * \brief Put H into register D
+	 */
 	void CPU::LD_D_H(uint16_t)
 	{
 		mRegisters.D = mRegisters.H;
 	}
 
+	/**
+	 * \brief Put L into register D
+	 */
 	void CPU::LD_D_L(uint16_t)
 	{
 		mRegisters.D = mRegisters.L;
 	}
 
+	/**
+	 * \brief Put value at memory location HL into register D
+	 */
 	void CPU::LD_D_aHL(uint16_t)
 	{
 		mRegisters.D = mMemory.ReadByte(mRegisters.HL);
 	}
 
+	/**
+	 * \brief Put B into register E
+	 */
 	void CPU::LD_E_B(uint16_t)
 	{
 		mRegisters.E = mRegisters.B;
 	}
 
+	/**
+	 * \brief Put C into register E
+	 */
 	void CPU::LD_E_C(uint16_t)
 	{
 		mRegisters.E = mRegisters.C;
 	}
 
+	/**
+	 * \brief Put D into register E
+	 */
 	void CPU::LD_E_D(uint16_t)
 	{
 		mRegisters.E = mRegisters.D;
 	}
 
+	/**
+	 * \brief Put E into register E
+	 */
 	void CPU::LD_E_E(uint16_t)
 	{
 		mRegisters.E = mRegisters.E;
 	}
 
+	/**
+	 * \brief Put H into register E
+	 */
 	void CPU::LD_E_H(uint16_t)
 	{
 		mRegisters.E = mRegisters.H;
 	}
 
+	/**
+	 * \brief Put L into register E
+	 */
 	void CPU::LD_E_L(uint16_t)
 	{
 		mRegisters.E = mRegisters.L;
 	}
 
+	/**
+	 * \brief Put value at memory location HL into register E
+	 */
 	void CPU::LD_E_aHL(uint16_t)
 	{
 		mRegisters.E = mMemory.ReadByte(mRegisters.HL);
 	}
 
+	/**
+	 * \brief Put B into register H
+	 */
 	void CPU::LD_H_B(uint16_t)
 	{
 		mRegisters.H = mRegisters.B;
 	}
 
+	/**
+	 * \brief Put C into register H
+	 */
 	void CPU::LD_H_C(uint16_t)
 	{
 		mRegisters.H = mRegisters.C;
 	}
 
+	/**
+	 * \brief Put D into register H
+	 */
 	void CPU::LD_H_D(uint16_t)
 	{
 		mRegisters.H = mRegisters.D;
 	}
 
+	/**
+	 * \brief Put E into register H
+	 */
 	void CPU::LD_H_E(uint16_t)
 	{
 		mRegisters.H = mRegisters.E;
 	}
 
+	/**
+	 * \brief Put H into register H
+	 */
 	void CPU::LD_H_H(uint16_t)
 	{
 		mRegisters.H = mRegisters.H;
 	}
 
+	/**
+	 * \brief Put L into register H
+	 */
 	void CPU::LD_H_L(uint16_t)
 	{
 		mRegisters.H = mRegisters.L;
 	}
 
+	/**
+	 * \brief Put value at memory location HL into register H
+	 */
 	void CPU::LD_H_aHL(uint16_t)
 	{
 		mRegisters.H = mMemory.ReadByte(mRegisters.HL);
 	}
 
+	/**
+	 * \brief Put B into register L
+	 */
 	void CPU::LD_L_B(uint16_t)
 	{
 		mRegisters.L = mRegisters.B;
 	}
 
+	/**
+	 * \brief Put C into register L
+	 */
 	void CPU::LD_L_C(uint16_t)
 	{
 		mRegisters.L = mRegisters.C;
 	}
 
+	/**
+	 * \brief Put D into register L
+	 */
 	void CPU::LD_L_D(uint16_t)
 	{
 		mRegisters.L = mRegisters.D;
 	}
 
+	/**
+	 * \brief Put E into register L
+	 */
 	void CPU::LD_L_E(uint16_t)
 	{
 		mRegisters.L = mRegisters.E;
 	}
 
+	/**
+	 * \brief Put H into register L
+	 */
 	void CPU::LD_L_H(uint16_t)
 	{
 		mRegisters.L = mRegisters.H;
 	}
 
+	/**
+	 * \brief Put L into register L
+	 */
 	void CPU::LD_L_L(uint16_t)
 	{
 		mRegisters.L = mRegisters.L;
 	}
 
+	/**
+	 * \brief Put value at memory location HL into register L
+	 */
 	void CPU::LD_L_aHL(uint16_t)
 	{
 		mRegisters.L = mMemory.ReadByte(mRegisters.HL);
 	}
 
+	/**
+	 * \brief Put B into memory location HL
+	 */
 	void CPU::LD_aHL_B(uint16_t)
 	{
 		mMemory.WriteByte(mRegisters.HL, mRegisters.B);
 	}
 
+	/**
+	 * \brief Put C into memory location HL
+	 */
 	void CPU::LD_aHL_C(uint16_t)
 	{
 		mMemory.WriteByte(mRegisters.HL, mRegisters.C);
 	}
 
+	/**
+	 * \brief Put D into memory location HL
+	 */
 	void CPU::LD_aHL_D(uint16_t)
 	{
 		mMemory.WriteByte(mRegisters.HL, mRegisters.D);
 	}
 
+	/**
+	 * \brief Put E into memory location HL
+	 */
 	void CPU::LD_aHL_E(uint16_t)
 	{
 		mMemory.WriteByte(mRegisters.HL, mRegisters.E);
 	}
 
+	/**
+	 * \brief Put H into memory location HL
+	 */
 	void CPU::LD_aHL_H(uint16_t)
 	{
 		mMemory.WriteByte(mRegisters.HL, mRegisters.H);
 	}
 
+	/**
+	 * \brief Put L into memory location HL
+	 */
 	void CPU::LD_aHL_L(uint16_t)
 	{
 		mMemory.WriteByte(mRegisters.HL, mRegisters.L);
 	}
 
+	/**
+	 * \brief Put one byte immediate value into memory location HL
+	 */
 	void CPU::LD_aHL_n(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand);
 		mMemory.WriteByte(mRegisters.HL, n);
 	}
 
+	/**
+	 * \brief Put value at memory location BC into register A
+	 */
 	void CPU::LD_A_aBC(uint16_t)
 	{
 		mRegisters.A = mMemory.ReadByte(mRegisters.BC);
 	}
 
+	/**
+	 * \brief Put value at memory location DE into register A
+	 */
 	void CPU::LD_A_aDE(uint16_t)
 	{
 		mRegisters.A = mMemory.ReadByte(mRegisters.DE);
 	}
 
+	/**
+	 * \brief Put value at two-byte immediate memory location into register A
+	 */
 	void CPU::LD_A_ann(uint16_t operand)
 	{
 		mRegisters.A = mMemory.ReadByte(operand);
 	}
 
+	/**
+	 * \brief Put one byte immediate value into register A
+	 */
 	void CPU::LD_A_n(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand);
 		mRegisters.A = n;
 	}
 
+	/**
+	 * \brief Put A into register B
+	 */
 	void CPU::LD_B_A(uint16_t)
 	{
 		mRegisters.B = mRegisters.A;
 	}
 
+	/**
+	 * \brief Put A into register C
+	 */
 	void CPU::LD_C_A(uint16_t)
 	{
 		mRegisters.C = mRegisters.A;
 	}
 
+	/**
+	 * \brief Put A into register D
+	 */
 	void CPU::LD_D_A(uint16_t)
 	{
 		mRegisters.D = mRegisters.A;
 	}
 
+	/**
+	 * \brief Put A into register E
+	 */
 	void CPU::LD_E_A(uint16_t)
 	{
 		mRegisters.E = mRegisters.A;
 	}
 
+	/**
+	 * \brief Put A into register H
+	 */
 	void CPU::LD_H_A(uint16_t)
 	{
 		mRegisters.H = mRegisters.A;
 	}
 
+	/**
+	 * \brief Put A into register L
+	 */
 	void CPU::LD_L_A(uint16_t)
 	{
 		mRegisters.L = mRegisters.A;
 	}
 
+	/**
+	 * \brief Put A into memory location BC
+	 */
 	void CPU::LD_aBC_A(uint16_t)
 	{
 		mMemory.WriteByte(mRegisters.BC, mRegisters.A);
 	}
 
+	/**
+	* \brief Put A into memory location DE
+	*/
 	void CPU::LD_aDE_A(uint16_t)
 	{
 		mMemory.WriteByte(mRegisters.DE, mRegisters.A);
 	}
 
+	/**
+	 * \brief Put A into memory location HL
+	 */
 	void CPU::LD_aHL_A(uint16_t)
 	{
 		mMemory.WriteByte(mRegisters.HL, mRegisters.A);
 	}
 
+	/**
+	 * \brief Put A into two-byte immediate memory location
+	 */
 	void CPU::LD_ann_A(uint16_t operand)
 	{
 		mMemory.WriteByte(operand, mRegisters.A);
 	}
 
+	/**
+	 * \brief Put value at memory location 0xFF00 + register C into register A
+	 */
+	void CPU::LD_A_aC(uint16_t)
+	{
+		mRegisters.A = mMemory.ReadByte(0xFF00 + mRegisters.C);
+	}
+
+	/**
+	 * \brief Put A into memory location 0xFF00 + register C
+	 */
+	void CPU::LD_aC_A(uint16_t)
+	{
+		mMemory.WriteByte(0xFF00 + mRegisters.C, mRegisters.A);
+	}
+
+	/**
+	 * \brief Put value at memory location HL into register A and decrement HL
+	 */
+	void CPU::LDD_A_aHL(uint16_t)
+	{
+		mRegisters.A = mMemory.ReadByte(mRegisters.HL--);
+	}
+
+	/**
+	 * \brief Put A into memory location HL and decrement HL
+	 */
+	void CPU::LDD_aHL_A(uint16_t)
+	{
+		mMemory.WriteByte(mRegisters.HL--, mRegisters.A);
+	}
+
+	/**
+	 * \brief Put value at memory location HL into register A and increment HL
+	 */
+	void CPU::LDI_A_aHL(uint16_t)
+	{
+		mRegisters.A = mMemory.ReadByte(mRegisters.HL++);
+	}
+
+	/**
+	 * \brief Put A into memory location HL and increment HL
+	 */
+	void CPU::LDI_aHL_A(uint16_t)
+	{
+		mMemory.WriteByte(mRegisters.HL++, mRegisters.A);
+	}
+
+	/**
+	 * \brief Put A into memory location 0xFF00 + a one byte immediate value
+	 */
+	void CPU::LD_an_A(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand);
+		mMemory.WriteByte(0xFF00 + n, mRegisters.A);
+	}
+
+	/**
+	 * \brief Put value at memory location 0xFF00 + a one byte immediate value into register A
+	 */
+	void CPU::LD_A_an(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand);
+		mRegisters.A = mMemory.ReadByte(0xFF00 + n);
+	}
+
+	/**
+	 * \brief Perform no operation
+	 */
 	void CPU::NOP(uint16_t)
 	{
-		// do nothing
 	}
 }
