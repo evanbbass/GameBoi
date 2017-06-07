@@ -169,3 +169,39 @@ int32_t CPU::GetOperandLength(uint8_t opcode)
 ```
 
 The last minor change was to remove the index operators from the Cartridge class in favor of Read/Write Byte/Word methods.
+
+## 6/06/2017
+[Related Commit 1](https://github.com/evanbbass/GameBoi/commit/0208553e34197550b7a66476814b94674449eeeb)
+[Related Commit 2](https://github.com/evanbbass/GameBoi/commit/e1e3f5387c1bfd0b0e806a88312cf77da4505ce4)
+[Related Commit 3](https://github.com/evanbbass/GameBoi/commit/df59aa3527164c242ef9d00b53009a064f287457)
+[Related Commit 4](https://github.com/evanbbass/GameBoi/commit/885aad59665ea5f0a57d69134fc3c98d90e42ff3)
+
+The first thing I did today was adjust the formatting to be able to compare to NO$GMB's debug output using [Beyond Compare](https://www.scootersoftware.com) (which is a great tool). While there were several minor formatting differences (it used LDI (HL),A whereas I used LD (HL+),A, I put a '$' before hex digits while it didn't, etc.), there were also a few major differences that helped me notice errors in some of my disassembly. Among the errors were: an incorrect argument length for the POP instruction; a few JR instructions mislabeled as JP; and LD A,(n) and LD (n),A having their opcodes mixed up.
+
+In the end this was a very helpful exercise. While the disassembly itself isn't necessarily vital to the emulator's success, the argument length error would have definitely caused problems later on.
+
+![Example Comparison](../Resources/DisasseblyComparison.jpg "My disassebly compared to NO$GMB's")
+
+Now that I was confident with the disassembly output, I began implementing some of the opcodes. I added a function pointer to the Instruction class:
+
+```c++
+struct Instruction
+{
+	typedef void (CPU::*InstructionFunction)(uint16_t);
+
+	Instruction(const char* disassembly, int32_t operandLength, int32_t cycles, InstructionFunction function) :
+        Function(function), Disassebly(disassembly), OperandLength(operandLength), Cycles(cycles)
+	{
+	}
+
+	InstructionFunction Function;
+	const char* Disassebly; // String disassebly
+	int32_t OperandLength; // Length of the operand of the instructions
+	int32_t Cycles; // Number of CPU clock cycles the instruction takes
+	};
+```
+You'll notice that all of the functions take in a 16-bit operand. This is for uniformity; instructions with no operand will simply ignore it while instructions with one byte operands will simply convert it to 8-bits.
+
+I had to add a constructor to minimize the impact to the map in the CPU class, since the function pointer had to be first due to packing concerns. This allows me to define the function last (so I can just stick it on the end of the line with minimal modifications) while still having the pointer first within the struct.
+
+In the end I got the 8-bit loads done, which were pretty straightforward. Initially I was hoping to be able to pool some of the instructions into a single method, but that would have complicated the function pointer. Overall, everything is proceeding on schedule.
