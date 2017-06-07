@@ -190,7 +190,7 @@ struct Instruction
 	typedef void (CPU::*InstructionFunction)(uint16_t);
 
 	Instruction(const char* disassembly, int32_t operandLength, int32_t cycles, InstructionFunction function) :
-        Function(function), Disassebly(disassembly), OperandLength(operandLength), Cycles(cycles)
+        	Function(function), Disassebly(disassembly), OperandLength(operandLength), Cycles(cycles)
 	{
 	}
 
@@ -200,7 +200,7 @@ struct Instruction
 	int32_t Cycles; // Number of CPU clock cycles the instruction takes
 	};
 ```
-You'll notice that all of the functions take in a 16-bit operand. This is for uniformity; instructions with no operand will simply ignore it while instructions with one byte operands will simply convert it to 8-bits.
+You'll notice that all of the functions take in a 16-bit operand. This is for uniformity; instructions with no operand will simply ignore it while instructions with one byte operands will convert it to 8-bits.
 
 I had to add a constructor to minimize the impact to the map in the CPU class, since the function pointer had to be first due to packing concerns. This allows me to define the function last (so I can just stick it on the end of the line with minimal modifications) while still having the pointer first within the struct.
 
