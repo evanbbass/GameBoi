@@ -111,7 +111,9 @@ Obviously this won't print a true csv, since the delimiters are semicolons and n
 
 From that .csv file, I could import the table into Excel, work some formatting magic, and get a table looking very similar to the above link. That way I could more easily verify that my disassembly was correct.
 
-**NOTE TO SELF** Include a screenshot of the table here for reference
+![Standard Instruction Table](../Resources/StandardInstructions.jpg "Standard Instructions")
+
+![Extended Instruction Table](../Resources/ExtendedInstructions.jpg "Extended Instructions")
 
 ## 6/05/2017
 [Related Commit](https://github.com/evanbbass/GameBoi/commit/1613aef9fa821f615d31d61339d78a2a8ba53a62)
