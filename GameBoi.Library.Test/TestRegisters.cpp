@@ -81,5 +81,71 @@ namespace GameBoiLibraryTest
 			reg.L = value2_l;
 			Assert::IsTrue(value2 == reg.HL);
 		}
+
+		TEST_METHOD(TestRegistersFlags)
+		{
+			Registers reg;
+			static const uint8_t ZERO_FLAG = 0b10000000;
+			static const uint8_t SUBTRACT_FLAG = 0b01000000;
+			static const uint8_t HALF_CARRY_FLAG = 0b00100000;
+			static const uint8_t CARRY_FLAG = 0b00010000;
+
+			// values should initialize to 0 (false)
+			Assert::IsFalse(reg.GetZeroFlag());
+			Assert::IsFalse(reg.GetSubtractFlag());
+			Assert::IsFalse(reg.GetHalfCarryFlag());
+			Assert::IsFalse(reg.GetCarryFlag());
+
+			// test setting flags
+			reg.SetZeroFlag();
+			Assert::IsTrue(reg.GetZeroFlag());
+			Assert::IsTrue(ZERO_FLAG == (ZERO_FLAG & reg.Flags));
+
+			reg.SetSubtractFlag();
+			Assert::IsTrue(reg.GetSubtractFlag());
+			Assert::IsTrue(SUBTRACT_FLAG == (SUBTRACT_FLAG & reg.Flags));
+
+			reg.SetHalfCarryFlag();
+			Assert::IsTrue(reg.GetHalfCarryFlag());
+			Assert::IsTrue(HALF_CARRY_FLAG == (HALF_CARRY_FLAG & reg.Flags));
+
+			reg.SetCarryFlag();
+			Assert::IsTrue(reg.GetCarryFlag());
+			Assert::IsTrue(CARRY_FLAG == (CARRY_FLAG & reg.Flags));
+
+			// test resetting flags
+			reg.ResetZeroFlag();
+			Assert::IsFalse(reg.GetZeroFlag());
+			Assert::IsFalse(ZERO_FLAG == (ZERO_FLAG & reg.Flags));
+
+			reg.ResetSubtractFlag();
+			Assert::IsFalse(reg.GetSubtractFlag());
+			Assert::IsFalse(SUBTRACT_FLAG == (SUBTRACT_FLAG & reg.Flags));
+
+			reg.ResetHalfCarryFlag();
+			Assert::IsFalse(reg.GetHalfCarryFlag());
+			Assert::IsFalse(HALF_CARRY_FLAG == (HALF_CARRY_FLAG & reg.Flags));
+
+			reg.ResetCarryFlag();
+			Assert::IsFalse(reg.GetCarryFlag());
+			Assert::IsFalse(CARRY_FLAG == (CARRY_FLAG & reg.Flags));
+
+			// test assigning flags
+			reg.AssignZeroFlag(true);
+			Assert::IsTrue(reg.GetZeroFlag());
+			Assert::IsTrue(ZERO_FLAG ==( ZERO_FLAG & reg.Flags));
+
+			reg.AssignSubtractFlag(true);
+			Assert::IsTrue(reg.GetSubtractFlag());
+			Assert::IsTrue(SUBTRACT_FLAG == (SUBTRACT_FLAG & reg.Flags));
+
+			reg.AssignHalfCarryFlag(true);
+			Assert::IsTrue(reg.GetHalfCarryFlag());
+			Assert::IsTrue(HALF_CARRY_FLAG == (HALF_CARRY_FLAG & reg.Flags));
+
+			reg.AssignCarryFlag(true);
+			Assert::IsTrue(reg.GetCarryFlag());
+			Assert::IsTrue(CARRY_FLAG == (CARRY_FLAG & reg.Flags));
+		}
 	};
 }

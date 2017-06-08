@@ -122,31 +122,31 @@ namespace GameBoi
 		#pragma region 16-bit loads
 
 		// LD n,nn
-		{ 0x01, { "LD   BC,$%04X", 2, 12, &UnimplementedInstruction } },
-		{ 0x11, { "LD   DE,$%04X", 2, 12, &UnimplementedInstruction } },
-		{ 0x21, { "LD   HL,$%04X", 2, 12, &UnimplementedInstruction } },
-		{ 0x31, { "LD   SP,$%04X", 2, 12, &UnimplementedInstruction } },
+		{ 0x01, { "LD   BC,$%04X", 2, 12, &LD_BC_nn } },
+		{ 0x11, { "LD   DE,$%04X", 2, 12, &LD_DE_nn } },
+		{ 0x21, { "LD   HL,$%04X", 2, 12, &LD_HL_nn } },
+		{ 0x31, { "LD   SP,$%04X", 2, 12, &LD_SP_nn } },
 
 		// LD, SP,HL
-		{ 0xF9, { "LD   SP,HL", 0, 8, &UnimplementedInstruction } },
+		{ 0xF9, { "LD   SP,HL", 0, 8, &LD_SP_HL } },
 
 		// LD HL,SP+n
-		{ 0xF8, { "LD   HL,SP+$%02X", 1, 12, &UnimplementedInstruction } }, // also LDHL SP,n
+		{ 0xF8, { "LD   HL,SP+$%02X", 1, 12, &LD_HL_SP_n } }, // also LDHL SP,n
 
 		// LD (nn),SP
-		{ 0x08, { "LD   ($%04X),SP", 2, 20, &UnimplementedInstruction } },
+		{ 0x08, { "LD   ($%04X),SP", 2, 20, &LD_ann_SP } },
 
 		// PUSH nn
-		{ 0xF5, { "PUSH AF", 0, 16, &UnimplementedInstruction } },
-		{ 0xC5, { "PUSH BC", 0, 16, &UnimplementedInstruction } },
-		{ 0xD5, { "PUSH DE", 0, 16, &UnimplementedInstruction } },
-		{ 0xE5, { "PUSH HL", 0, 16, &UnimplementedInstruction } },
+		{ 0xF5, { "PUSH AF", 0, 16, &PUSH_AF } },
+		{ 0xC5, { "PUSH BC", 0, 16, &PUSH_BC } },
+		{ 0xD5, { "PUSH DE", 0, 16, &PUSH_DE } },
+		{ 0xE5, { "PUSH HL", 0, 16, &PUSH_HL } },
 
 		// POP nn
-		{ 0xF1, { "POP  AF", 0, 12, &UnimplementedInstruction } },
-		{ 0xC1, { "POP  BC", 0, 12, &UnimplementedInstruction } },
-		{ 0xD1, { "POP  DE", 0, 12, &UnimplementedInstruction } },
-		{ 0xE1, { "POP  HL", 0, 12, &UnimplementedInstruction } },
+		{ 0xF1, { "POP  AF", 0, 12, &POP_AF } },
+		{ 0xC1, { "POP  BC", 0, 12, &POP_BC } },
+		{ 0xD1, { "POP  DE", 0, 12, &POP_DE } },
+		{ 0xE1, { "POP  HL", 0, 12, &POP_HL } },
 
 		#pragma endregion
 
@@ -910,6 +910,19 @@ namespace GameBoi
 		return str;
 	}
 
+	void CPU::PushWordToStack(uint16_t value)
+	{
+		mRegisters.SP -= 2;
+		mMemory.WriteWord(mRegisters.SP, value);
+	}
+
+	uint16_t CPU::PopWordFromStack()
+	{
+		uint16_t value = mMemory.ReadWord(mRegisters.SP);
+		mRegisters.SP += 2;
+		return value;
+	}
+
 	void CPU::UnimplementedInstruction(uint16_t)
 	{
 		throw exception("Unimplemented instruction!");
@@ -1603,6 +1616,132 @@ namespace GameBoi
 	{
 		uint8_t n = static_cast<uint8_t>(operand);
 		mRegisters.A = mMemory.ReadByte(0xFF00 + n);
+	}
+
+	/**
+	 * \brief Put two byte immediate value into register BC
+	 */
+	void CPU::LD_BC_nn(uint16_t operand)
+	{
+		mRegisters.BC = operand;
+	}
+
+	/**
+	 * \brief Put two byte immediate value into register DE
+	 */
+	void CPU::LD_DE_nn(uint16_t operand)
+	{
+		mRegisters.DE = operand;
+	}
+
+	/**
+	 * \brief Put two byte immediate value into register HL
+	 */
+	void CPU::LD_HL_nn(uint16_t operand)
+	{
+		mRegisters.HL = operand;
+	}
+
+	/**
+	 * \brief Put two byte immediate value into the stack pointer
+	 */
+	void CPU::LD_SP_nn(uint16_t operand)
+	{
+		mRegisters.SP = operand;
+	}
+
+	/**
+	 * \brief Put HL into the stack pointer
+	 */
+	void CPU::LD_SP_HL(uint16_t operand)
+	{
+		mRegisters.SP = operand;
+	}
+
+	/**
+	 * \brief Put SP + one byte signed immediate value into register HL.
+	 */
+	void CPU::LD_HL_SP_n(uint16_t operand)
+	{
+		int8_t n = static_cast<int8_t>(operand & 0xFF);
+		mRegisters.HL = mRegisters.HL + n;
+
+		mRegisters.ResetZeroFlag();
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag((mRegisters.HL & 0xFF) + (operand & 0xFF) > 0xFF);
+		mRegisters.AssignCarryFlag((mRegisters.HL & 0xF) + (operand & 0xF) > 0xF);
+	}
+
+	/**
+	 * \brief Put the stack pointer at the two byte immediate address
+	 */
+	void CPU::LD_ann_SP(uint16_t operand)
+	{
+		mMemory.WriteWord(operand, mRegisters.SP);
+	}
+
+	/**
+	 * \brief Push register AF onto the stack and decrement the stack pointer.
+	 */
+	void CPU::PUSH_AF(uint16_t)
+	{
+		PushWordToStack(mRegisters.AF);
+	}
+
+	/**
+	 * \brief Push register BC onto the stack and decrement the stack pointer.
+	 */
+	void CPU::PUSH_BC(uint16_t)
+	{
+		PushWordToStack(mRegisters.BC);
+	}
+
+	/**
+	 * \brief Push register DE onto the stack and decrement the stack pointer.
+	 */
+	void CPU::PUSH_DE(uint16_t)
+	{
+		PushWordToStack(mRegisters.DE);
+	}
+
+	/**
+	 * \brief Push register HL onto the stack and decrement the stack pointer.
+	 */
+	void CPU::PUSH_HL(uint16_t)
+	{
+		PushWordToStack(mRegisters.HL);
+	}
+
+	/**
+	 * \brief Pop two bytes off the stack into register AF and increment the stack pointer.
+	 */
+	void CPU::POP_AF(uint16_t)
+	{
+		mRegisters.AF = PopWordFromStack();
+	}
+
+	/**
+	 * \brief Pop two bytes off the stack into register BC and increment the stack pointer.
+	 */
+	void CPU::POP_BC(uint16_t)
+	{
+		mRegisters.BC = PopWordFromStack();
+	}
+
+	/**
+	 * \brief Pop two bytes off the stack into register DE and increment the stack pointer.
+	 */
+	void CPU::POP_DE(uint16_t)
+	{
+		mRegisters.DE = PopWordFromStack();
+	}
+
+	/**
+	 * \brief Pop two bytes off the stack into register HL and increment the stack pointer.
+	 */
+	void CPU::POP_HL(uint16_t)
+	{
+		mRegisters.HL = PopWordFromStack();
 	}
 
 	/**

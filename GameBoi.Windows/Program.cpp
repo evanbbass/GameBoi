@@ -28,11 +28,12 @@ int main(int argc, char* argv[])
 	//Cartridge red("C:\\Users\\ebass\\Downloads\\GB ROMs\\Pokemon - Red Version.gb");
 	//Cartridge gold("C:\\Users\\ebass\\Downloads\\GB ROMs\\Pokemon - Gold Version.gbc");
 
-	//tetris.DisassebleRomToFile("tetris.dis", 0x0000, 0x8000);
+	//Cartridge carazu("Z:\\FALL16-STUDENTS\\mholtkamp\\carazu.gb");
+	//carazu.DisassebleRomToFile("carazu.dis", 0x0000, 0x8000);
 
-	GameBoy gb("D:\\Users\\Evan\\Downloads\\Tetris (World).gb");
+	GameBoy gb("C:\\Users\\ebass\\Downloads\\GB ROMs\\Tetris (World).gb");
 	CPU& gbCpu = gb.GetCPU();
-
+	
 	while (true)
 	{
 		try

@@ -31,6 +31,9 @@ namespace GameBoi
 		static const std::map<uint8_t, Instruction> sOpcodeDisassembly;
 		static const std::map<uint8_t, Instruction> sOpcodeDisassembly_PrefixCB;
 
+		void PushWordToStack(uint16_t value);
+		uint16_t PopWordFromStack();
+
 		void UnimplementedInstruction(uint16_t operand);
 
 		#pragma region  8-Bit Loads
@@ -133,6 +136,37 @@ namespace GameBoi
 		// LDH (n),A and reverse
 		void LD_an_A(uint16_t operand);
 		void LD_A_an(uint16_t operand);
+
+		#pragma endregion
+
+		#pragma region 16-Bit Loads
+
+		// LD n,nn
+		void LD_BC_nn(uint16_t operand);
+		void LD_DE_nn(uint16_t operand);
+		void LD_HL_nn(uint16_t operand);
+		void LD_SP_nn(uint16_t operand);
+
+		// LD SP,HL
+		void LD_SP_HL(uint16_t operand);
+
+		// LD HL,SP+n
+		void LD_HL_SP_n(uint16_t operand);
+
+		// LD (nn),SP
+		void LD_ann_SP(uint16_t operand);
+
+		// PUSH nn
+		void PUSH_AF(uint16_t operand);
+		void PUSH_BC(uint16_t operand);
+		void PUSH_DE(uint16_t operand);
+		void PUSH_HL(uint16_t operand);
+
+		// POP nn
+		void POP_AF(uint16_t operand);
+		void POP_BC(uint16_t operand);
+		void POP_DE(uint16_t operand);
+		void POP_HL(uint16_t operand);
 
 		#pragma endregion
 

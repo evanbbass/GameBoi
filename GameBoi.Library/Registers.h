@@ -62,19 +62,23 @@ namespace GameBoi
 
 		bool GetZeroFlag() const;
 		void SetZeroFlag();
-		void ClearZeroFlag();
+		void ResetZeroFlag();
+		void AssignZeroFlag(bool value);
 
 		bool GetSubtractFlag() const;
 		void SetSubtractFlag();
-		void ClearSubtractFlag();
+		void ResetSubtractFlag();
+		void AssignSubtractFlag(bool value);
 
 		bool GetHalfCarryFlag() const;
 		void SetHalfCarryFlag();
-		void ClearHalfCarryFlag();
+		void ResetHalfCarryFlag();
+		void AssignHalfCarryFlag(bool value);
 
 		bool GetCarryFlag() const;
 		void SetCarryFlag();
-		void ClearCarryFlag();
+		void ResetCarryFlag();
+		void AssignCarryFlag(bool value);
 
 	private:
 		static const uint8_t ZERO_FLAG = 0b10000000;
