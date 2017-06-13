@@ -170,6 +170,118 @@ namespace GameBoi
 
 		#pragma endregion
 
+		#pragma region 8-bit ALU
+
+		// ADD A,n
+		void ADD_A_A(uint16_t operand);
+		void ADD_A_B(uint16_t operand);
+		void ADD_A_C(uint16_t operand);
+		void ADD_A_D(uint16_t operand);
+		void ADD_A_E(uint16_t operand);
+		void ADD_A_H(uint16_t operand);
+		void ADD_A_L(uint16_t operand);
+		void ADD_A_aHL(uint16_t operand);
+		void ADD_A_n(uint16_t operand);
+
+		// ADC A,n
+		void ADC_A_A(uint16_t operand);
+		void ADC_A_B(uint16_t operand);
+		void ADC_A_C(uint16_t operand);
+		void ADC_A_D(uint16_t operand);
+		void ADC_A_E(uint16_t operand);
+		void ADC_A_H(uint16_t operand);
+		void ADC_A_L(uint16_t operand);
+		void ADC_A_aHL(uint16_t operand);
+		void ADC_A_n(uint16_t operand);
+
+		// SUB n
+		void SUB_A(uint16_t operand);
+		void SUB_B(uint16_t operand);
+		void SUB_C(uint16_t operand);
+		void SUB_D(uint16_t operand);
+		void SUB_E(uint16_t operand);
+		void SUB_H(uint16_t operand);
+		void SUB_L(uint16_t operand);
+		void SUB_aHL(uint16_t operand);
+		void SUB_n(uint16_t operand);
+
+		// ADC A,n
+		void SBC_A_A(uint16_t operand);
+		void SBC_A_B(uint16_t operand);
+		void SBC_A_C(uint16_t operand);
+		void SBC_A_D(uint16_t operand);
+		void SBC_A_E(uint16_t operand);
+		void SBC_A_H(uint16_t operand);
+		void SBC_A_L(uint16_t operand);
+		void SBC_A_aHL(uint16_t operand);
+		void SBC_A_n(uint16_t operand);
+
+		// AND n
+		void AND_A(uint16_t operand);
+		void AND_B(uint16_t operand);
+		void AND_C(uint16_t operand);
+		void AND_D(uint16_t operand);
+		void AND_E(uint16_t operand);
+		void AND_H(uint16_t operand);
+		void AND_L(uint16_t operand);
+		void AND_aHL(uint16_t operand);
+		void AND_n(uint16_t operand);
+
+		// OR n
+		void OR_A(uint16_t operand);
+		void OR_B(uint16_t operand);
+		void OR_C(uint16_t operand);
+		void OR_D(uint16_t operand);
+		void OR_E(uint16_t operand);
+		void OR_H(uint16_t operand);
+		void OR_L(uint16_t operand);
+		void OR_aHL(uint16_t operand);
+		void OR_n(uint16_t operand);
+
+		// XOR n
+		void XOR_A(uint16_t operand);
+		void XOR_B(uint16_t operand);
+		void XOR_C(uint16_t operand);
+		void XOR_D(uint16_t operand);
+		void XOR_E(uint16_t operand);
+		void XOR_H(uint16_t operand);
+		void XOR_L(uint16_t operand);
+		void XOR_aHL(uint16_t operand);
+		void XOR_n(uint16_t operand);
+
+		// CP n
+		void CP_A(uint16_t operand);
+		void CP_B(uint16_t operand);
+		void CP_C(uint16_t operand);
+		void CP_D(uint16_t operand);
+		void CP_E(uint16_t operand);
+		void CP_H(uint16_t operand);
+		void CP_L(uint16_t operand);
+		void CP_aHL(uint16_t operand);
+		void CP_n(uint16_t operand);
+
+		// INC n
+		void INC_A(uint16_t operand);
+		void INC_B(uint16_t operand);
+		void INC_C(uint16_t operand);
+		void INC_D(uint16_t operand);
+		void INC_E(uint16_t operand);
+		void INC_H(uint16_t operand);
+		void INC_L(uint16_t operand);
+		void INC_aHL(uint16_t operand);
+
+		// DEC n
+		void DEC_A(uint16_t operand);
+		void DEC_B(uint16_t operand);
+		void DEC_C(uint16_t operand);
+		void DEC_D(uint16_t operand);
+		void DEC_E(uint16_t operand);
+		void DEC_H(uint16_t operand);
+		void DEC_L(uint16_t operand);
+		void DEC_aHL(uint16_t operand);
+
+		#pragma endregion
+
 		#pragma region Miscellaneous
 
 		void NOP(uint16_t operand);

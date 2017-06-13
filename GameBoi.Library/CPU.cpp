@@ -153,112 +153,112 @@ namespace GameBoi
 		#pragma region 8-bit ALU
 
 		// ADD A,n
-		{ 0x87, { "ADD  A,A", 0, 4, &UnimplementedInstruction } },
-		{ 0x80, { "ADD  A,B", 0, 4, &UnimplementedInstruction } },
-		{ 0x81, { "ADD  A,C", 0, 4, &UnimplementedInstruction } },
-		{ 0x82, { "ADD  A,D", 0, 4, &UnimplementedInstruction } },
-		{ 0x83, { "ADD  A,E", 0, 4, &UnimplementedInstruction } },
-		{ 0x84, { "ADD  A,H", 0, 4, &UnimplementedInstruction } },
-		{ 0x85, { "ADD  A,L", 0, 4, &UnimplementedInstruction } },
-		{ 0x86, { "ADD  A,(HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0xC6, { "ADD  A,$%02X", 1, 8, &UnimplementedInstruction } },
+		{ 0x87, { "ADD  A,A", 0, 4, &ADD_A_A } },
+		{ 0x80, { "ADD  A,B", 0, 4, &ADD_A_B } },
+		{ 0x81, { "ADD  A,C", 0, 4, &ADD_A_C } },
+		{ 0x82, { "ADD  A,D", 0, 4, &ADD_A_D } },
+		{ 0x83, { "ADD  A,E", 0, 4, &ADD_A_E } },
+		{ 0x84, { "ADD  A,H", 0, 4, &ADD_A_H } },
+		{ 0x85, { "ADD  A,L", 0, 4, &ADD_A_L } },
+		{ 0x86, { "ADD  A,(HL)", 0, 8, &ADD_A_aHL } },
+		{ 0xC6, { "ADD  A,$%02X", 1, 8, &ADD_A_n } },
 
 		// ADC A,n
-		{ 0x8F, { "ADC  A,A", 0, 4, &UnimplementedInstruction } },
-		{ 0x88, { "ADC  A,B", 0, 4, &UnimplementedInstruction } },
-		{ 0x89, { "ADC  A,C", 0, 4, &UnimplementedInstruction } },
-		{ 0x8A, { "ADC  A,D", 0, 4, &UnimplementedInstruction } },
-		{ 0x8B, { "ADC  A,E", 0, 4, &UnimplementedInstruction } },
-		{ 0x8C, { "ADC  A,H", 0, 4, &UnimplementedInstruction } },
-		{ 0x8D, { "ADC  A,L", 0, 4, &UnimplementedInstruction } },
-		{ 0x8E, { "ADC  A,(HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0xCE, { "ADC  A,$%02X", 1, 8, &UnimplementedInstruction } },
+		{ 0x8F, { "ADC  A,A", 0, 4, &ADC_A_A } },
+		{ 0x88, { "ADC  A,B", 0, 4, &ADC_A_B } },
+		{ 0x89, { "ADC  A,C", 0, 4, &ADC_A_C } },
+		{ 0x8A, { "ADC  A,D", 0, 4, &ADC_A_D } },
+		{ 0x8B, { "ADC  A,E", 0, 4, &ADC_A_E } },
+		{ 0x8C, { "ADC  A,H", 0, 4, &ADC_A_H } },
+		{ 0x8D, { "ADC  A,L", 0, 4, &ADC_A_L } },
+		{ 0x8E, { "ADC  A,(HL)", 0, 8, &ADC_A_aHL } },
+		{ 0xCE, { "ADC  A,$%02X", 1, 8, &ADC_A_n } },
 
 		// SUB n
-		{ 0x97, { "SUB  A", 0, 4, &UnimplementedInstruction } },
-		{ 0x90, { "SUB  B", 0, 4, &UnimplementedInstruction } },
-		{ 0x91, { "SUB  C", 0, 4, &UnimplementedInstruction } },
-		{ 0x92, { "SUB  D", 0, 4, &UnimplementedInstruction } },
-		{ 0x93, { "SUB  E", 0, 4, &UnimplementedInstruction } },
-		{ 0x94, { "SUB  H", 0, 4, &UnimplementedInstruction } },
-		{ 0x95, { "SUB  L", 0, 4, &UnimplementedInstruction } },
-		{ 0x96, { "SUB  (HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0xD6, { "SUB  $%02X", 1, 8, &UnimplementedInstruction } },
+		{ 0x97, { "SUB  A", 0, 4, &SUB_A } },
+		{ 0x90, { "SUB  B", 0, 4, &SUB_B } },
+		{ 0x91, { "SUB  C", 0, 4, &SUB_C } },
+		{ 0x92, { "SUB  D", 0, 4, &SUB_D } },
+		{ 0x93, { "SUB  E", 0, 4, &SUB_E } },
+		{ 0x94, { "SUB  H", 0, 4, &SUB_H } },
+		{ 0x95, { "SUB  L", 0, 4, &SUB_L } },
+		{ 0x96, { "SUB  (HL)", 0, 8, &SUB_aHL } },
+		{ 0xD6, { "SUB  $%02X", 1, 8, &SUB_n } },
 
 		// SBC A,n
-		{ 0x9F, { "SBC  A,A", 0, 4, &UnimplementedInstruction } },
-		{ 0x98, { "SBC  A,B", 0, 4, &UnimplementedInstruction } },
-		{ 0x99, { "SBC  A,C", 0, 4, &UnimplementedInstruction } },
-		{ 0x9A, { "SBC  A,D", 0, 4, &UnimplementedInstruction } },
-		{ 0x9B, { "SBC  A,E", 0, 4, &UnimplementedInstruction } },
-		{ 0x9C, { "SBC  A,H", 0, 4, &UnimplementedInstruction } },
-		{ 0x9D, { "SBC  A,L", 0, 4, &UnimplementedInstruction } },
-		{ 0x9E, { "SBC  A,(HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0xDE, { "SBC  A,$%02X", 1, 8, &UnimplementedInstruction } }, // ?? Manual seems confused about this one
+		{ 0x9F, { "SBC  A,A", 0, 4, &SBC_A_A } },
+		{ 0x98, { "SBC  A,B", 0, 4, &SBC_A_B } },
+		{ 0x99, { "SBC  A,C", 0, 4, &SBC_A_C } },
+		{ 0x9A, { "SBC  A,D", 0, 4, &SBC_A_D } },
+		{ 0x9B, { "SBC  A,E", 0, 4, &SBC_A_E } },
+		{ 0x9C, { "SBC  A,H", 0, 4, &SBC_A_H } },
+		{ 0x9D, { "SBC  A,L", 0, 4, &SBC_A_L } },
+		{ 0x9E, { "SBC  A,(HL)", 0, 8, &SBC_A_aHL } },
+		{ 0xDE, { "SBC  A,$%02X", 1, 8, &SBC_A_n } }, // ?? Manual seems confused about this one
 
 		// AND n
-		{ 0xA7, { "AND  A", 0, 4, &UnimplementedInstruction } },
-		{ 0xA0, { "AND  B", 0, 4, &UnimplementedInstruction } },
-		{ 0xA1, { "AND  C", 0, 4, &UnimplementedInstruction } },
-		{ 0xA2, { "AND  D", 0, 4, &UnimplementedInstruction } },
-		{ 0xA3, { "AND  E", 0, 4, &UnimplementedInstruction } },
-		{ 0xA4, { "AND  H", 0, 4, &UnimplementedInstruction } },
-		{ 0xA5, { "AND  L", 0, 4, &UnimplementedInstruction } },
-		{ 0xA6, { "AND  (HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0xE6, { "AND  $%02X", 1, 8, &UnimplementedInstruction } },
+		{ 0xA7, { "AND  A", 0, 4, &AND_A } },
+		{ 0xA0, { "AND  B", 0, 4, &AND_B } },
+		{ 0xA1, { "AND  C", 0, 4, &AND_C } },
+		{ 0xA2, { "AND  D", 0, 4, &AND_D } },
+		{ 0xA3, { "AND  E", 0, 4, &AND_E } },
+		{ 0xA4, { "AND  H", 0, 4, &AND_H } },
+		{ 0xA5, { "AND  L", 0, 4, &AND_L } },
+		{ 0xA6, { "AND  (HL)", 0, 8, &AND_aHL } },
+		{ 0xE6, { "AND  $%02X", 1, 8, &AND_n } },
 
 		// OR n
-		{ 0xB7, { "OR   A", 0, 4, &UnimplementedInstruction } },
-		{ 0xB0, { "OR   B", 0, 4, &UnimplementedInstruction } },
-		{ 0xB1, { "OR   C", 0, 4, &UnimplementedInstruction } },
-		{ 0xB2, { "OR   D", 0, 4, &UnimplementedInstruction } },
-		{ 0xB3, { "OR   E", 0, 4, &UnimplementedInstruction } },
-		{ 0xB4, { "OR   H", 0, 4, &UnimplementedInstruction } },
-		{ 0xB5, { "OR   L", 0, 4, &UnimplementedInstruction } },
-		{ 0xB6, { "OR   (HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0xF6, { "OR   $%02X", 1, 8, &UnimplementedInstruction } },
+		{ 0xB7, { "OR   A", 0, 4, &OR_A } },
+		{ 0xB0, { "OR   B", 0, 4, &OR_B } },
+		{ 0xB1, { "OR   C", 0, 4, &OR_C } },
+		{ 0xB2, { "OR   D", 0, 4, &OR_D } },
+		{ 0xB3, { "OR   E", 0, 4, &OR_E } },
+		{ 0xB4, { "OR   H", 0, 4, &OR_H } },
+		{ 0xB5, { "OR   L", 0, 4, &OR_L } },
+		{ 0xB6, { "OR   (HL)", 0, 8, &OR_aHL } },
+		{ 0xF6, { "OR   $%02X", 1, 8, &OR_n } },
 
 		// XOR n
-		{ 0xAF, { "XOR  A", 0, 4, &UnimplementedInstruction } },
-		{ 0xA8, { "XOR  B", 0, 4, &UnimplementedInstruction } },
-		{ 0xA9, { "XOR  C", 0, 4, &UnimplementedInstruction } },
-		{ 0xAA, { "XOR  D", 0, 4, &UnimplementedInstruction } },
-		{ 0xAB, { "XOR  E", 0, 4, &UnimplementedInstruction } },
-		{ 0xAC, { "XOR  H", 0, 4, &UnimplementedInstruction } },
-		{ 0xAD, { "XOR  L", 0, 4, &UnimplementedInstruction } },
-		{ 0xAE, { "XOR  (HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0xEE, { "XOR  $%02X", 1, 8, &UnimplementedInstruction } },
+		{ 0xAF, { "XOR  A", 0, 4, &XOR_A } },
+		{ 0xA8, { "XOR  B", 0, 4, &XOR_B } },
+		{ 0xA9, { "XOR  C", 0, 4, &XOR_C } },
+		{ 0xAA, { "XOR  D", 0, 4, &XOR_D } },
+		{ 0xAB, { "XOR  E", 0, 4, &XOR_E } },
+		{ 0xAC, { "XOR  H", 0, 4, &XOR_H } },
+		{ 0xAD, { "XOR  L", 0, 4, &XOR_L } },
+		{ 0xAE, { "XOR  (HL)", 0, 8, &XOR_aHL } },
+		{ 0xEE, { "XOR  $%02X", 1, 8, &XOR_n } },
 
 		// CP n
-		{ 0xBF, { "CP   A", 0, 4, &UnimplementedInstruction } },
-		{ 0xB8, { "CP   B", 0, 4, &UnimplementedInstruction } },
-		{ 0xB9, { "CP   C", 0, 4, &UnimplementedInstruction } },
-		{ 0xBA, { "CP   D", 0, 4, &UnimplementedInstruction } },
-		{ 0xBB, { "CP   E", 0, 4, &UnimplementedInstruction } },
-		{ 0xBC, { "CP   H", 0, 4, &UnimplementedInstruction } },
-		{ 0xBD, { "CP   L", 0, 4, &UnimplementedInstruction } },
-		{ 0xBE, { "CP   (HL)", 0, 8, &UnimplementedInstruction } },
-		{ 0xFE, { "CP   $%02X", 1, 8, &UnimplementedInstruction } },
+		{ 0xBF, { "CP   A", 0, 4, &CP_A } },
+		{ 0xB8, { "CP   B", 0, 4, &CP_B } },
+		{ 0xB9, { "CP   C", 0, 4, &CP_C } },
+		{ 0xBA, { "CP   D", 0, 4, &CP_D } },
+		{ 0xBB, { "CP   E", 0, 4, &CP_E } },
+		{ 0xBC, { "CP   H", 0, 4, &CP_H } },
+		{ 0xBD, { "CP   L", 0, 4, &CP_L } },
+		{ 0xBE, { "CP   (HL)", 0, 8, &CP_aHL } },
+		{ 0xFE, { "CP   $%02X", 1, 8, &CP_n } },
 
 		// INC n
-		{ 0x3C, { "INC  A", 0, 4, &UnimplementedInstruction } },
-		{ 0x04, { "INC  B", 0, 4, &UnimplementedInstruction } },
-		{ 0x0C, { "INC  C", 0, 4, &UnimplementedInstruction } },
-		{ 0x14, { "INC  D", 0, 4, &UnimplementedInstruction } },
-		{ 0x1C, { "INC  E", 0, 4, &UnimplementedInstruction } },
-		{ 0x24, { "INC  H", 0, 4, &UnimplementedInstruction } },
-		{ 0x2C, { "INC  L", 0, 4, &UnimplementedInstruction } },
-		{ 0x34, { "INC  (HL)", 0, 12, &UnimplementedInstruction } },
+		{ 0x3C, { "INC  A", 0, 4, &INC_A } },
+		{ 0x04, { "INC  B", 0, 4, &INC_B } },
+		{ 0x0C, { "INC  C", 0, 4, &INC_C } },
+		{ 0x14, { "INC  D", 0, 4, &INC_D } },
+		{ 0x1C, { "INC  E", 0, 4, &INC_E } },
+		{ 0x24, { "INC  H", 0, 4, &INC_H } },
+		{ 0x2C, { "INC  L", 0, 4, &INC_L } },
+		{ 0x34, { "INC  (HL)", 0, 12, &INC_aHL } },
 
 		// DEC n
-		{ 0x3D, { "DEC  A", 0, 4, &UnimplementedInstruction } },
-		{ 0x05, { "DEC  B", 0, 4, &UnimplementedInstruction } },
-		{ 0x0D, { "DEC  C", 0, 4, &UnimplementedInstruction } },
-		{ 0x15, { "DEC  D", 0, 4, &UnimplementedInstruction } },
-		{ 0x1D, { "DEC  E", 0, 4, &UnimplementedInstruction } },
-		{ 0x25, { "DEC  H", 0, 4, &UnimplementedInstruction } },
-		{ 0x2D, { "DEC  L", 0, 4, &UnimplementedInstruction } },
-		{ 0x35, { "DEC  (HL)", 0, 12, &UnimplementedInstruction } },
+		{ 0x3D, { "DEC  A", 0, 4, &DEC_A } },
+		{ 0x05, { "DEC  B", 0, 4, &DEC_B } },
+		{ 0x0D, { "DEC  C", 0, 4, &DEC_C } },
+		{ 0x15, { "DEC  D", 0, 4, &DEC_D } },
+		{ 0x1D, { "DEC  E", 0, 4, &DEC_E } },
+		{ 0x25, { "DEC  H", 0, 4, &DEC_H } },
+		{ 0x2D, { "DEC  L", 0, 4, &DEC_L } },
+		{ 0x35, { "DEC  (HL)", 0, 12, &DEC_aHL } },
 
 		#pragma endregion
 
@@ -1664,12 +1664,13 @@ namespace GameBoi
 	void CPU::LD_HL_SP_n(uint16_t operand)
 	{
 		int8_t n = static_cast<int8_t>(operand & 0xFF);
-		mRegisters.HL = mRegisters.HL + n;
 
 		mRegisters.ResetZeroFlag();
 		mRegisters.ResetSubtractFlag();
-		mRegisters.AssignHalfCarryFlag((mRegisters.HL & 0xFF) + (operand & 0xFF) > 0xFF);
-		mRegisters.AssignCarryFlag((mRegisters.HL & 0xF) + (operand & 0xF) > 0xF);
+		mRegisters.AssignHalfCarryFlag((mRegisters.HL & 0xF) + (operand & 0xF) > 0xF);
+		mRegisters.AssignCarryFlag((mRegisters.HL & 0xFF) + (operand & 0xFF) > 0xFF);
+
+		mRegisters.HL = mRegisters.HL + n;
 	}
 
 	/**
@@ -1742,6 +1743,1370 @@ namespace GameBoi
 	void CPU::POP_HL(uint16_t)
 	{
 		mRegisters.HL = PopWordFromStack();
+	}
+
+	/**
+	 * \brief Add A into A
+	 */
+	void CPU::ADD_A_A(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.A;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.A & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.A & 0xFF) > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add B into A
+	 */
+	void CPU::ADD_A_B(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.B;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.B & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.B & 0xFF) > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add C into A
+	 */
+	void CPU::ADD_A_C(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.C;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.C & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.C & 0xFF) > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add D into A
+	 */
+	void CPU::ADD_A_D(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.D;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.D & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.D & 0xFF) > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add E into A
+	 */
+	void CPU::ADD_A_E(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.E;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.E & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.E & 0xFF) > 0xFF;
+
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+
+		mRegisters.A = result;
+	}
+
+	/**
+	 * \brief Add H into A
+	 */
+	void CPU::ADD_A_H(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.H;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.H & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.H & 0xFF) > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add L into A
+	 */
+	void CPU::ADD_A_L(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.L;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.L & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.L & 0xFF) > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add the value at address HL into A
+	 */
+	void CPU::ADD_A_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint8_t result = mRegisters.A + value;
+		bool halfCarry = (mRegisters.A & 0xF) + (value & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (value & 0xFF) > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add a one byte immediate value into A
+	 */
+	void CPU::ADD_A_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
+		uint8_t result = mRegisters.A + n;
+		bool halfCarry = (mRegisters.A & 0xF) + (n & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (n & 0xFF) > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add A with carry into A
+	 */
+	void CPU::ADC_A_A(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.A + mRegisters.GetCarryFlag() ? 1 : 0;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.A & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.A & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add B with carry into A
+	 */
+	void CPU::ADC_A_B(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.B + mRegisters.GetCarryFlag() ? 1 : 0;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.B & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.B & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add C with carry into A
+	 */
+	void CPU::ADC_A_C(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.C + mRegisters.GetCarryFlag() ? 1 : 0;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.C & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.C & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add D with carry into A
+	 */
+	void CPU::ADC_A_D(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.D + mRegisters.GetCarryFlag() ? 1 : 0;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.D & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.D & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add E with carry into A
+	 */
+	void CPU::ADC_A_E(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.E + mRegisters.GetCarryFlag() ? 1 : 0;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.E & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.E & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add H with carry into A
+	 */
+	void CPU::ADC_A_H(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.H + mRegisters.GetCarryFlag() ? 1 : 0;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.H & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.H & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add L with carry into A
+	 */
+	void CPU::ADC_A_L(uint16_t)
+	{
+		uint8_t result = mRegisters.A + mRegisters.L + mRegisters.GetCarryFlag() ? 1 : 0;
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.L & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.L & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add the value at address HL with carry into A
+	 */
+	void CPU::ADC_A_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint8_t result = mRegisters.A + value + mRegisters.GetCarryFlag() ? 1 : 0;
+		bool halfCarry = (mRegisters.A & 0xF) + (value & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (value & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add a one byte immediate value with carry into A
+	 */
+	void CPU::ADC_A_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
+		uint8_t result = mRegisters.A + n + mRegisters.GetCarryFlag() ? 1 : 0;
+		bool halfCarry = (mRegisters.A & 0xF) + (n & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (n & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract A from A
+	 */
+	void CPU::SUB_A(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.A;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.A & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.A & 0xFF);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract B from A
+	 */
+	void CPU::SUB_B(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.B;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.B & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.B & 0xFF);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract C from A
+	 */
+	void CPU::SUB_C(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.C;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.C & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.C & 0xFF);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract D from A
+	 */
+	void CPU::SUB_D(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.D;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.D & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.D & 0xFF);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract E from A
+	 */
+	void CPU::SUB_E(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.E;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.E & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.E & 0xFF);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract H from A
+	 */
+	void CPU::SUB_H(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.H;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.H & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.H & 0xFF);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract L from A
+	 */
+	void CPU::SUB_L(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.L;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.L & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.L & 0xFF);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract the value at address HL from A
+	 */
+	void CPU::SUB_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint8_t result = mRegisters.A - value;
+		bool halfCarry = (mRegisters.A & 0xF) < (value & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (value & 0xFF);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract a one byte immediate value from A
+	 */
+	void CPU::SUB_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
+		uint8_t result = mRegisters.A - n;
+		bool halfCarry = (mRegisters.A & 0xF) < (n & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (n & 0xFF);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract A with carry from A
+	 */
+	void CPU::SBC_A_A(uint16_t)
+	{
+		uint8_t result = mRegisters.A - (mRegisters.A + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.A & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.A & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract B with carry from A
+	 */
+	void CPU::SBC_A_B(uint16_t)
+	{
+		uint8_t result = mRegisters.A - (mRegisters.B + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.B & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.B & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract C with carry from A
+	 */
+	void CPU::SBC_A_C(uint16_t)
+	{
+		uint8_t result = mRegisters.A - (mRegisters.C + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.C & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.C & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract D with carry from A
+	 */
+	void CPU::SBC_A_D(uint16_t)
+	{
+		uint8_t result = mRegisters.A - (mRegisters.D + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.D & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.D & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract E with carry from A
+	 */
+	void CPU::SBC_A_E(uint16_t)
+	{
+		uint8_t result = mRegisters.A - (mRegisters.E + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.E & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.E & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract H with carry from A
+	 */
+	void CPU::SBC_A_H(uint16_t)
+	{
+		uint8_t result = mRegisters.A - (mRegisters.H + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.H & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.H & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract L with carry from A
+	 */
+	void CPU::SBC_A_L(uint16_t)
+	{
+		uint8_t result = mRegisters.A - (mRegisters.L + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.L & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.L & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract the value at address HL with carry from A
+	 */
+	void CPU::SBC_A_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint8_t result = mRegisters.A - (value + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) < ((value & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool fullCarry = (mRegisters.A & 0xFF) < ((value & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Subtract a one byte immediate value with carry from A
+	 */
+	void CPU::SBC_A_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
+		uint8_t result = mRegisters.A - (n + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) < ((n & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		bool fullCarry = (mRegisters.A & 0xFF) < ((n & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Logically AND A with A
+	 */
+	void CPU::AND_A(uint16_t)
+	{
+		uint8_t result = mRegisters.A & mRegisters.A;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically AND B with A
+	 */
+	void CPU::AND_B(uint16_t)
+	{
+		uint8_t result = mRegisters.A & mRegisters.B;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically AND C with A
+	 */
+	void CPU::AND_C(uint16_t)
+	{
+		uint8_t result = mRegisters.A & mRegisters.C;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically AND D with A
+	 */
+	void CPU::AND_D(uint16_t)
+	{
+		uint8_t result = mRegisters.A & mRegisters.D;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically AND E with A
+	 */
+	void CPU::AND_E(uint16_t)
+	{
+		uint8_t result = mRegisters.A & mRegisters.E;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically AND H with A
+	 */
+	void CPU::AND_H(uint16_t)
+	{
+		uint8_t result = mRegisters.A & mRegisters.H;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically AND L with A
+	 */
+	void CPU::AND_L(uint16_t)
+	{
+		uint8_t result = mRegisters.A & mRegisters.L;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically AND the value at address HL with A
+	 */
+	void CPU::AND_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint8_t result = mRegisters.A & value;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically AND a one byte immediate value with A
+	 */
+	void CPU::AND_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
+		uint8_t result = mRegisters.A & n;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically OR A with A
+	 */
+	void CPU::OR_A(uint16_t)
+	{
+		uint8_t result = mRegisters.A | mRegisters.A;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically OR B with A
+	 */
+	void CPU::OR_B(uint16_t)
+	{
+		uint8_t result = mRegisters.A | mRegisters.B;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically OR C with A
+	 */
+	void CPU::OR_C(uint16_t)
+	{
+		uint8_t result = mRegisters.A | mRegisters.C;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically OR D with A
+	 */
+	void CPU::OR_D(uint16_t)
+	{
+		uint8_t result = mRegisters.A | mRegisters.D;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically OR E with A
+	 */
+	void CPU::OR_E(uint16_t)
+	{
+		uint8_t result = mRegisters.A | mRegisters.E;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically OR H with A
+	 */
+	void CPU::OR_H(uint16_t)
+	{
+		uint8_t result = mRegisters.A | mRegisters.H;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically OR L with A
+	 */
+	void CPU::OR_L(uint16_t)
+	{
+		uint8_t result = mRegisters.A | mRegisters.L;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically OR the value at address HL with A
+	 */
+	void CPU::OR_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint8_t result = mRegisters.A | value;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically OR a one byte immediate value with A
+	 */
+	void CPU::OR_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
+		uint8_t result = mRegisters.A | n;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically exclusive OR A with A
+	 */
+	void CPU::XOR_A(uint16_t)
+	{
+		uint8_t result = mRegisters.A ^ mRegisters.A;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically exclusive OR B with A
+	 */
+	void CPU::XOR_B(uint16_t)
+	{
+		uint8_t result = mRegisters.A ^ mRegisters.B;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically exclusive OR C with A
+	 */
+	void CPU::XOR_C(uint16_t)
+	{
+		uint8_t result = mRegisters.A ^ mRegisters.C;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically exclusive OR D with A
+	 */
+	void CPU::XOR_D(uint16_t)
+	{
+		uint8_t result = mRegisters.A ^ mRegisters.D;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically exclusive OR E with A
+	 */
+	void CPU::XOR_E(uint16_t)
+	{
+		uint8_t result = mRegisters.A ^ mRegisters.E;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically exclusive OR H with A
+	 */
+	void CPU::XOR_H(uint16_t)
+	{
+		uint8_t result = mRegisters.A ^ mRegisters.H;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically exclusive OR L with A
+	 */
+	void CPU::XOR_L(uint16_t)
+	{
+		uint8_t result = mRegisters.A ^ mRegisters.L;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically exclusive OR the value at address HL with A
+	 */
+	void CPU::XOR_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint8_t result = mRegisters.A ^ value;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Logically exclusive OR a one byte immediate value with A
+	 */
+	void CPU::XOR_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
+		uint8_t result = mRegisters.A ^ n;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Compare A to A
+	 */
+	void CPU::CP_A(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.A;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.A & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.A & 0xFF);
+
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Compare B to A
+	 */
+	void CPU::CP_B(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.B;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.B & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.B & 0xFF);
+
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Compare C to A
+	 */
+	void CPU::CP_C(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.C;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.C & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.C & 0xFF);
+
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Compare D to A
+	 */
+	void CPU::CP_D(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.D;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.D & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.D & 0xFF);
+
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Compare E to A
+	 */
+	void CPU::CP_E(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.E;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.E & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.E & 0xFF);
+
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Compare H to A
+	 */
+	void CPU::CP_H(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.H;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.H & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.H & 0xFF);
+
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Compare L to A
+	 */
+	void CPU::CP_L(uint16_t)
+	{
+		uint8_t result = mRegisters.A - mRegisters.L;
+		bool halfCarry = (mRegisters.A & 0xF) < (mRegisters.L & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (mRegisters.L & 0xFF);
+
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Compare the value at address HL to A
+	 */
+	void CPU::CP_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint8_t result = mRegisters.A - value;
+		bool halfCarry = (mRegisters.A & 0xF) < (value & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (value & 0xFF);
+
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Compare a one byte immediate value to A
+	 */
+	void CPU::CP_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
+		uint8_t result = mRegisters.A - n;
+		bool halfCarry = (mRegisters.A & 0xF) < (n & 0xF);
+		bool fullCarry = (mRegisters.A & 0xFF) < (n & 0xFF);
+
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.SetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Increment register A
+	 */
+	void CPU::INC_A(uint16_t)
+	{
+		uint8_t result = mRegisters.A + 1;
+		bool halfCarry = (mRegisters.A & 0xF) + 1 > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Increment register B
+	 */
+	void CPU::INC_B(uint16_t)
+	{
+		uint8_t result = mRegisters.B + 1;
+		bool halfCarry = (mRegisters.B & 0xF) + 1 > 0xF;
+		bool fullCarry = (mRegisters.B & 0xFF) + 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Increment register C
+	 */
+	void CPU::INC_C(uint16_t)
+	{
+		uint8_t result = mRegisters.C + 1;
+		bool halfCarry = (mRegisters.C & 0xF) + 1 > 0xF;
+		bool fullCarry = (mRegisters.C & 0xFF) + 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Increment register D
+	 */
+	void CPU::INC_D(uint16_t)
+	{
+		uint8_t result = mRegisters.D + 1;
+		bool halfCarry = (mRegisters.D & 0xF) + 1 > 0xF;
+		bool fullCarry = (mRegisters.D & 0xFF) + 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Increment register E
+	 */
+	void CPU::INC_E(uint16_t)
+	{
+		uint8_t result = mRegisters.E + 1;
+		bool halfCarry = (mRegisters.E & 0xF) + 1 > 0xF;
+		bool fullCarry = (mRegisters.E & 0xFF) + 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Increment register H
+	 */
+	void CPU::INC_H(uint16_t)
+	{
+		uint8_t result = mRegisters.H + 1;
+		bool halfCarry = (mRegisters.H & 0xF) + 1 > 0xF;
+		bool fullCarry = (mRegisters.H & 0xFF) + 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Increment register L
+	 */
+	void CPU::INC_L(uint16_t)
+	{
+		uint8_t result = mRegisters.L + 1;
+		bool halfCarry = (mRegisters.L & 0xF) + 1 > 0xF;
+		bool fullCarry = (mRegisters.L & 0xFF) + 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Increment the value at address HL
+	 */
+	void CPU::INC_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint8_t result = mRegisters.A + value;
+		bool halfCarry = (mRegisters.A & 0xF) + (value & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (value & 0xFF) > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Decrement register A
+	 */
+	void CPU::DEC_A(uint16_t)
+	{
+		uint8_t result = mRegisters.A - 1;
+		bool halfCarry = (mRegisters.A & 0xF) - 1 > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) - 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Decrement register B
+	 */
+	void CPU::DEC_B(uint16_t)
+	{
+		uint8_t result = mRegisters.B - 1;
+		bool halfCarry = (mRegisters.B & 0xF) - 1 > 0xF;
+		bool fullCarry = (mRegisters.B & 0xFF) - 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Decrement register C
+	 */
+	void CPU::DEC_C(uint16_t)
+	{
+		uint8_t result = mRegisters.C - 1;
+		bool halfCarry = (mRegisters.C & 0xF) - 1 > 0xF;
+		bool fullCarry = (mRegisters.C & 0xFF) - 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Decrement register D
+	 */
+	void CPU::DEC_D(uint16_t)
+	{
+		uint8_t result = mRegisters.D - 1;
+		bool halfCarry = (mRegisters.D & 0xF) - 1 > 0xF;
+		bool fullCarry = (mRegisters.D & 0xFF) - 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Decrement register E
+	 */
+	void CPU::DEC_E(uint16_t)
+	{
+		uint8_t result = mRegisters.E - 1;
+		bool halfCarry = (mRegisters.E & 0xF) - 1 > 0xF;
+		bool fullCarry = (mRegisters.E & 0xFF) - 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Decrement register H
+	 */
+	void CPU::DEC_H(uint16_t)
+	{
+		uint8_t result = mRegisters.H - 1;
+		bool halfCarry = (mRegisters.H & 0xF) - 1 > 0xF;
+		bool fullCarry = (mRegisters.H & 0xFF) - 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Decrement register L
+	 */
+	void CPU::DEC_L(uint16_t)
+	{
+		uint8_t result = mRegisters.L - 1;
+		bool halfCarry = (mRegisters.L & 0xF) - 1 > 0xF;
+		bool fullCarry = (mRegisters.L & 0xFF) - 1 > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Decrement the value at address HL
+	 */
+	void CPU::DEC_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint8_t result = mRegisters.A - value;
+		bool halfCarry = (mRegisters.A & 0xF) - (value & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) - (value & 0xFF) > 0xFF;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
 	}
 
 	/**
