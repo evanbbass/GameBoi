@@ -474,43 +474,43 @@ namespace GameBoi
 		#pragma region Calls
 
 		// CALL nn
-		{ 0xCD, { "CALL $%04X", 2, 12, &UnimplementedInstruction } },
+		{ 0xCD, { "CALL $%04X", 2, 12, &CALL_nn } },
 
 		// CALL cc,nn
-		{ 0xC4, { "CALL NZ,$%04X", 2, 12, &UnimplementedInstruction } },
-		{ 0xCC, { "CALL Z,$%04X", 2, 12, &UnimplementedInstruction } },
-		{ 0xD4, { "CALL NC,$%04X", 2, 12, &UnimplementedInstruction } },
-		{ 0xDC, { "CALL C,$%04X", 2, 12, &UnimplementedInstruction } },
+		{ 0xC4, { "CALL NZ,$%04X", 2, 12, &CALL_NZ_nn } },
+		{ 0xCC, { "CALL Z,$%04X", 2, 12, &CALL_Z_nn } },
+		{ 0xD4, { "CALL NC,$%04X", 2, 12, &CALL_NC_nn } },
+		{ 0xDC, { "CALL C,$%04X", 2, 12, &CALL_C_nn } },
 
 		#pragma endregion
 
 		#pragma region Restarts
 
 		// RST n
-		{ 0xC7, { "RST  $00", 0, 32, &UnimplementedInstruction } },
-		{ 0xCF, { "RST  $08", 0, 32, &UnimplementedInstruction } },
-		{ 0xD7, { "RST  $10", 0, 32, &UnimplementedInstruction } },
-		{ 0xDF, { "RST  $18", 0, 32, &UnimplementedInstruction } },
-		{ 0xE7, { "RST  $20", 0, 32, &UnimplementedInstruction } },
-		{ 0xEF, { "RST  $28", 0, 32, &UnimplementedInstruction } },
-		{ 0xF7, { "RST  $30", 0, 32, &UnimplementedInstruction } },
-		{ 0xFF, { "RST  $38", 0, 32, &UnimplementedInstruction } },
+		{ 0xC7, { "RST  $00", 0, 32, &RST_00 } },
+		{ 0xCF, { "RST  $08", 0, 32, &RST_08 } },
+		{ 0xD7, { "RST  $10", 0, 32, &RST_10 } },
+		{ 0xDF, { "RST  $18", 0, 32, &RST_18 } },
+		{ 0xE7, { "RST  $20", 0, 32, &RST_20 } },
+		{ 0xEF, { "RST  $28", 0, 32, &RST_28 } },
+		{ 0xF7, { "RST  $30", 0, 32, &RST_30 } },
+		{ 0xFF, { "RST  $38", 0, 32, &RST_38 } },
 
 		#pragma endregion
 
 		#pragma region Returns
 
 		// RET
-		{ 0xC9, { "RET", 0, 8, &UnimplementedInstruction } },
+		{ 0xC9, { "RET", 0, 8, &RET } },
 
 		// RET cc
-		{ 0xC0, { "RET  NZ", 0, 8, &UnimplementedInstruction } },
-		{ 0xC8, { "RET  Z", 0, 8, &UnimplementedInstruction } },
-		{ 0xD0, { "RET  NC", 0, 8, &UnimplementedInstruction } },
-		{ 0xD8, { "RET  C", 0, 8, &UnimplementedInstruction } },
+		{ 0xC0, { "RET  NZ", 0, 8, &RET_NZ } },
+		{ 0xC8, { "RET  Z", 0, 8, &RET_Z } },
+		{ 0xD0, { "RET  NC", 0, 8, &RET_NC } },
+		{ 0xD8, { "RET  C", 0, 8, &RET_C } },
 
 		// RETI
-		{ 0xD9, { "RETI", 0, 8, &UnimplementedInstruction } },
+		{ 0xD9, { "RETI", 0, 8, &RETI } },
 
 		#pragma endregion
 	};
@@ -4535,5 +4535,192 @@ namespace GameBoi
 			int8_t offset = static_cast<int8_t>(operand & 0xFF);
 			mRegisters.PC += offset;
 		}
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to the two byte immediate value
+	 */
+	void CPU::CALL_nn(uint16_t operand)
+	{
+		PushWordToStack(mRegisters.PC + 3);
+		mRegisters.PC = operand;
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to the two byte immediate value if the zero flag is not set
+	 */
+	void CPU::CALL_NZ_nn(uint16_t operand)
+	{
+		if (!mRegisters.GetZeroFlag())
+		{
+			PushWordToStack(mRegisters.PC + 3);
+			mRegisters.PC = operand;
+		}
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to the two byte immediate value if the zero flag is set
+	 */
+	void CPU::CALL_Z_nn(uint16_t operand)
+	{
+		if (mRegisters.GetZeroFlag())
+		{
+			PushWordToStack(mRegisters.PC + 3);
+			mRegisters.PC = operand;
+		}
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to the two byte immediate value if the carry flag is not set
+	 */
+	void CPU::CALL_NC_nn(uint16_t operand)
+	{
+		if (!mRegisters.GetCarryFlag())
+		{
+			PushWordToStack(mRegisters.PC + 3);
+			mRegisters.PC = operand;
+		}
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to the two byte immediate value if the carry flag is set
+	 */
+	void CPU::CALL_C_nn(uint16_t operand)
+	{
+		if (mRegisters.GetCarryFlag())
+		{
+			PushWordToStack(mRegisters.PC + 3);
+			mRegisters.PC = operand;
+		}
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to address 0x0000
+	 */
+	void CPU::RST_00(uint16_t)
+	{
+		CALL_nn(0x0000);
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to address 0x0008
+	 */
+	void CPU::RST_08(uint16_t)
+	{
+		CALL_nn(0x0008);
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to address 0x0010
+	 */
+	void CPU::RST_10(uint16_t)
+	{
+		CALL_nn(0x0010);
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to address 0x0018
+	 */
+	void CPU::RST_18(uint16_t)
+	{
+		CALL_nn(0x0018);
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to address 0x0020
+	 */
+	void CPU::RST_20(uint16_t)
+	{
+		CALL_nn(0x0020);
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to address 0x0028
+	 */
+	void CPU::RST_28(uint16_t)
+	{
+		CALL_nn(0x0028);
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to address 0x0030
+	 */
+	void CPU::RST_30(uint16_t)
+	{
+		CALL_nn(0x0030);
+	}
+
+	/**
+	 * \brief Push address of next instruction onto stack and then jump to address 0x0038
+	 */
+	void CPU::RST_38(uint16_t)
+	{
+		CALL_nn(0x0038);
+	}
+
+	/**
+	 * \brief Pop two bytes from stack & jump to that address
+	 */
+	void CPU::RET(uint16_t)
+	{
+		uint16_t address = PopWordFromStack();
+		mRegisters.PC = address;
+	}
+
+	/**
+	 * \brief Pop two bytes from stack & jump to that address if the zero flag is not set
+	 */
+	void CPU::RET_NZ(uint16_t)
+	{
+		if (!mRegisters.GetZeroFlag())
+		{
+			uint16_t address = PopWordFromStack();
+			mRegisters.PC = address;
+		}
+	}
+
+	/**
+	 * \brief Pop two bytes from stack & jump to that address if the zero flag is set
+	 */
+	void CPU::RET_Z(uint16_t)
+	{
+		if (mRegisters.GetZeroFlag())
+		{
+			uint16_t address = PopWordFromStack();
+			mRegisters.PC = address;
+		}
+	}
+
+	/**
+	 * \brief Pop two bytes from stack & jump to that address if the carry flag is not set
+	 */
+	void CPU::RET_NC(uint16_t)
+	{
+		if (!mRegisters.GetCarryFlag())
+		{
+			uint16_t address = PopWordFromStack();
+			mRegisters.PC = address;
+		}
+	}
+
+	/**
+	 * \brief Pop two bytes from stack & jump to that address if the carry flag is set
+	 */
+	void CPU::RET_C(uint16_t)
+	{
+		if (mRegisters.GetCarryFlag())
+		{
+			uint16_t address = PopWordFromStack();
+			mRegisters.PC = address;
+		}
+	}
+
+	/**
+	 * \brief Pop two bytes from stack & jump to that address then enable interrupts
+	 */
+	void CPU::RETI(uint16_t operand)
+	{
+		RET(operand);
+		EI(operand);
 	}
 }

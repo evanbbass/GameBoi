@@ -453,5 +453,48 @@ namespace GameBoi
 		void JR_C_n(uint16_t operand);
 
 		#pragma endregion
+
+		#pragma region Calls
+
+		// CALL nn
+		void CALL_nn(uint16_t operand);
+
+		// CALL cc,nn
+		void CALL_NZ_nn(uint16_t operand);
+		void CALL_Z_nn(uint16_t operand);
+		void CALL_NC_nn(uint16_t operand);
+		void CALL_C_nn(uint16_t operand);
+
+		#pragma endregion
+
+		#pragma region Restarts
+
+		// RST n
+		void RST_00(uint16_t operand);
+		void RST_08(uint16_t operand);
+		void RST_10(uint16_t operand);
+		void RST_18(uint16_t operand);
+		void RST_20(uint16_t operand);
+		void RST_28(uint16_t operand);
+		void RST_30(uint16_t operand);
+		void RST_38(uint16_t operand);
+
+		#pragma endregion
+
+		#pragma region Returns
+
+		// RET
+		void RET(uint16_t operand);
+
+		// RET cc
+		void RET_NZ(uint16_t operand);
+		void RET_Z(uint16_t operand);
+		void RET_NC(uint16_t operand);
+		void RET_C(uint16_t operand);
+
+		// RETI
+		void RETI(uint16_t operand);
+
+		#pragma endregion
 	};
 }
