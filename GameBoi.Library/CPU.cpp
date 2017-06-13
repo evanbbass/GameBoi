@@ -449,25 +449,25 @@ namespace GameBoi
 		#pragma region Jumps
 
 		// JP nn
-		{ 0xC3, { "JP   $%04X", 2, 12, &UnimplementedInstruction } },
+		{ 0xC3, { "JP   $%04X", 2, 12, &JP_nn } },
 
 		// JP cc,nn
-		{ 0xC2, { "JP   NZ,$%04X", 2, 12, &UnimplementedInstruction } },
-		{ 0xCA, { "JP   Z,$%04X", 2, 12, &UnimplementedInstruction } },
-		{ 0xD2, { "JP   NC,$%04X", 2, 12, &UnimplementedInstruction } },
-		{ 0xDA, { "JP   C,$%04X", 2, 12, &UnimplementedInstruction } },
+		{ 0xC2, { "JP   NZ,$%04X", 2, 12, &JP_NZ_nn } },
+		{ 0xCA, { "JP   Z,$%04X", 2, 12, &JP_Z_nn } },
+		{ 0xD2, { "JP   NC,$%04X", 2, 12, &JP_NC_nn } },
+		{ 0xDA, { "JP   C,$%04X", 2, 12, &JP_C_nn } },
 
 		// JP (HL)
-		{ 0xE9, { "JP   (HL)", 0, 4, &UnimplementedInstruction } },
+		{ 0xE9, { "JP   (HL)", 0, 4, &JP_aHL } },
 
 		// JR n (relative jump)
-		{ 0x18, { "JR   $%02X", 1, 8, &UnimplementedInstruction } },
+		{ 0x18, { "JR   $%04X", 1, 8, &JR_n } },
 
 		// JR cc,n
-		{ 0x20, { "JR   NZ,$%02X", 1, 8, &UnimplementedInstruction } },
-		{ 0x28, { "JR   Z,$%02X", 1, 8, &UnimplementedInstruction } },
-		{ 0x30, { "JR   NC,$%02X", 1, 8, &UnimplementedInstruction } },
-		{ 0x38, { "JR   C,$%02X", 1, 8, &UnimplementedInstruction } },
+		{ 0x20, { "JR   NZ,$%04X", 1, 8, &JR_NZ_n } },
+		{ 0x28, { "JR   Z,$%04X", 1, 8, &JR_Z_n } },
+		{ 0x30, { "JR   NC,$%04X", 1, 8, &JR_NC_n } },
+		{ 0x38, { "JR   C,$%04X", 1, 8, &JR_C_n } },
 
 		#pragma endregion
 
@@ -4418,5 +4418,122 @@ namespace GameBoi
 		mRegisters.ResetSubtractFlag();
 		mRegisters.ResetHalfCarryFlag();
 		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Jump to two byte immediate address
+	 */
+	void CPU::JP_nn(uint16_t operand)
+	{
+		mRegisters.PC = operand;
+	}
+
+	/**
+	 * \brief Jump to two byte immediate address if the zero flag is not set
+	 */
+	void CPU::JP_NZ_nn(uint16_t operand)
+	{
+		if (!mRegisters.GetZeroFlag())
+		{
+			mRegisters.PC = operand;
+		}
+	}
+
+	/**
+	 * \brief Jump to two byte immediate address if the zero flag is set
+	 */
+	void CPU::JP_Z_nn(uint16_t operand)
+	{
+		if (mRegisters.GetZeroFlag())
+		{
+			mRegisters.PC = operand;
+		}
+	}
+
+	/**
+	 * \brief Jump to two byte immediate address if the carry flag is not set
+	 */
+	void CPU::JP_NC_nn(uint16_t operand)
+	{
+		if (!mRegisters.GetCarryFlag())
+		{
+			mRegisters.PC = operand;
+		}
+	}
+
+	/**
+	 * \brief Jump to two byte immediate address if the carry flag is set
+	 */
+	void CPU::JP_C_nn(uint16_t operand)
+	{
+		if (mRegisters.GetCarryFlag())
+		{
+			mRegisters.PC = operand;
+		}
+	}
+
+	/**
+	 * \brief Jump to address contained in HL
+	 */
+	void CPU::JP_aHL(uint16_t)
+	{
+		mRegisters.PC = mRegisters.HL;
+	}
+
+	/**
+	 * \brief Add one byte immediate to current address and jump to it
+	 */
+	void CPU::JR_n(uint16_t operand)
+	{
+		int8_t offset = static_cast<int8_t>(operand & 0xFF);
+		mRegisters.PC += offset;
+	}
+
+	/**
+	 * \brief Add one byte immediate to current address and jump to it if the zero flag is not set
+	 */
+	void CPU::JR_NZ_n(uint16_t operand)
+	{
+		if (!mRegisters.GetZeroFlag())
+		{
+			int8_t offset = static_cast<int8_t>(operand & 0xFF);
+			mRegisters.PC += offset;
+		}
+	}
+
+	/**
+	 * \brief Add one byte immediate to current address and jump to it if the zero flag is set
+	 */
+	void CPU::JR_Z_n(uint16_t operand)
+	{
+		if (mRegisters.GetZeroFlag())
+		{
+			int8_t offset = static_cast<int8_t>(operand & 0xFF);
+			mRegisters.PC += offset;
+		}
+	}
+
+	/**
+	 * \brief Add one byte immediate to current address and jump to it if the carry flag is not set
+	 */
+	void CPU::JR_NC_n(uint16_t operand)
+	{
+		if (!mRegisters.GetCarryFlag())
+		{
+			int8_t offset = static_cast<int8_t>(operand & 0xFF);
+			mRegisters.PC += offset;
+		}
+	}
+
+	/**
+	 * \brief Add one byte immediate to current address and jump to it if the carry flag is set
+	 */
+	void CPU::JR_C_n(uint16_t operand)
+	{
+		if (mRegisters.GetCarryFlag())
+		{
+			int8_t offset = static_cast<int8_t>(operand & 0xFF);
+			mRegisters.PC += offset;
+		}
 	}
 }

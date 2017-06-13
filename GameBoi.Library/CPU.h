@@ -428,5 +428,30 @@ namespace GameBoi
 		void SRL_aHL(uint16_t operand);
 
 		#pragma endregion
+
+		#pragma region Jumps
+
+		// JP nn
+		void JP_nn(uint16_t operand);
+
+		// JP cc,nn
+		void JP_NZ_nn(uint16_t operand);
+		void JP_Z_nn(uint16_t operand);
+		void JP_NC_nn(uint16_t operand);
+		void JP_C_nn(uint16_t operand);
+
+		// JP (HL)
+		void JP_aHL(uint16_t operand);
+
+		// JR n
+		void JR_n(uint16_t operand);
+
+		// JR cc,n
+		void JR_NZ_n(uint16_t operand);
+		void JR_Z_n(uint16_t operand);
+		void JR_NC_n(uint16_t operand);
+		void JR_C_n(uint16_t operand);
+
+		#pragma endregion
 	};
 }
