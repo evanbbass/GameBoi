@@ -67,7 +67,6 @@ namespace GameBoi
 
 	public:
 		MemoryMap();
-		~MemoryMap() = default;
 
 		void Reset();
 

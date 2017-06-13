@@ -290,39 +290,39 @@ namespace GameBoi
 		#pragma region Miscellaneous
 
 		// SWAP n (See Prefix CB opcodes)
-		//{ 0xCB 37, { "SWAP A", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 30, { "SWAP B", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 31, { "SWAP C", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 32, { "SWAP D", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 33, { "SWAP E", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 34, { "SWAP H", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 35, { "SWAP L", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 36, { "SWAP (HL)", 0, 16, &UnimplementedInstruction } },
+		//{ 0xCB 37, { "SWAP A", 0, 8, &SWAP_A } },
+		//{ 0xCB 30, { "SWAP B", 0, 8, &SWAP_B } },
+		//{ 0xCB 31, { "SWAP C", 0, 8, &SWAP_C } },
+		//{ 0xCB 32, { "SWAP D", 0, 8, &SWAP_D } },
+		//{ 0xCB 33, { "SWAP E", 0, 8, &SWAP_E } },
+		//{ 0xCB 34, { "SWAP H", 0, 8, &SWAP_H } },
+		//{ 0xCB 35, { "SWAP L", 0, 8, &SWAP_L } },
+		//{ 0xCB 36, { "SWAP (HL)", 0, 16, &SWAP_aHL } },
 
 		// Decimal adjust (Register A)
-		{ 0x27, { "DAA", 0, 4, &UnimplementedInstruction } },
+		{ 0x27, { "DAA", 0, 4, &DAA } },
 
 		// Complement (Register A)
-		{ 0x2F, { "CPL", 0, 4, &UnimplementedInstruction } },
+		{ 0x2F, { "CPL", 0, 4, &CPL } },
 
 		// Complement carry flag
-		{ 0x3F, { "CCF", 0, 4, &UnimplementedInstruction } },
+		{ 0x3F, { "CCF", 0, 4, &CCF } },
 
 		// Set carry flag
-		{ 0x37, { "SCF", 0, 4, &UnimplementedInstruction } },
+		{ 0x37, { "SCF", 0, 4, &SCF } },
 
 		// NOP
 		{ 0x00, { "NOP", 0, 4, &NOP } },
 
 		// HALT
-		{ 0x76, { "HALT", 0, 4, &UnimplementedInstruction } },
+		{ 0x76, { "HALT", 0, 4, &HALT } },
 
 		// STOP
-		{ 0x10, { "STOP", 1, 4, &UnimplementedInstruction } }, // technically 10 00, but second byte is ignored
+		{ 0x10, { "STOP", 1, 4, &STOP } }, // technically 10 00, but second byte is ignored
 
 		// Disable/Enable Interrupts
-		{ 0xF3, { "DI", 0, 4, &UnimplementedInstruction } },
-		{ 0xFB, { "EI", 0, 4, &UnimplementedInstruction } },
+		{ 0xF3, { "DI", 0, 4, &DI } },
+		{ 0xFB, { "EI", 0, 4, &EI } },
 
 		#pragma endregion
 
@@ -520,14 +520,14 @@ namespace GameBoi
 		#pragma region Swap
 
 		// SWAP n (See Prefix CB opcodes)
-		{ 0x37, { "SWAP A", 0, 8, &UnimplementedInstruction } },
-		{ 0x30, { "SWAP B", 0, 8, &UnimplementedInstruction } },
-		{ 0x31, { "SWAP C", 0, 8, &UnimplementedInstruction } },
-		{ 0x32, { "SWAP D", 0, 8, &UnimplementedInstruction } },
-		{ 0x33, { "SWAP E", 0, 8, &UnimplementedInstruction } },
-		{ 0x34, { "SWAP H", 0, 8, &UnimplementedInstruction } },
-		{ 0x35, { "SWAP L", 0, 8, &UnimplementedInstruction } },
-		{ 0x36, { "SWAP (HL)", 0, 16, &UnimplementedInstruction } },
+		{ 0x37, { "SWAP A", 0, 8, &SWAP_A } },
+		{ 0x30, { "SWAP B", 0, 8, &SWAP_B } },
+		{ 0x31, { "SWAP C", 0, 8, &SWAP_C } },
+		{ 0x32, { "SWAP D", 0, 8, &SWAP_D } },
+		{ 0x33, { "SWAP E", 0, 8, &SWAP_E } },
+		{ 0x34, { "SWAP H", 0, 8, &SWAP_H } },
+		{ 0x35, { "SWAP L", 0, 8, &SWAP_L } },
+		{ 0x36, { "SWAP (HL)", 0, 16, &SWAP_aHL } },
 
 		#pragma endregion
 
@@ -815,9 +815,27 @@ namespace GameBoi
 
 	void CPU::StepCPU()
 	{
+		if (mHalted)
+		{
+			return;
+		}
+
 		uint8_t opcode = 0x00;
+		uint16_t pc = mRegisters.PC;
 		try
 		{
+			bool disableInterrupts = false, enableInterrupts = false;
+			if (mDisableInterruptsAfterNextInstruction)
+			{
+				disableInterrupts = true;
+				mDisableInterruptsAfterNextInstruction = false;
+			}
+			if (mEnableInterruptsAfterNextInstruction)
+			{
+				enableInterrupts = true;
+				mEnableInterruptsAfterNextInstruction = false;
+			}
+
 			opcode = mMemory.ReadByte(mRegisters.PC);
 			Instruction instruction = opcode != 0xCB ? sOpcodeDisassembly.at(opcode) : sOpcodeDisassembly_PrefixCB.at(opcode);
 			uint16_t operand = 0x0000;
@@ -833,11 +851,20 @@ namespace GameBoi
 			invoke(instruction.Function, this, operand);
 			mRegisters.PC += static_cast<uint16_t>(1 + instruction.OperandLength);
 			// increment clock cycles
+
+			if (disableInterrupts)
+			{
+				mInterruptsEnabled = false;
+			}
+			if (enableInterrupts)
+			{
+				mInterruptsEnabled = true;
+			}
 		}
 		catch (exception& ex)
 		{
 			char message[100];
-			sprintf_s(message, sizeof(message), "Error executing instruction 0x%02X at memory location 0x%04X:\n%s", opcode, mRegisters.PC, ex.what());
+			sprintf_s(message, sizeof(message), "Error executing instruction 0x%02X at memory location 0x%04X:\n%s", opcode, pc, ex.what());
 			throw exception(message);
 		}
 	}
@@ -3251,9 +3278,212 @@ namespace GameBoi
 	}
 
 	/**
+	 * \brief Swap upper & lower nibles of A
+	 */
+	void CPU::SWAP_A(uint16_t)
+	{
+		uint8_t result = ((mRegisters.A & 0xF0) >> 4) | ((mRegisters.A & 0x0F) << 4);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Swap upper & lower nibles of B
+	 */
+	void CPU::SWAP_B(uint16_t)
+	{
+		uint8_t result = ((mRegisters.B & 0xF0) >> 4) | ((mRegisters.B & 0x0F) << 4);
+
+		mRegisters.B = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Swap upper & lower nibles of C
+	 */
+	void CPU::SWAP_C(uint16_t)
+	{
+		uint8_t result = ((mRegisters.C & 0xF0) >> 4) | ((mRegisters.C & 0x0F) << 4);
+
+		mRegisters.C = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Swap upper & lower nibles of D
+	 */
+	void CPU::SWAP_D(uint16_t)
+	{
+		uint8_t result = ((mRegisters.D & 0xF0) >> 4) | ((mRegisters.D & 0x0F) << 4);
+
+		mRegisters.D = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Swap upper & lower nibles of E
+	 */
+	void CPU::SWAP_E(uint16_t)
+	{
+		uint8_t result = ((mRegisters.E & 0xF0) >> 4) | ((mRegisters.E & 0x0F) << 4);
+
+		mRegisters.E = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Swap upper & lower nibles of H
+	 */
+	void CPU::SWAP_H(uint16_t)
+	{
+		uint8_t result = ((mRegisters.H & 0xF0) >> 4) | ((mRegisters.H & 0x0F) << 4);
+
+		mRegisters.H = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Swap upper & lower nibles of L
+	 */
+	void CPU::SWAP_L(uint16_t)
+	{
+		uint8_t result = ((mRegisters.L & 0xF0) >> 4) | ((mRegisters.L & 0x0F) << 4);
+
+		mRegisters.L = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Swap upper & lower nibles of the value at address HL
+	 */
+	void CPU::SWAP_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint8_t result = ((value & 0xF0) >> 4) | ((value & 0x0F) << 4);
+
+		mMemory.WriteByte(mRegisters.HL, result);
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.ResetCarryFlag();
+	}
+
+	/**
+	 * \brief Decimal adjust register A (Make BCD)
+	 * \remarks Based on http://z80-heaven.wikidot.com/instructions-set:daa
+	 */
+	void CPU::DAA(uint16_t)
+	{
+		uint8_t value = mRegisters.A;
+
+		if ((value & 0x0F) > 9 || mRegisters.GetHalfCarryFlag())
+		{
+			value += 0x06;
+		}
+
+		if (((value & 0xF0) >> 4) > 9 || mRegisters.GetCarryFlag())
+		{
+			value += 0x60;
+			mRegisters.SetCarryFlag();
+		}
+		else
+		{
+			mRegisters.ResetCarryFlag();
+		}
+
+		mRegisters.A = value;
+		mRegisters.AssignZeroFlag(value == 0);
+		mRegisters.ResetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Complement register A (flip bits)
+	 */
+	void CPU::CPL(uint16_t)
+	{
+		mRegisters.A = ~mRegisters.A;
+		mRegisters.SetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Complement carry flag
+	 */
+	void CPU::CCF(uint16_t)
+	{
+		mRegisters.AssignCarryFlag(!mRegisters.GetCarryFlag());
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Set carry flag
+	 */
+	void CPU::SCF(uint16_t)
+	{
+		mRegisters.SetCarryFlag();
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+	}
+
+	/**
 	 * \brief Perform no operation
 	 */
 	void CPU::NOP(uint16_t)
 	{
+	}
+
+	/**
+	 * \brief Power down CPU until an interrupt occurs
+	 */
+	void CPU::HALT(uint16_t)
+	{
+		mHalted = true;
+	}
+
+	/**
+	 * \brief Halt CPU & display until button pressed
+	 */
+	void CPU::STOP(uint16_t)
+	{
+		// TODO figure out what to do here
+	}
+
+	/**
+	 * \brief Disable interrupts (after next instruction)
+	 */
+	void CPU::DI(uint16_t)
+	{
+		mDisableInterruptsAfterNextInstruction = true;
+	}
+
+	/**
+	 * \brief Enable interrupts (after next instruction)
+	 */
+	void CPU::EI(uint16_t)
+	{
+		mEnableInterruptsAfterNextInstruction = true;
 	}
 }

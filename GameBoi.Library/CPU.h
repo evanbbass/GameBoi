@@ -10,7 +10,6 @@ namespace GameBoi
 	{
 	public:
 		explicit CPU(MemoryMap& memory);
-		~CPU() = default;
 
 		void StepCPU();
 
@@ -27,6 +26,10 @@ namespace GameBoi
 	private:
 		Registers mRegisters;
 		MemoryMap& mMemory;
+		bool mInterruptsEnabled;
+		bool mHalted;
+		bool mEnableInterruptsAfterNextInstruction;
+		bool mDisableInterruptsAfterNextInstruction;
 
 		static const std::map<uint8_t, Instruction> sOpcodeDisassembly;
 		static const std::map<uint8_t, Instruction> sOpcodeDisassembly_PrefixCB;
@@ -309,7 +312,40 @@ namespace GameBoi
 
 		#pragma region Miscellaneous
 
+		// SWAP n
+		void SWAP_A(uint16_t operand);
+		void SWAP_B(uint16_t operand);
+		void SWAP_C(uint16_t operand);
+		void SWAP_D(uint16_t operand);
+		void SWAP_E(uint16_t operand);
+		void SWAP_H(uint16_t operand);
+		void SWAP_L(uint16_t operand);
+		void SWAP_aHL(uint16_t operand);
+
+		// DAA
+		void DAA(uint16_t operand);
+
+		// CPL
+		void CPL(uint16_t operand);
+
+		// CCF
+		void CCF(uint16_t operand);
+
+		// SCF
+		void SCF(uint16_t operand);
+
+		// NOP
 		void NOP(uint16_t operand);
+
+		// HALT
+		void HALT(uint16_t operand);
+
+		// STOP
+		void STOP(uint16_t operand);
+
+		// Interrupts
+		void DI(uint16_t operand);
+		void EI(uint16_t operand);
 
 		#pragma endregion
 	};

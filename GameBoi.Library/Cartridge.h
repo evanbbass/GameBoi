@@ -42,7 +42,6 @@ namespace GameBoi
 	public:
 		Cartridge();
 		explicit Cartridge(const std::string& filename);
-		~Cartridge() = default;
 
 		void ReadFromFile(const std::string& filename);
 		void Reset();
