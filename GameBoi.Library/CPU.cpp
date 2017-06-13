@@ -265,25 +265,25 @@ namespace GameBoi
 		#pragma region 16-bit Arithmetic
 
 		// ADD HL,n
-		{ 0x09, { "ADD  HL,BC", 0, 8, &UnimplementedInstruction } },
-		{ 0x19, { "ADD  HL,DE", 0, 8, &UnimplementedInstruction } },
-		{ 0x29, { "ADD  HL,HL", 0, 8, &UnimplementedInstruction } },
-		{ 0x39, { "ADD  HL,SP", 0, 8, &UnimplementedInstruction } },
+		{ 0x09, { "ADD  HL,BC", 0, 8, &ADD_HL_BC } },
+		{ 0x19, { "ADD  HL,DE", 0, 8, &ADD_HL_DE } },
+		{ 0x29, { "ADD  HL,HL", 0, 8, &ADD_HL_HL } },
+		{ 0x39, { "ADD  HL,SP", 0, 8, &ADD_HL_SP } },
 
 		// ADD SP,n
-		{ 0xE8, { "ADD  SP,$%02X", 1, 16, &UnimplementedInstruction } },
+		{ 0xE8, { "ADD  SP,$%02X", 1, 16, &ADD_SP_n } },
 
 		// INC nn
-		{ 0x03, { "INC  BC", 0, 8, &UnimplementedInstruction } },
-		{ 0x13, { "INC  DE", 0, 8, &UnimplementedInstruction } },
-		{ 0x23, { "INC  HL", 0, 8, &UnimplementedInstruction } },
-		{ 0x33, { "INC  SP", 0, 8, &UnimplementedInstruction } },
+		{ 0x03, { "INC  BC", 0, 8, &INC_BC } },
+		{ 0x13, { "INC  DE", 0, 8, &INC_DE } },
+		{ 0x23, { "INC  HL", 0, 8, &INC_HL } },
+		{ 0x33, { "INC  SP", 0, 8, &INC_SP } },
 
 		// DEC nn
-		{ 0x0B, { "DEC  BC", 0, 8, &UnimplementedInstruction } },
-		{ 0x1B, { "DEC  DE", 0, 8, &UnimplementedInstruction } },
-		{ 0x2B, { "DEC  HL", 0, 8, &UnimplementedInstruction } },
-		{ 0x3B, { "DEC  SP", 0, 8, &UnimplementedInstruction } },
+		{ 0x0B, { "DEC  BC", 0, 8, &DEC_BC } },
+		{ 0x1B, { "DEC  DE", 0, 8, &DEC_DE } },
+		{ 0x2B, { "DEC  HL", 0, 8, &DEC_HL } },
+		{ 0x3B, { "DEC  SP", 0, 8, &DEC_SP } },
 
 		#pragma endregion
 
@@ -2876,7 +2876,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.B & 0xF) + 1 > 0xF;
 		bool fullCarry = (mRegisters.B & 0xFF) + 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.B = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -2892,7 +2892,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.C & 0xF) + 1 > 0xF;
 		bool fullCarry = (mRegisters.C & 0xFF) + 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.C = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -2908,7 +2908,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.D & 0xF) + 1 > 0xF;
 		bool fullCarry = (mRegisters.D & 0xFF) + 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.D = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -2924,7 +2924,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.E & 0xF) + 1 > 0xF;
 		bool fullCarry = (mRegisters.E & 0xFF) + 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.E = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -2940,7 +2940,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.H & 0xF) + 1 > 0xF;
 		bool fullCarry = (mRegisters.H & 0xFF) + 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.H = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -2956,7 +2956,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.L & 0xF) + 1 > 0xF;
 		bool fullCarry = (mRegisters.L & 0xFF) + 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.L = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -2973,7 +2973,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.A & 0xF) + (value & 0xF) > 0xF;
 		bool fullCarry = (mRegisters.A & 0xFF) + (value & 0xFF) > 0xFF;
 
-		mRegisters.A = result;
+		mMemory.WriteByte(mRegisters.HL, result);
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -3005,7 +3005,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.B & 0xF) - 1 > 0xF;
 		bool fullCarry = (mRegisters.B & 0xFF) - 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.B = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -3021,7 +3021,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.C & 0xF) - 1 > 0xF;
 		bool fullCarry = (mRegisters.C & 0xFF) - 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.C = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -3037,7 +3037,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.D & 0xF) - 1 > 0xF;
 		bool fullCarry = (mRegisters.D & 0xFF) - 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.D = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -3053,7 +3053,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.E & 0xF) - 1 > 0xF;
 		bool fullCarry = (mRegisters.E & 0xFF) - 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.E = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -3069,7 +3069,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.H & 0xF) - 1 > 0xF;
 		bool fullCarry = (mRegisters.H & 0xFF) - 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.H = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -3085,7 +3085,7 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.L & 0xF) - 1 > 0xF;
 		bool fullCarry = (mRegisters.L & 0xFF) - 1 > 0xFF;
 
-		mRegisters.A = result;
+		mRegisters.L = result;
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
@@ -3102,11 +3102,152 @@ namespace GameBoi
 		bool halfCarry = (mRegisters.A & 0xF) - (value & 0xF) > 0xF;
 		bool fullCarry = (mRegisters.A & 0xFF) - (value & 0xFF) > 0xFF;
 
-		mRegisters.A = result;
+		mMemory.WriteByte(mRegisters.HL, result);
 		mRegisters.AssignZeroFlag(result == 0);
 		mRegisters.ResetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
 		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add BC into HL
+	 */
+	void CPU::ADD_HL_BC(uint16_t)
+	{
+		uint16_t result = mRegisters.HL + mRegisters.BC;
+		bool halfCarry = (mRegisters.H & 0xF) + (mRegisters.B & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.H & 0xFF) + (mRegisters.B & 0xFF) > 0xFF;
+
+		mRegisters.HL = result;
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add DE into HL
+	 */
+	void CPU::ADD_HL_DE(uint16_t)
+	{
+		uint16_t result = mRegisters.HL + mRegisters.DE;
+		bool halfCarry = (mRegisters.H & 0xF) + (mRegisters.D & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.H & 0xFF) + (mRegisters.D & 0xFF) > 0xFF;
+
+		mRegisters.HL = result;
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add HL into HL
+	 */
+	void CPU::ADD_HL_HL(uint16_t)
+	{
+		uint16_t result = mRegisters.HL + mRegisters.HL;
+		bool halfCarry = (mRegisters.H & 0xF) + (mRegisters.H & 0xF) > 0xF;
+		bool fullCarry = (mRegisters.H & 0xFF) + (mRegisters.H & 0xFF) > 0xFF;
+
+		mRegisters.HL = result;
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add SP into HL
+	 */
+	void CPU::ADD_HL_SP(uint16_t)
+	{
+		uint16_t result = mRegisters.HL + mRegisters.SP;
+		bool halfCarry = (mRegisters.H & 0xF) + ((mRegisters.SP & 0xF00) >> 8) > 0xF;
+		bool fullCarry = (mRegisters.H & 0xFF) + ((mRegisters.SP & 0xFF00) >> 8) > 0xFF;
+
+		mRegisters.HL = result;
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Add a two byte immediate value into SP
+	 */
+	void CPU::ADD_SP_n(uint16_t operand)
+	{
+		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
+		uint16_t result = mRegisters.SP + n;
+		bool halfCarry = ((mRegisters.SP & 0xF00) >> 8) + (n & 0xF) > 0xF;
+		bool fullCarry = ((mRegisters.SP & 0xFF00) >> 8) + (n & 0xFF) > 0xFF;
+
+		mRegisters.SP = result;
+		mRegisters.ResetZeroFlag();
+		mRegisters.ResetSubtractFlag();
+		mRegisters.AssignHalfCarryFlag(halfCarry);
+		mRegisters.AssignCarryFlag(fullCarry);
+	}
+
+	/**
+	 * \brief Increment register BC
+	 */
+	void CPU::INC_BC(uint16_t)
+	{
+		mRegisters.BC = mRegisters.BC + 1;
+	}
+
+	/**
+	 * \brief Increment register DE
+	 */
+	void CPU::INC_DE(uint16_t)
+	{
+		mRegisters.DE = mRegisters.DE + 1;
+	}
+
+	/**
+	 * \brief Increment register HL
+	 */
+	void CPU::INC_HL(uint16_t)
+	{
+		mRegisters.HL = mRegisters.HL + 1;
+	}
+
+	/**
+	 * \brief Increment register SP
+	 */
+	void CPU::INC_SP(uint16_t)
+	{
+		mRegisters.SP = mRegisters.SP + 1;
+	}
+
+	/**
+	 * \brief Decrement register BC
+	 */
+	void CPU::DEC_BC(uint16_t)
+	{
+		mRegisters.BC = mRegisters.BC + 1;
+	}
+
+	/**
+	 * \brief Decrement register DE
+	 */
+	void CPU::DEC_DE(uint16_t)
+	{
+		mRegisters.DE = mRegisters.DE + 1;
+	}
+
+	/**
+	 * \brief Decrement register HL
+	 */
+	void CPU::DEC_HL(uint16_t)
+	{
+		mRegisters.HL = mRegisters.HL + 1;
+	}
+
+	/**
+	 * \brief Decrement register SP
+	 */
+	void CPU::DEC_SP(uint16_t)
+	{
+		mRegisters.SP = mRegisters.SP + 1;
 	}
 
 	/**

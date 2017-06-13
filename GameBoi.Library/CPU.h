@@ -282,6 +282,31 @@ namespace GameBoi
 
 		#pragma endregion
 
+		#pragma region 16-bit Arithmetic
+
+		// ADD HL,n
+		void ADD_HL_BC(uint16_t operand);
+		void ADD_HL_DE(uint16_t operand);
+		void ADD_HL_HL(uint16_t operand);
+		void ADD_HL_SP(uint16_t operand);
+
+		// ADD SP,n
+		void ADD_SP_n(uint16_t operand);
+
+		// INC nn
+		void INC_BC(uint16_t operand);
+		void INC_DE(uint16_t operand);
+		void INC_HL(uint16_t operand);
+		void INC_SP(uint16_t operand);
+
+		// DEC nn
+		void DEC_BC(uint16_t operand);
+		void DEC_DE(uint16_t operand);
+		void DEC_HL(uint16_t operand);
+		void DEC_SP(uint16_t operand);
+
+		#pragma endregion
+
 		#pragma region Miscellaneous
 
 		void NOP(uint16_t operand);
