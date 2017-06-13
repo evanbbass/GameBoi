@@ -329,86 +329,86 @@ namespace GameBoi
 		#pragma region Rotates & Shifts
 
 		// Rotate left with carry (Register A)
-		{ 0x07, { "RLCA", 0, 4, &UnimplementedInstruction } }, // NOTE TO SELF: this rotates A and sets the carry flag to the old bit 7 (bit 0 is set to bit 7, c is also set to bit 7)
+		{ 0x07, { "RLCA", 0, 4, &RLCA } }, // NOTE TO SELF: this rotates A and sets the carry flag to the old bit 7 (bit 0 is set to bit 7, c is also set to bit 7)
 
 		// Rotate left through carry (Register A)
-		{ 0x17, { "RLA", 0, 4, &UnimplementedInstruction } }, // NOTE TO SELF: this rotates A plus the carry flag (bit 0 is set to c, c is set to bit 7)
+		{ 0x17, { "RLA", 0, 4, &RLA } }, // NOTE TO SELF: this rotates A plus the carry flag (bit 0 is set to c, c is set to bit 7)
 
 		// Rotate right with carry (Register A)
-		{ 0x0F, { "RRCA", 0, 4, &UnimplementedInstruction } },
+		{ 0x0F, { "RRCA", 0, 4, &RRCA } },
 
 		// Rotate right through carry (Register A)
-		{ 0x1F, { "RRA", 0, 4, &UnimplementedInstruction } },
+		{ 0x1F, { "RRA", 0, 4, &RRA } },
 
 		// Rotate left with carry (RLC n) (See Prefix CB opcodes)
-		//{ 0xCB 07, { "RLC  A", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 00, { "RLC  B", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 01, { "RLC  C", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 02, { "RLC  D", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 03, { "RLC  E", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 04, { "RLC  H", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 05, { "RLC  L", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 06, { "RLC  (HL)", 0, 16, &UnimplementedInstruction } },
+		//{ 0xCB 07, { "RLC  A", 0, 8, &RLC_A } },
+		//{ 0xCB 00, { "RLC  B", 0, 8, &RLC_B } },
+		//{ 0xCB 01, { "RLC  C", 0, 8, &RLC_C } },
+		//{ 0xCB 02, { "RLC  D", 0, 8, &RLC_D } },
+		//{ 0xCB 03, { "RLC  E", 0, 8, &RLC_E } },
+		//{ 0xCB 04, { "RLC  H", 0, 8, &RLC_H } },
+		//{ 0xCB 05, { "RLC  L", 0, 8, &RLC_L } },
+		//{ 0xCB 06, { "RLC  (HL)", 0, 16, &RLC_aHL } },
 
 		// Rotate left through carry (RL n) (See Prefix CB opcodes)
-		//{ 0xCB 17, { "RL   A", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 10, { "RL   B", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 11, { "RL   C", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 12, { "RL   D", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 13, { "RL   E", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 14, { "RL   H", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 15, { "RL   L", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 16, { "RL   (HL)", 0, 16, &UnimplementedInstruction } },
+		//{ 0xCB 17, { "RL   A", 0, 8, &RL_A } },
+		//{ 0xCB 10, { "RL   B", 0, 8, &RL_B } },
+		//{ 0xCB 11, { "RL   C", 0, 8, &RL_C } },
+		//{ 0xCB 12, { "RL   D", 0, 8, &RL_D } },
+		//{ 0xCB 13, { "RL   E", 0, 8, &RL_E } },
+		//{ 0xCB 14, { "RL   H", 0, 8, &RL_H } },
+		//{ 0xCB 15, { "RL   L", 0, 8, &RL_L } },
+		//{ 0xCB 16, { "RL   (HL)", 0, 16, &RL_aHL } },
 
 		// Rotate right with carry (RRC n) (See Prefix CB opcodes)
-		//{ 0xCB 0F, { "RRC  A", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 08, { "RRC  B", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 09, { "RRC  C", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 0A, { "RRC  D", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 0B, { "RRC  E", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 0C, { "RRC  H", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 0D, { "RRC  L", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 0E, { "RRC  (HL)", 0, 16, &UnimplementedInstruction },
+		//{ 0xCB 0F, { "RRC  A", 0, 8, &RRC_A } },
+		//{ 0xCB 08, { "RRC  B", 0, 8, &RRC_B } },
+		//{ 0xCB 09, { "RRC  C", 0, 8, &RRC_C } },
+		//{ 0xCB 0A, { "RRC  D", 0, 8, &RRC_D } },
+		//{ 0xCB 0B, { "RRC  E", 0, 8, &RRC_E } },
+		//{ 0xCB 0C, { "RRC  H", 0, 8, &RRC_H } },
+		//{ 0xCB 0D, { "RRC  L", 0, 8, &RRC_L } },
+		//{ 0xCB 0E, { "RRC  (HL)", 0, 16, &RRC_aHL },
 
 		// Rotate right through carry (RR n) (See Prefix CB opcodes)
-		//{ 0xCB 1F, { "RR   A", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 18, { "RR   B", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 19, { "RR   C", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 1A, { "RR   D", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 1B, { "RR   E", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 1C, { "RR   H", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 1D, { "RR   L", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 1E, { "RR   (HL)", 0, 16 } },
+		//{ 0xCB 1F, { "RR   A", 0, 8, &RR_A } },
+		//{ 0xCB 18, { "RR   B", 0, 8, &RR_B } },
+		//{ 0xCB 19, { "RR   C", 0, 8, &RR_C } },
+		//{ 0xCB 1A, { "RR   D", 0, 8, &RR_D } },
+		//{ 0xCB 1B, { "RR   E", 0, 8, &RR_E } },
+		//{ 0xCB 1C, { "RR   H", 0, 8, &RR_H } },
+		//{ 0xCB 1D, { "RR   L", 0, 8, &RR_L } },
+		//{ 0xCB 1E, { "RR   (HL)", 0, 16, &RR_aHL } },
 
 		// Shift left into carry (SLA n) (See Prefix CB opcodes)
-		//{ 0xCB 27, { "SLA  A", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 20, { "SLA  B", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 21, { "SLA  C", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 22, { "SLA  D", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 23, { "SLA  E", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 24, { "SLA  H", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 25, { "SLA  L", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 26, { "SLA  (HL)", 0, 16, &UnimplementedInstruction } },
+		//{ 0xCB 27, { "SLA  A", 0, 8, &SLA_A } },
+		//{ 0xCB 20, { "SLA  B", 0, 8, &SLA_B } },
+		//{ 0xCB 21, { "SLA  C", 0, 8, &SLA_C } },
+		//{ 0xCB 22, { "SLA  D", 0, 8, &SLA_D } },
+		//{ 0xCB 23, { "SLA  E", 0, 8, &SLA_E } },
+		//{ 0xCB 24, { "SLA  H", 0, 8, &SLA_H } },
+		//{ 0xCB 25, { "SLA  L", 0, 8, &SLA_L } },
+		//{ 0xCB 26, { "SLA  (HL)", 0, 16, &SLA_aHL } },
 
 		// Shift right into carry (SRA n) (See Prefix CB opcodes)
-		//{ 0xCB 2F, { "SRA  A", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 28, { "SRA  B", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 29, { "SRA  C", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 2A, { "SRA  D", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 2B, { "SRA  E", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 2C, { "SRA  H", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 2D, { "SRA  L", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 2E, { "SRA  (HL)", 0, 16, &UnimplementedInstruction } },
+		//{ 0xCB 2F, { "SRA  A", 0, 8, &SRA_A } },
+		//{ 0xCB 28, { "SRA  B", 0, 8, &SRA_B } },
+		//{ 0xCB 29, { "SRA  C", 0, 8, &SRA_C } },
+		//{ 0xCB 2A, { "SRA  D", 0, 8, &SRA_D } },
+		//{ 0xCB 2B, { "SRA  E", 0, 8, &SRA_E } },
+		//{ 0xCB 2C, { "SRA  H", 0, 8, &SRA_H } },
+		//{ 0xCB 2D, { "SRA  L", 0, 8, &SRA_L } },
+		//{ 0xCB 2E, { "SRA  (HL)", 0, 16, &SRA_aHL } },
 
 		// Shift right into carry (SRL n) (See Prefix CB opcodes)
-		//{ 0xCB 3F, { "SRL  A", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 38, { "SRL  B", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 39, { "SRL  C", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 3A, { "SRL  D", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 3B, { "SRL  E", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 3C, { "SRL  H", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 3D, { "SRL  L", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 3E, { "SRL  (HL)", 0, 16, &UnimplementedInstruction } },
+		//{ 0xCB 3F, { "SRL  A", 0, 8, &SRL_A } },
+		//{ 0xCB 38, { "SRL  B", 0, 8, &SRL_B } },
+		//{ 0xCB 39, { "SRL  C", 0, 8, &SRL_C } },
+		//{ 0xCB 3A, { "SRL  D", 0, 8, &SRL_D } },
+		//{ 0xCB 3B, { "SRL  E", 0, 8, &SRL_E } },
+		//{ 0xCB 3C, { "SRL  H", 0, 8, &SRL_H } },
+		//{ 0xCB 3D, { "SRL  L", 0, 8, &SRL_L } },
+		//{ 0xCB 3E, { "SRL  (HL)", 0, 16, &SRL_aHL } },
 
 		#pragma endregion
 
@@ -534,74 +534,74 @@ namespace GameBoi
 		#pragma region Rotates & Shifts
 
 		// Rotate left with carry (RLC n)
-		{ 0x07, { "RLC  A", 1, 8, &UnimplementedInstruction } },
-		{ 0x00, { "RLC  B", 1, 8, &UnimplementedInstruction } },
-		{ 0x01, { "RLC  C", 1, 8, &UnimplementedInstruction } },
-		{ 0x02, { "RLC  D", 1, 8, &UnimplementedInstruction } },
-		{ 0x03, { "RLC  E", 1, 8, &UnimplementedInstruction } },
-		{ 0x04, { "RLC  H", 1, 8, &UnimplementedInstruction } },
-		{ 0x05, { "RLC  L", 1, 8, &UnimplementedInstruction } },
-		{ 0x06, { "RLC  (HL)", 1, 16, &UnimplementedInstruction } },
+		{ 0x07, { "RLC  A", 1, 8, &RLC_A } },
+		{ 0x00, { "RLC  B", 1, 8, &RLC_B } },
+		{ 0x01, { "RLC  C", 1, 8, &RLC_C } },
+		{ 0x02, { "RLC  D", 1, 8, &RLC_D } },
+		{ 0x03, { "RLC  E", 1, 8, &RLC_E } },
+		{ 0x04, { "RLC  H", 1, 8, &RLC_H } },
+		{ 0x05, { "RLC  L", 1, 8, &RLC_L } },
+		{ 0x06, { "RLC  (HL)", 1, 16, &RLC_aHL } },
 
 		// Rotate left through carry (RL n)
-		{ 0x17, { "RL   A", 1, 8, &UnimplementedInstruction } },
-		{ 0x10, { "RL   B", 1, 8, &UnimplementedInstruction } },
-		{ 0x11, { "RL   C", 1, 8, &UnimplementedInstruction } },
-		{ 0x12, { "RL   D", 1, 8, &UnimplementedInstruction } },
-		{ 0x13, { "RL   E", 1, 8, &UnimplementedInstruction } },
-		{ 0x14, { "RL   H", 1, 8, &UnimplementedInstruction } },
-		{ 0x15, { "RL   L", 1, 8, &UnimplementedInstruction } },
-		{ 0x16, { "RL   (HL)", 1, 16, &UnimplementedInstruction } },
+		{ 0x17, { "RL   A", 1, 8, &RL_A } },
+		{ 0x10, { "RL   B", 1, 8, &RL_B } },
+		{ 0x11, { "RL   C", 1, 8, &RL_C } },
+		{ 0x12, { "RL   D", 1, 8, &RL_D } },
+		{ 0x13, { "RL   E", 1, 8, &RL_E } },
+		{ 0x14, { "RL   H", 1, 8, &RL_H } },
+		{ 0x15, { "RL   L", 1, 8, &RL_L } },
+		{ 0x16, { "RL   (HL)", 1, 16, &RL_aHL } },
 
 		// Rotate right with carry (RRC n)
-		{ 0x0F, { "RRC  A", 1, 8, &UnimplementedInstruction } },
-		{ 0x08, { "RRC  B", 1, 8, &UnimplementedInstruction } },
-		{ 0x09, { "RRC  C", 1, 8, &UnimplementedInstruction } },
-		{ 0x0A, { "RRC  D", 1, 8, &UnimplementedInstruction } },
-		{ 0x0B, { "RRC  E", 1, 8, &UnimplementedInstruction } },
-		{ 0x0C, { "RRC  H", 1, 8, &UnimplementedInstruction } },
-		{ 0x0D, { "RRC  L", 1, 8, &UnimplementedInstruction } },
-		{ 0x0E, { "RRC  (HL)", 1, 16, &UnimplementedInstruction } },
+		{ 0x0F, { "RRC  A", 1, 8, &RRC_A } },
+		{ 0x08, { "RRC  B", 1, 8, &RRC_B } },
+		{ 0x09, { "RRC  C", 1, 8, &RRC_C } },
+		{ 0x0A, { "RRC  D", 1, 8, &RRC_D } },
+		{ 0x0B, { "RRC  E", 1, 8, &RRC_E } },
+		{ 0x0C, { "RRC  H", 1, 8, &RRC_H } },
+		{ 0x0D, { "RRC  L", 1, 8, &RRC_L } },
+		{ 0x0E, { "RRC  (HL)", 1, 16, &RRC_aHL } },
 
 		// Rotate right through carry (RR n)
-		{ 0x1F, { "RR   A", 1, 8, &UnimplementedInstruction } },
-		{ 0x18, { "RR   B", 1, 8, &UnimplementedInstruction } },
-		{ 0x19, { "RR   C", 1, 8, &UnimplementedInstruction } },
-		{ 0x1A, { "RR   D", 1, 8, &UnimplementedInstruction } },
-		{ 0x1B, { "RR   E", 1, 8, &UnimplementedInstruction } },
-		{ 0x1C, { "RR   H", 1, 8, &UnimplementedInstruction } },
-		{ 0x1D, { "RR   L", 1, 8, &UnimplementedInstruction } },
-		{ 0x1E, { "RR   (HL)", 1, 16, &UnimplementedInstruction } },
+		{ 0x1F, { "RR   A", 1, 8, &RR_A } },
+		{ 0x18, { "RR   B", 1, 8, &RR_B } },
+		{ 0x19, { "RR   C", 1, 8, &RR_C } },
+		{ 0x1A, { "RR   D", 1, 8, &RR_D } },
+		{ 0x1B, { "RR   E", 1, 8, &RR_E } },
+		{ 0x1C, { "RR   H", 1, 8, &RR_H } },
+		{ 0x1D, { "RR   L", 1, 8, &RR_L } },
+		{ 0x1E, { "RR   (HL)", 1, 16, &RR_aHL } },
 
 		// Shif left into carry (SLA n)
-		{ 0x27, { "SLA  A", 1, 8, &UnimplementedInstruction } },
-		{ 0x20, { "SLA  B", 1, 8, &UnimplementedInstruction } },
-		{ 0x21, { "SLA  C", 1, 8, &UnimplementedInstruction } },
-		{ 0x22, { "SLA  D", 1, 8, &UnimplementedInstruction } },
-		{ 0x23, { "SLA  E", 1, 8, &UnimplementedInstruction } },
-		{ 0x24, { "SLA  H", 1, 8, &UnimplementedInstruction } },
-		{ 0x25, { "SLA  L", 1, 8, &UnimplementedInstruction } },
-		{ 0x26, { "SLA  (HL)", 1, 16, &UnimplementedInstruction } },
+		{ 0x27, { "SLA  A", 1, 8, &SLA_A } },
+		{ 0x20, { "SLA  B", 1, 8, &SLA_B } },
+		{ 0x21, { "SLA  C", 1, 8, &SLA_C } },
+		{ 0x22, { "SLA  D", 1, 8, &SLA_D } },
+		{ 0x23, { "SLA  E", 1, 8, &SLA_E } },
+		{ 0x24, { "SLA  H", 1, 8, &SLA_H } },
+		{ 0x25, { "SLA  L", 1, 8, &SLA_L } },
+		{ 0x26, { "SLA  (HL)", 1, 16, &SLA_aHL } },
 
 		// Shif right into carry (SRA n)
-		{ 0x2F, { "SRA  A", 1, 8, &UnimplementedInstruction } },
-		{ 0x28, { "SRA  B", 1, 8, &UnimplementedInstruction } },
-		{ 0x29, { "SRA  C", 1, 8, &UnimplementedInstruction } },
-		{ 0x2A, { "SRA  D", 1, 8, &UnimplementedInstruction } },
-		{ 0x2B, { "SRA  E", 1, 8, &UnimplementedInstruction } },
-		{ 0x2C, { "SRA  H", 1, 8, &UnimplementedInstruction } },
-		{ 0x2D, { "SRA  L", 1, 8, &UnimplementedInstruction } },
-		{ 0x2E, { "SRA  (HL)", 1, 16, &UnimplementedInstruction } },
+		{ 0x2F, { "SRA  A", 1, 8, &SRA_A } },
+		{ 0x28, { "SRA  B", 1, 8, &SRA_B } },
+		{ 0x29, { "SRA  C", 1, 8, &SRA_C } },
+		{ 0x2A, { "SRA  D", 1, 8, &SRA_D } },
+		{ 0x2B, { "SRA  E", 1, 8, &SRA_E } },
+		{ 0x2C, { "SRA  H", 1, 8, &SRA_H } },
+		{ 0x2D, { "SRA  L", 1, 8, &SRA_L } },
+		{ 0x2E, { "SRA  (HL)", 1, 16, &SRA_aHL } },
 
 		// Shift right into carry (SRL n)
-		{ 0x3F, { "SRL  A", 1, 8, &UnimplementedInstruction } },
-		{ 0x38, { "SRL  B", 1, 8, &UnimplementedInstruction } },
-		{ 0x39, { "SRL  C", 1, 8, &UnimplementedInstruction } },
-		{ 0x3A, { "SRL  D", 1, 8, &UnimplementedInstruction } },
-		{ 0x3B, { "SRL  E", 1, 8, &UnimplementedInstruction } },
-		{ 0x3C, { "SRL  H", 1, 8, &UnimplementedInstruction } },
-		{ 0x3D, { "SRL  L", 1, 8, &UnimplementedInstruction } },
-		{ 0x3E, { "SRL  (HL)", 1, 16, &UnimplementedInstruction } },
+		{ 0x3F, { "SRL  A", 1, 8, &SRL_A } },
+		{ 0x38, { "SRL  B", 1, 8, &SRL_B } },
+		{ 0x39, { "SRL  C", 1, 8, &SRL_C } },
+		{ 0x3A, { "SRL  D", 1, 8, &SRL_D } },
+		{ 0x3B, { "SRL  E", 1, 8, &SRL_E } },
+		{ 0x3C, { "SRL  H", 1, 8, &SRL_H } },
+		{ 0x3D, { "SRL  L", 1, 8, &SRL_L } },
+		{ 0x3E, { "SRL  (HL)", 1, 16, &SRL_aHL } },
 
 		#pragma endregion
 
@@ -809,7 +809,7 @@ namespace GameBoi
 	};
 
 	CPU::CPU(MemoryMap& memory) :
-		mMemory(memory)
+		mMemory(memory), mInterruptsEnabled(false), mHalted(false), mEnableInterruptsAfterNextInstruction(false), mDisableInterruptsAfterNextInstruction(false)
 	{
 	}
 
@@ -3485,5 +3485,938 @@ namespace GameBoi
 	void CPU::EI(uint16_t)
 	{
 		mEnableInterruptsAfterNextInstruction = true;
+	}
+
+	/**
+	 * \brief Rotate A left
+	 */
+	void CPU::RLCA(uint16_t)
+	{
+		uint16_t result = mRegisters.A << 1;
+		bool carry = result > 0xFF;
+		result += carry ? 1 : 0;
+
+		mRegisters.A = result & 0xFF;
+		mRegisters.ResetZeroFlag(); // ???
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate A left through carry
+	 */
+	void CPU::RLA(uint16_t)
+	{
+		uint16_t result = mRegisters.A << 1;
+		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		bool carry = result > 0xFF;
+
+		mRegisters.A = result & 0xFF;
+		mRegisters.ResetZeroFlag(); // ???
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate A right
+	 */
+	void CPU::RRCA(uint16_t)
+	{
+		bool carry = (mRegisters.A & 0x1) != 0;
+		uint8_t result = (mRegisters.A >> 1) + (carry ? 0x80 : 0x00);
+
+		mRegisters.A = result;
+		mRegisters.ResetZeroFlag(); // ???
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate A right with carry
+	 */
+	void CPU::RRA(uint16_t)
+	{
+		bool carry = (mRegisters.A & 0x1) != 0;
+		uint8_t result = (mRegisters.A >> 1) + (mRegisters.GetCarryFlag() ? 0x80 : 0x00);
+
+		mRegisters.A = result;
+		mRegisters.ResetZeroFlag(); // ???
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate A left
+	 */
+	void CPU::RLC_A(uint16_t)
+	{
+		uint16_t result = mRegisters.A << 1;
+		bool carry = result > 0xFF;
+		result += carry ? 1 : 0;
+
+		mRegisters.A = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate B left
+	 */
+	void CPU::RLC_B(uint16_t)
+	{
+		uint16_t result = mRegisters.B << 1;
+		bool carry = result > 0xFF;
+		result += carry ? 1 : 0;
+
+		mRegisters.B = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate C left
+	 */
+	void CPU::RLC_C(uint16_t)
+	{
+		uint16_t result = mRegisters.C << 1;
+		bool carry = result > 0xFF;
+		result += carry ? 1 : 0;
+
+		mRegisters.C = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate D left
+	 */
+	void CPU::RLC_D(uint16_t)
+	{
+		uint16_t result = mRegisters.D << 1;
+		bool carry = result > 0xFF;
+		result += carry ? 1 : 0;
+
+		mRegisters.D = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate E left
+	 */
+	void CPU::RLC_E(uint16_t)
+	{
+		uint16_t result = mRegisters.E << 1;
+		bool carry = result > 0xFF;
+		result += carry ? 1 : 0;
+
+		mRegisters.E = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate H left
+	 */
+	void CPU::RLC_H(uint16_t)
+	{
+		uint16_t result = mRegisters.H << 1;
+		bool carry = result > 0xFF;
+		result += carry ? 1 : 0;
+
+		mRegisters.H = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate L left
+	 */
+	void CPU::RLC_L(uint16_t)
+	{
+		uint16_t result = mRegisters.L << 1;
+		bool carry = result > 0xFF;
+		result += carry ? 1 : 0;
+
+		mRegisters.L = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate the value at address HL left
+	 */
+	void CPU::RLC_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint16_t result = value << 1;
+		bool carry = result > 0xFF;
+		result += carry ? 1 : 0;
+
+		mMemory.WriteByte(mRegisters.HL, result & 0xFF);
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate A left through carry
+	 */
+	void CPU::RL_A(uint16_t)
+	{
+		uint16_t result = mRegisters.A << 1;
+		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		bool carry = result > 0xFF;
+
+		mRegisters.A = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate B left through carry
+	 */
+	void CPU::RL_B(uint16_t)
+	{
+		uint16_t result = mRegisters.B << 1;
+		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		bool carry = result > 0xFF;
+
+		mRegisters.B = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate C left through carry
+	 */
+	void CPU::RL_C(uint16_t)
+	{
+		uint16_t result = mRegisters.C << 1;
+		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		bool carry = result > 0xFF;
+
+		mRegisters.C = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate D left through carry
+	 */
+	void CPU::RL_D(uint16_t)
+	{
+		uint16_t result = mRegisters.D << 1;
+		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		bool carry = result > 0xFF;
+
+		mRegisters.D = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate E left through carry
+	 */
+	void CPU::RL_E(uint16_t)
+	{
+		uint16_t result = mRegisters.E << 1;
+		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		bool carry = result > 0xFF;
+
+		mRegisters.E = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate H left through carry
+	 */
+	void CPU::RL_H(uint16_t)
+	{
+		uint16_t result = mRegisters.H << 1;
+		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		bool carry = result > 0xFF;
+
+		mRegisters.H = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate L left through carry
+	 */
+	void CPU::RL_L(uint16_t)
+	{
+		uint16_t result = mRegisters.L << 1;
+		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		bool carry = result > 0xFF;
+
+		mRegisters.L = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate the value at address HL left through carry
+	 */
+	void CPU::RL_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint16_t result = value << 1;
+		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		bool carry = result > 0xFF;
+
+		mMemory.WriteByte(mRegisters.HL, result & 0xFF);
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Rotate A right
+	 */
+	void CPU::RRC_A(uint16_t)
+	{
+		bool carry = (mRegisters.A & 0x1) != 0;
+		uint8_t result = (mRegisters.A >> 1) + (carry ? 0x80 : 0x00);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate B right
+	 */
+	void CPU::RRC_B(uint16_t)
+	{
+		bool carry = (mRegisters.B & 0x1) != 0;
+		uint8_t result = (mRegisters.B >> 1) + (carry ? 0x80 : 0x00);
+
+		mRegisters.B = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate C right
+	 */
+	void CPU::RRC_C(uint16_t)
+	{
+		bool carry = (mRegisters.C & 0x1) != 0;
+		uint8_t result = (mRegisters.C >> 1) + (carry ? 0x80 : 0x00);
+
+		mRegisters.C = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate D right
+	 */
+	void CPU::RRC_D(uint16_t)
+	{
+		bool carry = (mRegisters.D & 0x1) != 0;
+		uint8_t result = (mRegisters.D >> 1) + (carry ? 0x80 : 0x00);
+
+		mRegisters.D = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate E right
+	 */
+	void CPU::RRC_E(uint16_t)
+	{
+		bool carry = (mRegisters.E & 0x1) != 0;
+		uint8_t result = (mRegisters.E >> 1) + (carry ? 0x80 : 0x00);
+
+		mRegisters.E = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate H right
+	 */
+	void CPU::RRC_H(uint16_t)
+	{
+		bool carry = (mRegisters.H & 0x1) != 0;
+		uint8_t result = (mRegisters.H >> 1) + (carry ? 0x80 : 0x00);
+
+		mRegisters.H = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate L right
+	 */
+	void CPU::RRC_L(uint16_t)
+	{
+		bool carry = (mRegisters.L & 0x1) != 0;
+		uint8_t result = (mRegisters.L >> 1) + (carry ? 0x80 : 0x00);
+
+		mRegisters.L = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate the value at address HL right
+	 */
+	void CPU::RRC_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		bool carry = (value & 0x1) != 0;
+		uint8_t result = (value >> 1) + (carry ? 0x80 : 0x00);
+
+		mMemory.WriteByte(mRegisters.HL, result);
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate A right with carry
+	 */
+	void CPU::RR_A(uint16_t)
+	{
+		bool carry = (mRegisters.A & 0x1) != 0;
+		uint8_t result = (mRegisters.A >> 1) + (mRegisters.GetCarryFlag() ? 0x80 : 0x00);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate B right with carry
+	 */
+	void CPU::RR_B(uint16_t)
+	{
+		bool carry = (mRegisters.B & 0x1) != 0;
+		uint8_t result = (mRegisters.B >> 1) + (mRegisters.GetCarryFlag() ? 0x80 : 0x00);
+
+		mRegisters.B = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate C right with carry
+	 */
+	void CPU::RR_C(uint16_t)
+	{
+		bool carry = (mRegisters.C & 0x1) != 0;
+		uint8_t result = (mRegisters.C >> 1) + (mRegisters.GetCarryFlag() ? 0x80 : 0x00);
+
+		mRegisters.C = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate D right with carry
+	 */
+	void CPU::RR_D(uint16_t)
+	{
+		bool carry = (mRegisters.D & 0x1) != 0;
+		uint8_t result = (mRegisters.D >> 1) + (mRegisters.GetCarryFlag() ? 0x80 : 0x00);
+
+		mRegisters.D = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate E right with carry
+	 */
+	void CPU::RR_E(uint16_t)
+	{
+		bool carry = (mRegisters.E & 0x1) != 0;
+		uint8_t result = (mRegisters.E >> 1) + (mRegisters.GetCarryFlag() ? 0x80 : 0x00);
+
+		mRegisters.E = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate H right with carry
+	 */
+	void CPU::RR_H(uint16_t)
+	{
+		bool carry = (mRegisters.H & 0x1) != 0;
+		uint8_t result = (mRegisters.H >> 1) + (mRegisters.GetCarryFlag() ? 0x80 : 0x00);
+
+		mRegisters.H = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate L right with carry
+	 */
+	void CPU::RR_L(uint16_t)
+	{
+		bool carry = (mRegisters.L & 0x1) != 0;
+		uint8_t result = (mRegisters.L >> 1) + (mRegisters.GetCarryFlag() ? 0x80 : 0x00);
+
+		mRegisters.L = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Rotate the value at address HL right with carry
+	 */
+	void CPU::RR_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		bool carry = (value & 0x1) != 0;
+		uint8_t result = (value >> 1) + (mRegisters.GetCarryFlag() ? 0x80 : 0x00);
+
+		mMemory.WriteByte(mRegisters.HL, result);
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift A left (into carry)
+	 */
+	void CPU::SLA_A(uint16_t)
+	{
+		uint16_t result = mRegisters.A << 1;
+		bool carry = result > 0xFF;
+
+		mRegisters.A = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Shift B left (into carry)
+	 */
+	void CPU::SLA_B(uint16_t)
+	{
+		uint16_t result = mRegisters.B << 1;
+		bool carry = result > 0xFF;
+
+		mRegisters.B = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Shift C left (into carry)
+	 */
+	void CPU::SLA_C(uint16_t)
+	{
+		uint16_t result = mRegisters.C << 1;
+		bool carry = result > 0xFF;
+
+		mRegisters.C = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Shift D left (into carry)
+	 */
+	void CPU::SLA_D(uint16_t)
+	{
+		uint16_t result = mRegisters.D << 1;
+		bool carry = result > 0xFF;
+
+		mRegisters.D = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Shift E left (into carry)
+	 */
+	void CPU::SLA_E(uint16_t)
+	{
+		uint16_t result = mRegisters.E << 1;
+		bool carry = result > 0xFF;
+
+		mRegisters.E = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Shift H left (into carry)
+	 */
+	void CPU::SLA_H(uint16_t)
+	{
+		uint16_t result = mRegisters.H << 1;
+		bool carry = result > 0xFF;
+
+		mRegisters.H = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Shift L left (into carry)
+	 */
+	void CPU::SLA_L(uint16_t)
+	{
+		uint16_t result = mRegisters.L << 1;
+		bool carry = result > 0xFF;
+
+		mRegisters.L = result & 0xFF;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Shift the value at address HL left (into carry)
+	 */
+	void CPU::SLA_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		uint16_t result = value << 1;
+		bool carry = result > 0xFF;
+
+		mMemory.WriteByte(mRegisters.HL, result & 0xFF);
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 7 always goes into C
+	}
+
+	/**
+	 * \brief Shift A right arithmetically (into carry)
+	 */
+	void CPU::SRA_A(uint16_t)
+	{
+		bool carry = (mRegisters.A & 0x1) != 0;
+		bool negative = mRegisters.A & 0x80 != 0;
+		uint8_t result = (mRegisters.A >> 1) | (negative ? 0x80 : 0x00);
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift B right arithmetically (into carry)
+	 */
+	void CPU::SRA_B(uint16_t)
+	{
+		bool carry = (mRegisters.B & 0x1) != 0;
+		bool negative = mRegisters.B & 0x80 != 0;
+		uint8_t result = (mRegisters.B >> 1) | (negative ? 0x80 : 0x00);
+
+		mRegisters.B = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift C right arithmetically (into carry)
+	 */
+	void CPU::SRA_C(uint16_t)
+	{
+		bool carry = (mRegisters.C & 0x1) != 0;
+		bool negative = mRegisters.C & 0x80 != 0;
+		uint8_t result = (mRegisters.C >> 1) | (negative ? 0x80 : 0x00);
+
+		mRegisters.C = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift D right arithmetically (into carry)
+	 */
+	void CPU::SRA_D(uint16_t)
+	{
+		bool carry = (mRegisters.D & 0x1) != 0;
+		bool negative = mRegisters.D & 0x80 != 0;
+		uint8_t result = (mRegisters.D >> 1) | (negative ? 0x80 : 0x00);
+
+		mRegisters.D = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift E right arithmetically (into carry)
+	 */
+	void CPU::SRA_E(uint16_t)
+	{
+		bool carry = (mRegisters.E & 0x1) != 0;
+		bool negative = mRegisters.E & 0x80 != 0;
+		uint8_t result = (mRegisters.E >> 1) | (negative ? 0x80 : 0x00);
+
+		mRegisters.E = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift H right arithmetically (into carry)
+	 */
+	void CPU::SRA_H(uint16_t)
+	{
+		bool carry = (mRegisters.H & 0x1) != 0;
+		bool negative = mRegisters.H & 0x80 != 0;
+		uint8_t result = (mRegisters.H >> 1) | (negative ? 0x80 : 0x00);
+
+		mRegisters.H = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift L right arithmetically (into carry)
+	 */
+	void CPU::SRA_L(uint16_t)
+	{
+		bool carry = (mRegisters.L & 0x1) != 0;
+		bool negative = mRegisters.L & 0x80 != 0;
+		uint8_t result = (mRegisters.L >> 1) | (negative ? 0x80 : 0x00);
+
+		mRegisters.L = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift the value at address HL right arithmetically (into carry)
+	 */
+	void CPU::SRA_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		bool carry = (value & 0x1) != 0;
+		bool negative = value & 0x80 != 0;
+		uint8_t result = (value >> 1) | (negative ? 0x80 : 0x00);
+
+		mMemory.WriteByte(mRegisters.HL, result & 0xFF);
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift A right logically (into carry)
+	 */
+	void CPU::SRL_A(uint16_t)
+	{
+		bool carry = (mRegisters.A & 0x1) != 0;
+		uint8_t result = (mRegisters.A >> 1) & 0x7F;
+
+		mRegisters.A = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift B right logically (into carry)
+	 */
+	void CPU::SRL_B(uint16_t)
+	{
+		bool carry = (mRegisters.B & 0x1) != 0;
+		uint8_t result = (mRegisters.B >> 1) & 0x7F;
+
+		mRegisters.B = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift C right logically (into carry)
+	 */
+	void CPU::SRL_C(uint16_t)
+	{
+		bool carry = (mRegisters.C & 0x1) != 0;
+		uint8_t result = (mRegisters.C >> 1) & 0x7F;
+
+		mRegisters.C = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift D right logically (into carry)
+	 */
+	void CPU::SRL_D(uint16_t)
+	{
+		bool carry = (mRegisters.D & 0x1) != 0;
+		uint8_t result = (mRegisters.D >> 1) & 0x7F;
+
+		mRegisters.D = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift E right logically (into carry)
+	 */
+	void CPU::SRL_E(uint16_t)
+	{
+		bool carry = (mRegisters.E & 0x1) != 0;
+		uint8_t result = (mRegisters.E >> 1) & 0x7F;
+
+		mRegisters.E = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift H right logically (into carry)
+	 */
+	void CPU::SRL_H(uint16_t)
+	{
+		bool carry = (mRegisters.H & 0x1) != 0;
+		uint8_t result = (mRegisters.H >> 1) & 0x7F;
+
+		mRegisters.H = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift L right logically (into carry)
+	 */
+	void CPU::SRL_L(uint16_t)
+	{
+		bool carry = (mRegisters.L & 0x1) != 0;
+		uint8_t result = (mRegisters.L >> 1) & 0x7F;
+
+		mRegisters.L = result;
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
+	}
+
+	/**
+	 * \brief Shift the value at address HL right logically (into carry)
+	 */
+	void CPU::SRL_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		bool carry = (value & 0x1) != 0;
+		uint8_t result = (value >> 1) & 0x7F;
+
+		mMemory.WriteByte(mRegisters.HL, result & 0xFF);
+		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.ResetHalfCarryFlag();
+		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
 	}
 }

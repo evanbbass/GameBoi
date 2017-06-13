@@ -348,5 +348,85 @@ namespace GameBoi
 		void EI(uint16_t operand);
 
 		#pragma endregion
+
+		#pragma region Rotates & Shifts
+
+		// Rotate A
+		void RLCA(uint16_t operand);
+		void RLA(uint16_t operand);
+		void RRCA(uint16_t operand);
+		void RRA(uint16_t operand);
+
+		// RLC n
+		void RLC_A(uint16_t operand);
+		void RLC_B(uint16_t operand);
+		void RLC_C(uint16_t operand);
+		void RLC_D(uint16_t operand);
+		void RLC_E(uint16_t operand);
+		void RLC_H(uint16_t operand);
+		void RLC_L(uint16_t operand);
+		void RLC_aHL(uint16_t operand);
+
+		// RL n
+		void RL_A(uint16_t operand);
+		void RL_B(uint16_t operand);
+		void RL_C(uint16_t operand);
+		void RL_D(uint16_t operand);
+		void RL_E(uint16_t operand);
+		void RL_H(uint16_t operand);
+		void RL_L(uint16_t operand);
+		void RL_aHL(uint16_t operand);
+
+		// RRC n
+		void RRC_A(uint16_t operand);
+		void RRC_B(uint16_t operand);
+		void RRC_C(uint16_t operand);
+		void RRC_D(uint16_t operand);
+		void RRC_E(uint16_t operand);
+		void RRC_H(uint16_t operand);
+		void RRC_L(uint16_t operand);
+		void RRC_aHL(uint16_t operand);
+
+		// RR n
+		void RR_A(uint16_t operand);
+		void RR_B(uint16_t operand);
+		void RR_C(uint16_t operand);
+		void RR_D(uint16_t operand);
+		void RR_E(uint16_t operand);
+		void RR_H(uint16_t operand);
+		void RR_L(uint16_t operand);
+		void RR_aHL(uint16_t operand);
+
+		// SLA n
+		void SLA_A(uint16_t operand);
+		void SLA_B(uint16_t operand);
+		void SLA_C(uint16_t operand);
+		void SLA_D(uint16_t operand);
+		void SLA_E(uint16_t operand);
+		void SLA_H(uint16_t operand);
+		void SLA_L(uint16_t operand);
+		void SLA_aHL(uint16_t operand);
+
+		// SRA n
+		void SRA_A(uint16_t operand);
+		void SRA_B(uint16_t operand);
+		void SRA_C(uint16_t operand);
+		void SRA_D(uint16_t operand);
+		void SRA_E(uint16_t operand);
+		void SRA_H(uint16_t operand);
+		void SRA_L(uint16_t operand);
+		void SRA_aHL(uint16_t operand);
+
+		// SRL n
+		void SRL_A(uint16_t operand);
+		void SRL_B(uint16_t operand);
+		void SRL_C(uint16_t operand);
+		void SRL_D(uint16_t operand);
+		void SRL_E(uint16_t operand);
+		void SRL_H(uint16_t operand);
+		void SRL_L(uint16_t operand);
+		void SRL_aHL(uint16_t operand);
+
+		#pragma endregion
 	};
 }
