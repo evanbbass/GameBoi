@@ -173,7 +173,7 @@ namespace GameBoi
 
 		#pragma endregion
 
-		#pragma region 8-bit ALU
+		#pragma region 8-Bit ALU
 
 		// ADD A,n
 		void ADD_A_A(uint16_t operand);
@@ -285,7 +285,7 @@ namespace GameBoi
 
 		#pragma endregion
 
-		#pragma region 16-bit Arithmetic
+		#pragma region 16-Bit Arithmetic
 
 		// ADD HL,n
 		void ADD_HL_BC(uint16_t operand);
@@ -426,6 +426,208 @@ namespace GameBoi
 		void SRL_H(uint16_t operand);
 		void SRL_L(uint16_t operand);
 		void SRL_aHL(uint16_t operand);
+
+		#pragma endregion
+
+		#pragma region Bit Opcodes
+
+		// BIT b,r
+		void BIT_0_A(uint16_t operand);
+		void BIT_1_A(uint16_t operand);
+		void BIT_2_A(uint16_t operand);
+		void BIT_3_A(uint16_t operand);
+		void BIT_4_A(uint16_t operand);
+		void BIT_5_A(uint16_t operand);
+		void BIT_6_A(uint16_t operand);
+		void BIT_7_A(uint16_t operand);
+		void BIT_0_B(uint16_t operand);
+		void BIT_1_B(uint16_t operand);
+		void BIT_2_B(uint16_t operand);
+		void BIT_3_B(uint16_t operand);
+		void BIT_4_B(uint16_t operand);
+		void BIT_5_B(uint16_t operand);
+		void BIT_6_B(uint16_t operand);
+		void BIT_7_B(uint16_t operand);
+		void BIT_0_C(uint16_t operand);
+		void BIT_1_C(uint16_t operand);
+		void BIT_2_C(uint16_t operand);
+		void BIT_3_C(uint16_t operand);
+		void BIT_4_C(uint16_t operand);
+		void BIT_5_C(uint16_t operand);
+		void BIT_6_C(uint16_t operand);
+		void BIT_7_C(uint16_t operand);
+		void BIT_0_D(uint16_t operand);
+		void BIT_1_D(uint16_t operand);
+		void BIT_2_D(uint16_t operand);
+		void BIT_3_D(uint16_t operand);
+		void BIT_4_D(uint16_t operand);
+		void BIT_5_D(uint16_t operand);
+		void BIT_6_D(uint16_t operand);
+		void BIT_7_D(uint16_t operand);
+		void BIT_0_E(uint16_t operand);
+		void BIT_1_E(uint16_t operand);
+		void BIT_2_E(uint16_t operand);
+		void BIT_3_E(uint16_t operand);
+		void BIT_4_E(uint16_t operand);
+		void BIT_5_E(uint16_t operand);
+		void BIT_6_E(uint16_t operand);
+		void BIT_7_E(uint16_t operand);
+		void BIT_0_H(uint16_t operand);
+		void BIT_1_H(uint16_t operand);
+		void BIT_2_H(uint16_t operand);
+		void BIT_3_H(uint16_t operand);
+		void BIT_4_H(uint16_t operand);
+		void BIT_5_H(uint16_t operand);
+		void BIT_6_H(uint16_t operand);
+		void BIT_7_H(uint16_t operand);
+		void BIT_0_L(uint16_t operand);
+		void BIT_1_L(uint16_t operand);
+		void BIT_2_L(uint16_t operand);
+		void BIT_3_L(uint16_t operand);
+		void BIT_4_L(uint16_t operand);
+		void BIT_5_L(uint16_t operand);
+		void BIT_6_L(uint16_t operand);
+		void BIT_7_L(uint16_t operand);
+		void BIT_0_aHL(uint16_t operand);
+		void BIT_1_aHL(uint16_t operand);
+		void BIT_2_aHL(uint16_t operand);
+		void BIT_3_aHL(uint16_t operand);
+		void BIT_4_aHL(uint16_t operand);
+		void BIT_5_aHL(uint16_t operand);
+		void BIT_6_aHL(uint16_t operand);
+		void BIT_7_aHL(uint16_t operand);
+
+		// SET b,r
+		void SET_0_A(uint16_t operand);
+		void SET_1_A(uint16_t operand);
+		void SET_2_A(uint16_t operand);
+		void SET_3_A(uint16_t operand);
+		void SET_4_A(uint16_t operand);
+		void SET_5_A(uint16_t operand);
+		void SET_6_A(uint16_t operand);
+		void SET_7_A(uint16_t operand);
+		void SET_0_B(uint16_t operand);
+		void SET_1_B(uint16_t operand);
+		void SET_2_B(uint16_t operand);
+		void SET_3_B(uint16_t operand);
+		void SET_4_B(uint16_t operand);
+		void SET_5_B(uint16_t operand);
+		void SET_6_B(uint16_t operand);
+		void SET_7_B(uint16_t operand);
+		void SET_0_C(uint16_t operand);
+		void SET_1_C(uint16_t operand);
+		void SET_2_C(uint16_t operand);
+		void SET_3_C(uint16_t operand);
+		void SET_4_C(uint16_t operand);
+		void SET_5_C(uint16_t operand);
+		void SET_6_C(uint16_t operand);
+		void SET_7_C(uint16_t operand);
+		void SET_0_D(uint16_t operand);
+		void SET_1_D(uint16_t operand);
+		void SET_2_D(uint16_t operand);
+		void SET_3_D(uint16_t operand);
+		void SET_4_D(uint16_t operand);
+		void SET_5_D(uint16_t operand);
+		void SET_6_D(uint16_t operand);
+		void SET_7_D(uint16_t operand);
+		void SET_0_E(uint16_t operand);
+		void SET_1_E(uint16_t operand);
+		void SET_2_E(uint16_t operand);
+		void SET_3_E(uint16_t operand);
+		void SET_4_E(uint16_t operand);
+		void SET_5_E(uint16_t operand);
+		void SET_6_E(uint16_t operand);
+		void SET_7_E(uint16_t operand);
+		void SET_0_H(uint16_t operand);
+		void SET_1_H(uint16_t operand);
+		void SET_2_H(uint16_t operand);
+		void SET_3_H(uint16_t operand);
+		void SET_4_H(uint16_t operand);
+		void SET_5_H(uint16_t operand);
+		void SET_6_H(uint16_t operand);
+		void SET_7_H(uint16_t operand);
+		void SET_0_L(uint16_t operand);
+		void SET_1_L(uint16_t operand);
+		void SET_2_L(uint16_t operand);
+		void SET_3_L(uint16_t operand);
+		void SET_4_L(uint16_t operand);
+		void SET_5_L(uint16_t operand);
+		void SET_6_L(uint16_t operand);
+		void SET_7_L(uint16_t operand);
+		void SET_0_aHL(uint16_t operand);
+		void SET_1_aHL(uint16_t operand);
+		void SET_2_aHL(uint16_t operand);
+		void SET_3_aHL(uint16_t operand);
+		void SET_4_aHL(uint16_t operand);
+		void SET_5_aHL(uint16_t operand);
+		void SET_6_aHL(uint16_t operand);
+		void SET_7_aHL(uint16_t operand);
+
+		// RES b,r
+		void RES_0_A(uint16_t operand);
+		void RES_1_A(uint16_t operand);
+		void RES_2_A(uint16_t operand);
+		void RES_3_A(uint16_t operand);
+		void RES_4_A(uint16_t operand);
+		void RES_5_A(uint16_t operand);
+		void RES_6_A(uint16_t operand);
+		void RES_7_A(uint16_t operand);
+		void RES_0_B(uint16_t operand);
+		void RES_1_B(uint16_t operand);
+		void RES_2_B(uint16_t operand);
+		void RES_3_B(uint16_t operand);
+		void RES_4_B(uint16_t operand);
+		void RES_5_B(uint16_t operand);
+		void RES_6_B(uint16_t operand);
+		void RES_7_B(uint16_t operand);
+		void RES_0_C(uint16_t operand);
+		void RES_1_C(uint16_t operand);
+		void RES_2_C(uint16_t operand);
+		void RES_3_C(uint16_t operand);
+		void RES_4_C(uint16_t operand);
+		void RES_5_C(uint16_t operand);
+		void RES_6_C(uint16_t operand);
+		void RES_7_C(uint16_t operand);
+		void RES_0_D(uint16_t operand);
+		void RES_1_D(uint16_t operand);
+		void RES_2_D(uint16_t operand);
+		void RES_3_D(uint16_t operand);
+		void RES_4_D(uint16_t operand);
+		void RES_5_D(uint16_t operand);
+		void RES_6_D(uint16_t operand);
+		void RES_7_D(uint16_t operand);
+		void RES_0_E(uint16_t operand);
+		void RES_1_E(uint16_t operand);
+		void RES_2_E(uint16_t operand);
+		void RES_3_E(uint16_t operand);
+		void RES_4_E(uint16_t operand);
+		void RES_5_E(uint16_t operand);
+		void RES_6_E(uint16_t operand);
+		void RES_7_E(uint16_t operand);
+		void RES_0_H(uint16_t operand);
+		void RES_1_H(uint16_t operand);
+		void RES_2_H(uint16_t operand);
+		void RES_3_H(uint16_t operand);
+		void RES_4_H(uint16_t operand);
+		void RES_5_H(uint16_t operand);
+		void RES_6_H(uint16_t operand);
+		void RES_7_H(uint16_t operand);
+		void RES_0_L(uint16_t operand);
+		void RES_1_L(uint16_t operand);
+		void RES_2_L(uint16_t operand);
+		void RES_3_L(uint16_t operand);
+		void RES_4_L(uint16_t operand);
+		void RES_5_L(uint16_t operand);
+		void RES_6_L(uint16_t operand);
+		void RES_7_L(uint16_t operand);
+		void RES_0_aHL(uint16_t operand);
+		void RES_1_aHL(uint16_t operand);
+		void RES_2_aHL(uint16_t operand);
+		void RES_3_aHL(uint16_t operand);
+		void RES_4_aHL(uint16_t operand);
+		void RES_5_aHL(uint16_t operand);
+		void RES_6_aHL(uint16_t operand);
+		void RES_7_aHL(uint16_t operand);
 
 		#pragma endregion
 

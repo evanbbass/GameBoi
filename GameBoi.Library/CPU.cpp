@@ -415,34 +415,34 @@ namespace GameBoi
 		#pragma region Bit Opcodes
 
 		// Test Bit (BIT b,r) (See Prefix CB opcodes)
-		//{ 0xCB 47, { "BIT  b,A", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 40, { "BIT  b,B", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 41, { "BIT  b,C", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 42, { "BIT  b,D", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 43, { "BIT  b,E", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 44, { "BIT  b,H", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 45, { "BIT  b,L", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 46, { "BIT  b,(HL)", 0, 16, &UnimplementedInstruction } },
+		//{ 0xCB 47, { "BIT  b,A", 0, 8, &BIT_n_A } },
+		//{ 0xCB 40, { "BIT  b,B", 0, 8, &BIT_n_B } },
+		//{ 0xCB 41, { "BIT  b,C", 0, 8, &BIT_n_C } },
+		//{ 0xCB 42, { "BIT  b,D", 0, 8, &BIT_n_D } },
+		//{ 0xCB 43, { "BIT  b,E", 0, 8, &BIT_n_E } },
+		//{ 0xCB 44, { "BIT  b,H", 0, 8, &BIT_n_H } },
+		//{ 0xCB 45, { "BIT  b,L", 0, 8, &BIT_n_L } },
+		//{ 0xCB 46, { "BIT  b,(HL)", 0, 16, &BIT_n_aHL } },
 
 		// Set Bit (SET b,r) (See Prefix CB opcodes)
-		//{ 0xCB C7, { "SET  b,A", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB C0, { "SET  b,B", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB C1, { "SET  b,C", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB C2, { "SET  b,D", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB C3, { "SET  b,E", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB C4, { "SET  b,H", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB C5, { "SET  b,L", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB C6, { "SET  b,(HL)", 0, 16, &UnimplementedInstruction } },
+		//{ 0xCB C7, { "SET  b,A", 0, 8, &SET_n_A } },
+		//{ 0xCB C0, { "SET  b,B", 0, 8, &SET_n_B } },
+		//{ 0xCB C1, { "SET  b,C", 0, 8, &SET_n_C } },
+		//{ 0xCB C2, { "SET  b,D", 0, 8, &SET_n_D } },
+		//{ 0xCB C3, { "SET  b,E", 0, 8, &SET_n_E } },
+		//{ 0xCB C4, { "SET  b,H", 0, 8, &SET_n_H } },
+		//{ 0xCB C5, { "SET  b,L", 0, 8, &SET_n_L } },
+		//{ 0xCB C6, { "SET  b,(HL)", 0, 16, &SET_n_aHL } },
 
 		// Reset (clear) Bit (RES b,r) (See Prefix CB opcodes)
-		//{ 0xCB 87, { "RES  b,A", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 80, { "RES  b,B", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 81, { "RES  b,C", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 82, { "RES  b,D", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 83, { "RES  b,E", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 84, { "RES  b,H", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 85, { "RES  b,L", 0, 8, &UnimplementedInstruction } },
-		//{ 0xCB 86, { "RES  b,(HL)", 0, 16, &UnimplementedInstruction } },
+		//{ 0xCB 87, { "RES  b,A", 0, 8, &RES_n_A } },
+		//{ 0xCB 80, { "RES  b,B", 0, 8, &RES_n_B } },
+		//{ 0xCB 81, { "RES  b,C", 0, 8, &RES_n_C } },
+		//{ 0xCB 82, { "RES  b,D", 0, 8, &RES_n_D } },
+		//{ 0xCB 83, { "RES  b,E", 0, 8, &RES_n_E } },
+		//{ 0xCB 84, { "RES  b,H", 0, 8, &RES_n_H } },
+		//{ 0xCB 85, { "RES  b,L", 0, 8, &RES_n_L } },
+		//{ 0xCB 86, { "RES  b,(HL)", 0, 16, &RES_n_aHL } },
 
 		#pragma endregion
 
@@ -608,202 +608,202 @@ namespace GameBoi
 		#pragma region Bit Opcodes
 
 		// Test Bit (BIT b,r)
-		{ 0x47, { "BIT  0,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x40, { "BIT  0,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x41, { "BIT  0,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x42, { "BIT  0,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x43, { "BIT  0,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x44, { "BIT  0,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x45, { "BIT  0,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x46, { "BIT  0,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0x4F, { "BIT  1,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x48, { "BIT  1,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x49, { "BIT  1,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x4A, { "BIT  1,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x4B, { "BIT  1,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x4C, { "BIT  1,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x4D, { "BIT  1,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x4E, { "BIT  1,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0x57, { "BIT  2,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x50, { "BIT  2,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x51, { "BIT  2,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x52, { "BIT  2,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x53, { "BIT  2,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x54, { "BIT  2,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x55, { "BIT  2,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x56, { "BIT  2,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0x5F, { "BIT  3,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x58, { "BIT  3,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x59, { "BIT  3,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x5A, { "BIT  3,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x5B, { "BIT  3,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x5C, { "BIT  3,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x5D, { "BIT  3,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x5E, { "BIT  3,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0x67, { "BIT  4,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x60, { "BIT  4,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x61, { "BIT  4,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x62, { "BIT  4,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x63, { "BIT  4,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x64, { "BIT  4,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x65, { "BIT  4,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x66, { "BIT  4,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0x6F, { "BIT  5,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x68, { "BIT  5,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x69, { "BIT  5,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x6A, { "BIT  5,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x6B, { "BIT  5,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x6C, { "BIT  5,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x6D, { "BIT  5,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x6E, { "BIT  5,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0x77, { "BIT  6,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x70, { "BIT  6,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x71, { "BIT  6,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x72, { "BIT  6,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x73, { "BIT  6,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x74, { "BIT  6,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x75, { "BIT  6,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x76, { "BIT  6,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0x7F, { "BIT  7,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x78, { "BIT  7,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x79, { "BIT  7,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x7A, { "BIT  7,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x7B, { "BIT  7,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x7C, { "BIT  7,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x7D, { "BIT  7,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x7E, { "BIT  7,(HL)", 1, 16, &UnimplementedInstruction } },
+		{ 0x47, { "BIT  0,A", 1, 8, &BIT_0_A } },
+		{ 0x40, { "BIT  0,B", 1, 8, &BIT_0_B } },
+		{ 0x41, { "BIT  0,C", 1, 8, &BIT_0_C } },
+		{ 0x42, { "BIT  0,D", 1, 8, &BIT_0_D } },
+		{ 0x43, { "BIT  0,E", 1, 8, &BIT_0_E } },
+		{ 0x44, { "BIT  0,H", 1, 8, &BIT_0_H } },
+		{ 0x45, { "BIT  0,L", 1, 8, &BIT_0_L } },
+		{ 0x46, { "BIT  0,(HL)", 1, 16, &BIT_0_aHL } },
+		{ 0x4F, { "BIT  1,A", 1, 8, &BIT_1_A } },
+		{ 0x48, { "BIT  1,B", 1, 8, &BIT_1_B } },
+		{ 0x49, { "BIT  1,C", 1, 8, &BIT_1_C } },
+		{ 0x4A, { "BIT  1,D", 1, 8, &BIT_1_D } },
+		{ 0x4B, { "BIT  1,E", 1, 8, &BIT_1_E } },
+		{ 0x4C, { "BIT  1,H", 1, 8, &BIT_1_H } },
+		{ 0x4D, { "BIT  1,L", 1, 8, &BIT_1_L } },
+		{ 0x4E, { "BIT  1,(HL)", 1, 16, &BIT_1_aHL } },
+		{ 0x57, { "BIT  2,A", 1, 8, &BIT_2_A } },
+		{ 0x50, { "BIT  2,B", 1, 8, &BIT_2_B } },
+		{ 0x51, { "BIT  2,C", 1, 8, &BIT_2_C } },
+		{ 0x52, { "BIT  2,D", 1, 8, &BIT_2_D } },
+		{ 0x53, { "BIT  2,E", 1, 8, &BIT_2_E } },
+		{ 0x54, { "BIT  2,H", 1, 8, &BIT_2_H } },
+		{ 0x55, { "BIT  2,L", 1, 8, &BIT_2_L } },
+		{ 0x56, { "BIT  2,(HL)", 1, 16, &BIT_2_aHL } },
+		{ 0x5F, { "BIT  3,A", 1, 8, &BIT_3_A } },
+		{ 0x58, { "BIT  3,B", 1, 8, &BIT_3_B } },
+		{ 0x59, { "BIT  3,C", 1, 8, &BIT_3_C } },
+		{ 0x5A, { "BIT  3,D", 1, 8, &BIT_3_D } },
+		{ 0x5B, { "BIT  3,E", 1, 8, &BIT_3_E } },
+		{ 0x5C, { "BIT  3,H", 1, 8, &BIT_3_H } },
+		{ 0x5D, { "BIT  3,L", 1, 8, &BIT_3_L } },
+		{ 0x5E, { "BIT  3,(HL)", 1, 16, &BIT_3_aHL } },
+		{ 0x67, { "BIT  4,A", 1, 8, &BIT_4_A } },
+		{ 0x60, { "BIT  4,B", 1, 8, &BIT_4_B } },
+		{ 0x61, { "BIT  4,C", 1, 8, &BIT_4_C } },
+		{ 0x62, { "BIT  4,D", 1, 8, &BIT_4_D } },
+		{ 0x63, { "BIT  4,E", 1, 8, &BIT_4_E } },
+		{ 0x64, { "BIT  4,H", 1, 8, &BIT_4_H } },
+		{ 0x65, { "BIT  4,L", 1, 8, &BIT_4_L } },
+		{ 0x66, { "BIT  4,(HL)", 1, 16, &BIT_4_aHL } },
+		{ 0x6F, { "BIT  5,A", 1, 8, &BIT_5_A } },
+		{ 0x68, { "BIT  5,B", 1, 8, &BIT_5_B } },
+		{ 0x69, { "BIT  5,C", 1, 8, &BIT_5_C } },
+		{ 0x6A, { "BIT  5,D", 1, 8, &BIT_5_D } },
+		{ 0x6B, { "BIT  5,E", 1, 8, &BIT_5_E } },
+		{ 0x6C, { "BIT  5,H", 1, 8, &BIT_5_H } },
+		{ 0x6D, { "BIT  5,L", 1, 8, &BIT_5_L } },
+		{ 0x6E, { "BIT  5,(HL)", 1, 16, &BIT_5_aHL } },
+		{ 0x77, { "BIT  6,A", 1, 8, &BIT_6_A } },
+		{ 0x70, { "BIT  6,B", 1, 8, &BIT_6_B } },
+		{ 0x71, { "BIT  6,C", 1, 8, &BIT_6_C } },
+		{ 0x72, { "BIT  6,D", 1, 8, &BIT_6_D } },
+		{ 0x73, { "BIT  6,E", 1, 8, &BIT_6_E } },
+		{ 0x74, { "BIT  6,H", 1, 8, &BIT_6_H } },
+		{ 0x75, { "BIT  6,L", 1, 8, &BIT_6_L } },
+		{ 0x76, { "BIT  6,(HL)", 1, 16, &BIT_6_aHL } },
+		{ 0x7F, { "BIT  7,A", 1, 8, &BIT_7_A } },
+		{ 0x78, { "BIT  7,B", 1, 8, &BIT_7_B } },
+		{ 0x79, { "BIT  7,C", 1, 8, &BIT_7_C } },
+		{ 0x7A, { "BIT  7,D", 1, 8, &BIT_7_D } },
+		{ 0x7B, { "BIT  7,E", 1, 8, &BIT_7_E } },
+		{ 0x7C, { "BIT  7,H", 1, 8, &BIT_7_H } },
+		{ 0x7D, { "BIT  7,L", 1, 8, &BIT_7_L } },
+		{ 0x7E, { "BIT  7,(HL)", 1, 16, &BIT_7_aHL } },
 
 		// Set Bit (SET b,r)
-		{ 0xC7, { "SET  0,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xC0, { "SET  0,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xC1, { "SET  0,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xC2, { "SET  0,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xC3, { "SET  0,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xC4, { "SET  0,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xC5, { "SET  0,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xC6, { "SET  0,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0xCF, { "SET  1,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xC8, { "SET  1,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xC9, { "SET  1,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xCA, { "SET  1,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xCB, { "SET  1,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xCC, { "SET  1,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xCD, { "SET  1,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xCE, { "SET  1,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0xD7, { "SET  2,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xD0, { "SET  2,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xD1, { "SET  2,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xD2, { "SET  2,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xD3, { "SET  2,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xD4, { "SET  2,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xD5, { "SET  2,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xD6, { "SET  2,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0xDF, { "SET  3,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xD8, { "SET  3,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xD9, { "SET  3,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xDA, { "SET  3,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xDB, { "SET  3,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xDC, { "SET  3,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xDD, { "SET  3,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xDE, { "SET  3,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0xE7, { "SET  4,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xE0, { "SET  4,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xE1, { "SET  4,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xE2, { "SET  4,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xE3, { "SET  4,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xE4, { "SET  4,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xE5, { "SET  4,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xE6, { "SET  4,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0xEF, { "SET  5,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xE8, { "SET  5,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xE9, { "SET  5,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xEA, { "SET  5,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xEB, { "SET  5,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xEC, { "SET  5,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xED, { "SET  5,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xEE, { "SET  5,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0xF7, { "SET  6,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xF0, { "SET  6,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xF1, { "SET  6,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xF2, { "SET  6,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xF3, { "SET  6,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xF4, { "SET  6,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xF5, { "SET  6,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xF6, { "SET  6,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0xFF, { "SET  7,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xF8, { "SET  7,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xF9, { "SET  7,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xFA, { "SET  7,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xFB, { "SET  7,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xFC, { "SET  7,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xFD, { "SET  7,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xFE, { "SET  7,(HL)", 1, 16, &UnimplementedInstruction } },
+		{ 0xC7, { "SET  0,A", 1, 8, &SET_0_A } },
+		{ 0xC0, { "SET  0,B", 1, 8, &SET_0_B } },
+		{ 0xC1, { "SET  0,C", 1, 8, &SET_0_C } },
+		{ 0xC2, { "SET  0,D", 1, 8, &SET_0_D } },
+		{ 0xC3, { "SET  0,E", 1, 8, &SET_0_E } },
+		{ 0xC4, { "SET  0,H", 1, 8, &SET_0_H } },
+		{ 0xC5, { "SET  0,L", 1, 8, &SET_0_L } },
+		{ 0xC6, { "SET  0,(HL)", 1, 16, &SET_0_aHL } },
+		{ 0xCF, { "SET  1,A", 1, 8, &SET_1_A } },
+		{ 0xC8, { "SET  1,B", 1, 8, &SET_1_B } },
+		{ 0xC9, { "SET  1,C", 1, 8, &SET_1_C } },
+		{ 0xCA, { "SET  1,D", 1, 8, &SET_1_D } },
+		{ 0xCB, { "SET  1,E", 1, 8, &SET_1_E } },
+		{ 0xCC, { "SET  1,H", 1, 8, &SET_1_H } },
+		{ 0xCD, { "SET  1,L", 1, 8, &SET_1_L } },
+		{ 0xCE, { "SET  1,(HL)", 1, 16, &SET_1_aHL } },
+		{ 0xD7, { "SET  2,A", 1, 8, &SET_2_A } },
+		{ 0xD0, { "SET  2,B", 1, 8, &SET_2_B } },
+		{ 0xD1, { "SET  2,C", 1, 8, &SET_2_C } },
+		{ 0xD2, { "SET  2,D", 1, 8, &SET_2_D } },
+		{ 0xD3, { "SET  2,E", 1, 8, &SET_2_E } },
+		{ 0xD4, { "SET  2,H", 1, 8, &SET_2_H } },
+		{ 0xD5, { "SET  2,L", 1, 8, &SET_2_L } },
+		{ 0xD6, { "SET  2,(HL)", 1, 16, &SET_2_aHL } },
+		{ 0xDF, { "SET  3,A", 1, 8, &SET_3_A } },
+		{ 0xD8, { "SET  3,B", 1, 8, &SET_3_B } },
+		{ 0xD9, { "SET  3,C", 1, 8, &SET_3_C } },
+		{ 0xDA, { "SET  3,D", 1, 8, &SET_3_D } },
+		{ 0xDB, { "SET  3,E", 1, 8, &SET_3_E } },
+		{ 0xDC, { "SET  3,H", 1, 8, &SET_3_H } },
+		{ 0xDD, { "SET  3,L", 1, 8, &SET_3_L } },
+		{ 0xDE, { "SET  3,(HL)", 1, 16, &SET_3_aHL } },
+		{ 0xE7, { "SET  4,A", 1, 8, &SET_4_A } },
+		{ 0xE0, { "SET  4,B", 1, 8, &SET_4_B } },
+		{ 0xE1, { "SET  4,C", 1, 8, &SET_4_C } },
+		{ 0xE2, { "SET  4,D", 1, 8, &SET_4_D } },
+		{ 0xE3, { "SET  4,E", 1, 8, &SET_4_E } },
+		{ 0xE4, { "SET  4,H", 1, 8, &SET_4_H } },
+		{ 0xE5, { "SET  4,L", 1, 8, &SET_4_L } },
+		{ 0xE6, { "SET  4,(HL)", 1, 16, &SET_4_aHL } },
+		{ 0xEF, { "SET  5,A", 1, 8, &SET_5_A } },
+		{ 0xE8, { "SET  5,B", 1, 8, &SET_5_B } },
+		{ 0xE9, { "SET  5,C", 1, 8, &SET_5_C } },
+		{ 0xEA, { "SET  5,D", 1, 8, &SET_5_D } },
+		{ 0xEB, { "SET  5,E", 1, 8, &SET_5_E } },
+		{ 0xEC, { "SET  5,H", 1, 8, &SET_5_H } },
+		{ 0xED, { "SET  5,L", 1, 8, &SET_5_L } },
+		{ 0xEE, { "SET  5,(HL)", 1, 16, &SET_5_aHL } },
+		{ 0xF7, { "SET  6,A", 1, 8, &SET_6_A } },
+		{ 0xF0, { "SET  6,B", 1, 8, &SET_6_B } },
+		{ 0xF1, { "SET  6,C", 1, 8, &SET_6_C } },
+		{ 0xF2, { "SET  6,D", 1, 8, &SET_6_D } },
+		{ 0xF3, { "SET  6,E", 1, 8, &SET_6_E } },
+		{ 0xF4, { "SET  6,H", 1, 8, &SET_6_H } },
+		{ 0xF5, { "SET  6,L", 1, 8, &SET_6_L } },
+		{ 0xF6, { "SET  6,(HL)", 1, 16, &SET_6_aHL } },
+		{ 0xFF, { "SET  7,A", 1, 8, &SET_7_A } },
+		{ 0xF8, { "SET  7,B", 1, 8, &SET_7_B } },
+		{ 0xF9, { "SET  7,C", 1, 8, &SET_7_C } },
+		{ 0xFA, { "SET  7,D", 1, 8, &SET_7_D } },
+		{ 0xFB, { "SET  7,E", 1, 8, &SET_7_E } },
+		{ 0xFC, { "SET  7,H", 1, 8, &SET_7_H } },
+		{ 0xFD, { "SET  7,L", 1, 8, &SET_7_L } },
+		{ 0xFE, { "SET  7,(HL)", 1, 16, &SET_7_aHL } },
 
 		// Reset (Clear) Bit (RES b,r)
-		{ 0x87, { "RES  0,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x80, { "RES  0,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x81, { "RES  0,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x82, { "RES  0,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x83, { "RES  0,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x84, { "RES  0,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x85, { "RES  0,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x86, { "RES  0,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0x8F, { "RES  1,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x88, { "RES  1,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x89, { "RES  1,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x8A, { "RES  1,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x8B, { "RES  1,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x8C, { "RES  1,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x8D, { "RES  1,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x8E, { "RES  1,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0x97, { "RES  2,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x90, { "RES  2,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x91, { "RES  2,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x92, { "RES  2,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x93, { "RES  2,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x94, { "RES  2,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x95, { "RES  2,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x96, { "RES  2,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0x9F, { "RES  3,A", 1, 8, &UnimplementedInstruction } },
-		{ 0x98, { "RES  3,B", 1, 8, &UnimplementedInstruction } },
-		{ 0x99, { "RES  3,C", 1, 8, &UnimplementedInstruction } },
-		{ 0x9A, { "RES  3,D", 1, 8, &UnimplementedInstruction } },
-		{ 0x9B, { "RES  3,E", 1, 8, &UnimplementedInstruction } },
-		{ 0x9C, { "RES  3,H", 1, 8, &UnimplementedInstruction } },
-		{ 0x9D, { "RES  3,L", 1, 8, &UnimplementedInstruction } },
-		{ 0x9E, { "RES  3,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0xA7, { "RES  4,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xA0, { "RES  4,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xA1, { "RES  4,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xA2, { "RES  4,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xA3, { "RES  4,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xA4, { "RES  4,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xA5, { "RES  4,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xA6, { "RES  4,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0xAF, { "RES  5,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xA8, { "RES  5,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xA9, { "RES  5,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xAA, { "RES  5,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xAB, { "RES  5,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xAC, { "RES  5,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xAD, { "RES  5,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xAE, { "RES  5,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0xB7, { "RES  6,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xB0, { "RES  6,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xB1, { "RES  6,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xB2, { "RES  6,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xB3, { "RES  6,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xB4, { "RES  6,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xB5, { "RES  6,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xB6, { "RES  6,(HL)", 1, 16, &UnimplementedInstruction } },
-		{ 0xBF, { "RES  7,A", 1, 8, &UnimplementedInstruction } },
-		{ 0xB8, { "RES  7,B", 1, 8, &UnimplementedInstruction } },
-		{ 0xB9, { "RES  7,C", 1, 8, &UnimplementedInstruction } },
-		{ 0xBA, { "RES  7,D", 1, 8, &UnimplementedInstruction } },
-		{ 0xBB, { "RES  7,E", 1, 8, &UnimplementedInstruction } },
-		{ 0xBC, { "RES  7,H", 1, 8, &UnimplementedInstruction } },
-		{ 0xBD, { "RES  7,L", 1, 8, &UnimplementedInstruction } },
-		{ 0xBE, { "RES  7,(HL)", 1, 16, &UnimplementedInstruction } }
+		{ 0x87, { "RES  0,A", 1, 8, &RES_0_A } },
+		{ 0x80, { "RES  0,B", 1, 8, &RES_0_B } },
+		{ 0x81, { "RES  0,C", 1, 8, &RES_0_C } },
+		{ 0x82, { "RES  0,D", 1, 8, &RES_0_D } },
+		{ 0x83, { "RES  0,E", 1, 8, &RES_0_E } },
+		{ 0x84, { "RES  0,H", 1, 8, &RES_0_H } },
+		{ 0x85, { "RES  0,L", 1, 8, &RES_0_L } },
+		{ 0x86, { "RES  0,(HL)", 1, 16, &RES_0_aHL } },
+		{ 0x8F, { "RES  1,A", 1, 8, &RES_1_A } },
+		{ 0x88, { "RES  1,B", 1, 8, &RES_1_B } },
+		{ 0x89, { "RES  1,C", 1, 8, &RES_1_C } },
+		{ 0x8A, { "RES  1,D", 1, 8, &RES_1_D } },
+		{ 0x8B, { "RES  1,E", 1, 8, &RES_1_E } },
+		{ 0x8C, { "RES  1,H", 1, 8, &RES_1_H } },
+		{ 0x8D, { "RES  1,L", 1, 8, &RES_1_L } },
+		{ 0x8E, { "RES  1,(HL)", 1, 16, &RES_1_aHL } },
+		{ 0x97, { "RES  2,A", 1, 8, &RES_2_A } },
+		{ 0x90, { "RES  2,B", 1, 8, &RES_2_B } },
+		{ 0x91, { "RES  2,C", 1, 8, &RES_2_C } },
+		{ 0x92, { "RES  2,D", 1, 8, &RES_2_D } },
+		{ 0x93, { "RES  2,E", 1, 8, &RES_2_E } },
+		{ 0x94, { "RES  2,H", 1, 8, &RES_2_H } },
+		{ 0x95, { "RES  2,L", 1, 8, &RES_2_L } },
+		{ 0x96, { "RES  2,(HL)", 1, 16, &RES_2_aHL } },
+		{ 0x9F, { "RES  3,A", 1, 8, &RES_3_A } },
+		{ 0x98, { "RES  3,B", 1, 8, &RES_3_B } },
+		{ 0x99, { "RES  3,C", 1, 8, &RES_3_C } },
+		{ 0x9A, { "RES  3,D", 1, 8, &RES_3_D } },
+		{ 0x9B, { "RES  3,E", 1, 8, &RES_3_E } },
+		{ 0x9C, { "RES  3,H", 1, 8, &RES_3_H } },
+		{ 0x9D, { "RES  3,L", 1, 8, &RES_3_L } },
+		{ 0x9E, { "RES  3,(HL)", 1, 16, &RES_3_aHL } },
+		{ 0xA7, { "RES  4,A", 1, 8, &RES_4_A } },
+		{ 0xA0, { "RES  4,B", 1, 8, &RES_4_B } },
+		{ 0xA1, { "RES  4,C", 1, 8, &RES_4_C } },
+		{ 0xA2, { "RES  4,D", 1, 8, &RES_4_D } },
+		{ 0xA3, { "RES  4,E", 1, 8, &RES_4_E } },
+		{ 0xA4, { "RES  4,H", 1, 8, &RES_4_H } },
+		{ 0xA5, { "RES  4,L", 1, 8, &RES_4_L } },
+		{ 0xA6, { "RES  4,(HL)", 1, 16, &RES_4_aHL } },
+		{ 0xAF, { "RES  5,A", 1, 8, &RES_5_A } },
+		{ 0xA8, { "RES  5,B", 1, 8, &RES_5_B } },
+		{ 0xA9, { "RES  5,C", 1, 8, &RES_5_C } },
+		{ 0xAA, { "RES  5,D", 1, 8, &RES_5_D } },
+		{ 0xAB, { "RES  5,E", 1, 8, &RES_5_E } },
+		{ 0xAC, { "RES  5,H", 1, 8, &RES_5_H } },
+		{ 0xAD, { "RES  5,L", 1, 8, &RES_5_L } },
+		{ 0xAE, { "RES  5,(HL)", 1, 16, &RES_5_aHL } },
+		{ 0xB7, { "RES  6,A", 1, 8, &RES_6_A } },
+		{ 0xB0, { "RES  6,B", 1, 8, &RES_6_B } },
+		{ 0xB1, { "RES  6,C", 1, 8, &RES_6_C } },
+		{ 0xB2, { "RES  6,D", 1, 8, &RES_6_D } },
+		{ 0xB3, { "RES  6,E", 1, 8, &RES_6_E } },
+		{ 0xB4, { "RES  6,H", 1, 8, &RES_6_H } },
+		{ 0xB5, { "RES  6,L", 1, 8, &RES_6_L } },
+		{ 0xB6, { "RES  6,(HL)", 1, 16, &RES_6_aHL } },
+		{ 0xBF, { "RES  7,A", 1, 8, &RES_7_A } },
+		{ 0xB8, { "RES  7,B", 1, 8, &RES_7_B } },
+		{ 0xB9, { "RES  7,C", 1, 8, &RES_7_C } },
+		{ 0xBA, { "RES  7,D", 1, 8, &RES_7_D } },
+		{ 0xBB, { "RES  7,E", 1, 8, &RES_7_E } },
+		{ 0xBC, { "RES  7,H", 1, 8, &RES_7_H } },
+		{ 0xBD, { "RES  7,L", 1, 8, &RES_7_L } },
+		{ 0xBE, { "RES  7,(HL)", 1, 16, &RES_7_aHL } }
 
 		#pragma endregion
 	};
@@ -954,6 +954,8 @@ namespace GameBoi
 	{
 		throw exception("Unimplemented instruction!");
 	}
+
+	#pragma region 8-Bit Loads
 
 	/**
 	 * \brief Load one byte immediate value into register B
@@ -1645,6 +1647,10 @@ namespace GameBoi
 		mRegisters.A = mMemory.ReadByte(0xFF00 + n);
 	}
 
+	#pragma endregion
+
+	#pragma region 16-Bit Loads
+
 	/**
 	 * \brief Put two byte immediate value into register BC
 	 */
@@ -1771,6 +1777,10 @@ namespace GameBoi
 	{
 		mRegisters.HL = PopWordFromStack();
 	}
+
+	#pragma endregion
+
+	#pragma region 8-Bit ALU
 
 	/**
 	 * \brief Add A into A
@@ -3136,6 +3146,10 @@ namespace GameBoi
 		mRegisters.AssignCarryFlag(fullCarry);
 	}
 
+	#pragma endregion
+
+	#pragma region 16-Bit Arithmetic
+
 	/**
 	 * \brief Add BC into HL
 	 */
@@ -3276,6 +3290,10 @@ namespace GameBoi
 	{
 		mRegisters.SP = mRegisters.SP + 1;
 	}
+
+	#pragma endregion
+
+	#pragma region Miscellaneous
 
 	/**
 	 * \brief Swap upper & lower nibles of A
@@ -3486,6 +3504,10 @@ namespace GameBoi
 	{
 		mEnableInterruptsAfterNextInstruction = true;
 	}
+
+	#pragma endregion
+
+	#pragma region Rotates & Shift
 
 	/**
 	 * \brief Rotate A left
@@ -4420,6 +4442,1718 @@ namespace GameBoi
 		mRegisters.AssignCarryFlag(carry); // bit 0 always goes into C
 	}
 
+	#pragma endregion
+
+	#pragma region Bit Opcodes
+
+	/**
+	 * \brief Test bit 0 in register A
+	 */
+	void CPU::BIT_0_A(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.A & 0b00000001) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 1 in register A
+	 */
+	void CPU::BIT_1_A(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.A & 0b00000010) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 2 in register A
+	 */
+	void CPU::BIT_2_A(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.A & 0b00000100) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 3 in register A
+	 */
+	void CPU::BIT_3_A(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.A & 0b00001000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 4 in register A
+	 */
+	void CPU::BIT_4_A(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.A & 0b00010000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 5 in register A
+	 */
+	void CPU::BIT_5_A(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.A & 0b00100000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 6 in register A
+	 */
+	void CPU::BIT_6_A(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.A & 0b01000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 7 in register A
+	 */
+	void CPU::BIT_7_A(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.A & 0b10000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 0 in register B
+	 */
+	void CPU::BIT_0_B(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.B & 0b00000001) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 1 in register B
+	 */
+	void CPU::BIT_1_B(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.B & 0b00000010) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 2 in register B
+	 */
+	void CPU::BIT_2_B(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.B & 0b00000100) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 3 in register B
+	 */
+	void CPU::BIT_3_B(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.B & 0b00001000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 4 in register B
+	 */
+	void CPU::BIT_4_B(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.B & 0b00010000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 5 in register B
+	 */
+	void CPU::BIT_5_B(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.B & 0b00100000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 6 in register B
+	 */
+	void CPU::BIT_6_B(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.B & 0b01000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 7 in register B
+	 */
+	void CPU::BIT_7_B(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.B & 0b10000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 0 in register C
+	 */
+	void CPU::BIT_0_C(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.C & 0b00000001) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 1 in register C
+	 */
+	void CPU::BIT_1_C(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.C & 0b00000010) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 2 in register C
+	 */
+	void CPU::BIT_2_C(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.C & 0b00000100) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 3 in register C
+	 */
+	void CPU::BIT_3_C(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.C & 0b00001000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 4 in register C
+	 */
+	void CPU::BIT_4_C(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.C & 0b00010000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 5 in register C
+	 */
+	void CPU::BIT_5_C(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.C & 0b00100000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 6 in register C
+	 */
+	void CPU::BIT_6_C(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.C & 0b01000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 7 in register C
+	 */
+	void CPU::BIT_7_C(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.C & 0b10000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 0 in register D
+	 */
+	void CPU::BIT_0_D(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.D & 0b00000001) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 1 in register D
+	 */
+	void CPU::BIT_1_D(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.D & 0b00000010) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 2 in register D
+	 */
+	void CPU::BIT_2_D(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.D & 0b00000100) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 3 in register D
+	 */
+	void CPU::BIT_3_D(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.D & 0b00001000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 4 in register D
+	 */
+	void CPU::BIT_4_D(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.D & 0b00010000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 5 in register D
+	 */
+	void CPU::BIT_5_D(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.D & 0b00100000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 6 in register D
+	 */
+	void CPU::BIT_6_D(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.D & 0b01000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 7 in register D
+	 */
+	void CPU::BIT_7_D(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.D & 0b10000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 0 in register E
+	 */
+	void CPU::BIT_0_E(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.E & 0b00000001) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 1 in register E
+	 */
+	void CPU::BIT_1_E(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.E & 0b00000010) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 2 in register E
+	 */
+	void CPU::BIT_2_E(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.E & 0b00000100) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 3 in register E
+	 */
+	void CPU::BIT_3_E(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.E & 0b00001000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 4 in register E
+	 */
+	void CPU::BIT_4_E(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.E & 0b00010000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 5 in register E
+	 */
+	void CPU::BIT_5_E(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.E & 0b00100000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 6 in register E
+	 */
+	void CPU::BIT_6_E(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.E & 0b01000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 7 in register E
+	 */
+	void CPU::BIT_7_E(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.E & 0b10000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 0 in register H
+	 */
+	void CPU::BIT_0_H(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.H & 0b00000001) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 1 in register H
+	 */
+	void CPU::BIT_1_H(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.H & 0b00000010) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 2 in register H
+	 */
+	void CPU::BIT_2_H(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.H & 0b00000100) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 3 in register H
+	 */
+	void CPU::BIT_3_H(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.H & 0b00001000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 4 in register H
+	 */
+	void CPU::BIT_4_H(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.H & 0b00010000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 5 in register H
+	 */
+	void CPU::BIT_5_H(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.H & 0b00100000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 6 in register H
+	 */
+	void CPU::BIT_6_H(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.H & 0b01000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 7 in register H
+	 */
+	void CPU::BIT_7_H(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.H & 0b10000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 0 in register L
+	 */
+	void CPU::BIT_0_L(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.L & 0b00000001) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 1 in register L
+	 */
+	void CPU::BIT_1_L(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.L & 0b00000010) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 2 in register L
+	 */
+	void CPU::BIT_2_L(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.L & 0b00000100) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 3 in register L
+	 */
+	void CPU::BIT_3_L(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.L & 0b00001000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 4 in register L
+	 */
+	void CPU::BIT_4_L(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.L & 0b00010000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 5 in register L
+	 */
+	void CPU::BIT_5_L(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.L & 0b00100000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 6 in register L
+	 */
+	void CPU::BIT_6_L(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.L & 0b01000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 7 in register L
+	 */
+	void CPU::BIT_7_L(uint16_t)
+	{
+		mRegisters.AssignZeroFlag((mRegisters.L & 0b10000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 0 in the value at memory location HL
+	 */
+	void CPU::BIT_0_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		mRegisters.AssignZeroFlag((value & 0b00000001) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 1 in the value at memory location HL
+	 */
+	void CPU::BIT_1_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		mRegisters.AssignZeroFlag((value & 0b00000010) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 2 in the value at memory location HL
+	 */
+	void CPU::BIT_2_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		mRegisters.AssignZeroFlag((value & 0b00000100) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 3 in the value at memory location HL
+	 */
+	void CPU::BIT_3_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		mRegisters.AssignZeroFlag((value & 0b00001000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 4 in the value at memory location HL
+	 */
+	void CPU::BIT_4_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		mRegisters.AssignZeroFlag((value & 0b00010000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 5 in the value at memory location HL
+	 */
+	void CPU::BIT_5_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		mRegisters.AssignZeroFlag((value & 0b00100000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 6 in the value at memory location HL
+	 */
+	void CPU::BIT_6_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		mRegisters.AssignZeroFlag((value & 0b01000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Test bit 7 in the value at memory location HL
+	 */
+	void CPU::BIT_7_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		mRegisters.AssignZeroFlag((value & 0b10000000) != 0);
+		mRegisters.ResetSubtractFlag();
+		mRegisters.SetHalfCarryFlag();
+	}
+
+	/**
+	 * \brief Set bit 0 in register A
+	 */
+	void CPU::SET_0_A(uint16_t)
+	{
+		mRegisters.A |= 0b00000001;
+	}
+
+	/**
+	 * \brief Set bit 1 in register A
+	 */
+	void CPU::SET_1_A(uint16_t)
+	{
+		mRegisters.A |= 0b00000010;
+	}
+
+	/**
+	 * \brief Set bit 2 in register A
+	 */
+	void CPU::SET_2_A(uint16_t)
+	{
+		mRegisters.A |= 0b00000100;
+	}
+
+	/**
+	 * \brief Set bit 3 in register A
+	 */
+	void CPU::SET_3_A(uint16_t)
+	{
+		mRegisters.A |= 0b00001000;
+	}
+
+	/**
+	 * \brief Set bit 4 in register A
+	 */
+	void CPU::SET_4_A(uint16_t)
+	{
+		mRegisters.A |= 0b00010000;
+	}
+
+	/**
+	 * \brief Set bit 5 in register A
+	 */
+	void CPU::SET_5_A(uint16_t)
+	{
+		mRegisters.A |= 0b00100000;
+	}
+
+	/**
+	 * \brief Set bit 6 in register A
+	 */
+	void CPU::SET_6_A(uint16_t)
+	{
+		mRegisters.A |= 0b01000000;
+	}
+
+	/**
+	 * \brief Set bit 7 in register A
+	 */
+	void CPU::SET_7_A(uint16_t)
+	{
+		mRegisters.A |= 0b10000000;
+	}
+
+	/**
+	 * \brief Set bit 0 in register B
+	 */
+	void CPU::SET_0_B(uint16_t)
+	{
+		mRegisters.B |= 0b00000001;
+	}
+
+	/**
+	 * \brief Set bit 1 in register B
+	 */
+	void CPU::SET_1_B(uint16_t)
+	{
+		mRegisters.B |= 0b00000010;
+	}
+
+	/**
+	 * \brief Set bit 2 in register B
+	 */
+	void CPU::SET_2_B(uint16_t)
+	{
+		mRegisters.B |= 0b00000100;
+	}
+
+	/**
+	 * \brief Set bit 3 in register B
+	 */
+	void CPU::SET_3_B(uint16_t)
+	{
+		mRegisters.B |= 0b00001000;
+	}
+
+	/**
+	 * \brief Set bit 4 in register B
+	 */
+	void CPU::SET_4_B(uint16_t)
+	{
+		mRegisters.B |= 0b00010000;
+	}
+
+	/**
+	 * \brief Set bit 5 in register B
+	 */
+	void CPU::SET_5_B(uint16_t)
+	{
+		mRegisters.B |= 0b00100000;
+	}
+
+	/**
+	 * \brief Set bit 6 in register B
+	 */
+	void CPU::SET_6_B(uint16_t)
+	{
+		mRegisters.B |= 0b01000000;
+	}
+
+	/**
+	 * \brief Set bit 7 in register B
+	 */
+	void CPU::SET_7_B(uint16_t)
+	{
+		mRegisters.B |= 0b10000000;
+	}
+
+	/**
+	 * \brief Set bit 0 in register C
+	 */
+	void CPU::SET_0_C(uint16_t)
+	{
+		mRegisters.C |= 0b00000001;
+	}
+
+	/**
+	 * \brief Set bit 1 in register C
+	 */
+	void CPU::SET_1_C(uint16_t)
+	{
+		mRegisters.C |= 0b00000010;
+	}
+
+	/**
+	 * \brief Set bit 2 in register C
+	 */
+	void CPU::SET_2_C(uint16_t)
+	{
+		mRegisters.C |= 0b00000100;
+	}
+
+	/**
+	 * \brief Set bit 3 in register C
+	 */
+	void CPU::SET_3_C(uint16_t)
+	{
+		mRegisters.C |= 0b00001000;
+	}
+
+	/**
+	 * \brief Set bit 4 in register C
+	 */
+	void CPU::SET_4_C(uint16_t)
+	{
+		mRegisters.C |= 0b00010000;
+	}
+
+	/**
+	 * \brief Set bit 5 in register C
+	 */
+	void CPU::SET_5_C(uint16_t)
+	{
+		mRegisters.C |= 0b00100000;
+	}
+
+	/**
+	 * \brief Set bit 6 in register C
+	 */
+	void CPU::SET_6_C(uint16_t)
+	{
+		mRegisters.C |= 0b01000000;
+	}
+
+	/**
+	 * \brief Set bit 7 in register C
+	 */
+	void CPU::SET_7_C(uint16_t)
+	{
+		mRegisters.C |= 0b10000000;
+	}
+
+	/**
+	 * \brief Set bit 0 in register D
+	 */
+	void CPU::SET_0_D(uint16_t)
+	{
+		mRegisters.D |= 0b00000001;
+	}
+
+	/**
+	 * \brief Set bit 1 in register D
+	 */
+	void CPU::SET_1_D(uint16_t)
+	{
+		mRegisters.D |= 0b00000010;
+	}
+
+	/**
+	 * \brief Set bit 2 in register D
+	 */
+	void CPU::SET_2_D(uint16_t)
+	{
+		mRegisters.D |= 0b00000100;
+	}
+
+	/**
+	 * \brief Set bit 3 in register D
+	 */
+	void CPU::SET_3_D(uint16_t)
+	{
+		mRegisters.D |= 0b00001000;
+	}
+
+	/**
+	 * \brief Set bit 4 in register D
+	 */
+	void CPU::SET_4_D(uint16_t)
+	{
+		mRegisters.D |= 0b00010000;
+	}
+
+	/**
+	 * \brief Set bit 5 in register D
+	 */
+	void CPU::SET_5_D(uint16_t)
+	{
+		mRegisters.D |= 0b00100000;
+	}
+
+	/**
+	 * \brief Set bit 6 in register D
+	 */
+	void CPU::SET_6_D(uint16_t)
+	{
+		mRegisters.D |= 0b01000000;
+	}
+
+	/**
+	 * \brief Set bit 7 in register D
+	 */
+	void CPU::SET_7_D(uint16_t)
+	{
+		mRegisters.D |= 0b10000000;
+	}
+
+	/**
+	 * \brief Set bit 0 in register E
+	 */
+	void CPU::SET_0_E(uint16_t)
+	{
+		mRegisters.E |= 0b00000001;
+	}
+
+	/**
+	 * \brief Set bit 1 in register E
+	 */
+	void CPU::SET_1_E(uint16_t)
+	{
+		mRegisters.E |= 0b00000010;
+	}
+
+	/**
+	 * \brief Set bit 2 in register E
+	 */
+	void CPU::SET_2_E(uint16_t)
+	{
+		mRegisters.E |= 0b00000100;
+	}
+
+	/**
+	 * \brief Set bit 3 in register E
+	 */
+	void CPU::SET_3_E(uint16_t)
+	{
+		mRegisters.E |= 0b00001000;
+	}
+
+	/**
+	 * \brief Set bit 4 in register E
+	 */
+	void CPU::SET_4_E(uint16_t)
+	{
+		mRegisters.E |= 0b00010000;
+	}
+
+	/**
+	 * \brief Set bit 5 in register E
+	 */
+	void CPU::SET_5_E(uint16_t)
+	{
+		mRegisters.E |= 0b00100000;
+	}
+
+	/**
+	 * \brief Set bit 6 in register E
+	 */
+	void CPU::SET_6_E(uint16_t)
+	{
+		mRegisters.E |= 0b01000000;
+	}
+
+	/**
+	 * \brief Set bit 7 in register E
+	 */
+	void CPU::SET_7_E(uint16_t)
+	{
+		mRegisters.E |= 0b10000000;
+	}
+
+	/**
+	 * \brief Set bit 0 in register H
+	 */
+	void CPU::SET_0_H(uint16_t)
+	{
+		mRegisters.H |= 0b00000001;
+	}
+
+	/**
+	 * \brief Set bit 1 in register H
+	 */
+	void CPU::SET_1_H(uint16_t)
+	{
+		mRegisters.H |= 0b00000010;
+	}
+
+	/**
+	 * \brief Set bit 2 in register H
+	 */
+	void CPU::SET_2_H(uint16_t)
+	{
+		mRegisters.H |= 0b00000100;
+	}
+
+	/**
+	 * \brief Set bit 3 in register H
+	 */
+	void CPU::SET_3_H(uint16_t)
+	{
+		mRegisters.H |= 0b00001000;
+	}
+
+	/**
+	 * \brief Set bit 4 in register H
+	 */
+	void CPU::SET_4_H(uint16_t)
+	{
+		mRegisters.H |= 0b00010000;
+	}
+
+	/**
+	 * \brief Set bit 5 in register H
+	 */
+	void CPU::SET_5_H(uint16_t)
+	{
+		mRegisters.H |= 0b00100000;
+	}
+
+	/**
+	 * \brief Set bit 6 in register H
+	 */
+	void CPU::SET_6_H(uint16_t)
+	{
+		mRegisters.H |= 0b01000000;
+	}
+
+	/**
+	 * \brief Set bit 7 in register H
+	 */
+	void CPU::SET_7_H(uint16_t)
+	{
+		mRegisters.H |= 0b10000000;
+	}
+
+	/**
+	 * \brief Set bit 0 in register L
+	 */
+	void CPU::SET_0_L(uint16_t)
+	{
+		mRegisters.L |= 0b00000001;
+	}
+
+	/**
+	 * \brief Set bit 1 in register L
+	 */
+	void CPU::SET_1_L(uint16_t)
+	{
+		mRegisters.L |= 0b00000010;
+	}
+
+	/**
+	 * \brief Set bit 2 in register L
+	 */
+	void CPU::SET_2_L(uint16_t)
+	{
+		mRegisters.L |= 0b00000100;
+	}
+
+	/**
+	 * \brief Set bit 3 in register L
+	 */
+	void CPU::SET_3_L(uint16_t)
+	{
+		mRegisters.L |= 0b00001000;
+	}
+
+	/**
+	 * \brief Set bit 4 in register L
+	 */
+	void CPU::SET_4_L(uint16_t)
+	{
+		mRegisters.L |= 0b00010000;
+	}
+
+	/**
+	 * \brief Set bit 5 in register L
+	 */
+	void CPU::SET_5_L(uint16_t)
+	{
+		mRegisters.L |= 0b00100000;
+	}
+
+	/**
+	 * \brief Set bit 6 in register L
+	 */
+	void CPU::SET_6_L(uint16_t)
+	{
+		mRegisters.L |= 0b01000000;
+	}
+
+	/**
+	 * \brief Set bit 7 in register L
+	 */
+	void CPU::SET_7_L(uint16_t)
+	{
+		mRegisters.L |= 0b10000000;
+	}
+
+	/**
+	 * \brief Set bit 0 in the value at address HL
+	 */
+	void CPU::SET_0_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value |= 0b00000001;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Set bit 1 in the value at address HL
+	 */
+	void CPU::SET_1_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value |= 0b00000010;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Set bit 2 in the value at address HL
+	 */
+	void CPU::SET_2_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value |= 0b00000100;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Set bit 3 in the value at address HL
+	 */
+	void CPU::SET_3_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value |= 0b00001000;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Set bit 4 in the value at address HL
+	 */
+	void CPU::SET_4_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value |= 0b00010000;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Set bit 5 in the value at address HL
+	 */
+	void CPU::SET_5_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value |= 0b00100000;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Set bit 6 in the value at address HL
+	 */
+	void CPU::SET_6_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value |= 0b01000000;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Set bit 7 in the value at address HL
+	 */
+	void CPU::SET_7_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value |= 0b10000000;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Reset (clear) bit 0 in register A
+	 */
+	void CPU::RES_0_A(uint16_t)
+	{
+		mRegisters.A &= ~0b00000001;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 1 in register A
+	 */
+	void CPU::RES_1_A(uint16_t)
+	{
+		mRegisters.A &= ~0b00000010;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 2 in register A
+	 */
+	void CPU::RES_2_A(uint16_t)
+	{
+		mRegisters.A &= ~0b00000100;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 3 in register A
+	 */
+	void CPU::RES_3_A(uint16_t)
+	{
+		mRegisters.A &= ~0b00001000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 4 in register A
+	 */
+	void CPU::RES_4_A(uint16_t)
+	{
+		mRegisters.A &= ~0b00010000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 5 in register A
+	 */
+	void CPU::RES_5_A(uint16_t)
+	{
+		mRegisters.A &= ~0b00100000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 6 in register A
+	 */
+	void CPU::RES_6_A(uint16_t)
+	{
+		mRegisters.A &= ~0b01000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 7 in register A
+	 */
+	void CPU::RES_7_A(uint16_t)
+	{
+		mRegisters.A &= ~0b10000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 0 in register B
+	 */
+	void CPU::RES_0_B(uint16_t)
+	{
+		mRegisters.B &= ~0b00000001;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 1 in register B
+	 */
+	void CPU::RES_1_B(uint16_t)
+	{
+		mRegisters.B &= ~0b00000010;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 2 in register B
+	 */
+	void CPU::RES_2_B(uint16_t)
+	{
+		mRegisters.B &= ~0b00000100;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 3 in register B
+	 */
+	void CPU::RES_3_B(uint16_t)
+	{
+		mRegisters.B &= ~0b00001000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 4 in register B
+	 */
+	void CPU::RES_4_B(uint16_t)
+	{
+		mRegisters.B &= ~0b00010000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 5 in register B
+	 */
+	void CPU::RES_5_B(uint16_t)
+	{
+		mRegisters.B &= ~0b00100000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 6 in register B
+	 */
+	void CPU::RES_6_B(uint16_t)
+	{
+		mRegisters.B &= ~0b01000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 7 in register B
+	 */
+	void CPU::RES_7_B(uint16_t)
+	{
+		mRegisters.B &= ~0b10000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 0 in register C
+	 */
+	void CPU::RES_0_C(uint16_t)
+	{
+		mRegisters.C &= ~0b00000001;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 1 in register C
+	 */
+	void CPU::RES_1_C(uint16_t)
+	{
+		mRegisters.C &= ~0b00000010;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 2 in register C
+	 */
+	void CPU::RES_2_C(uint16_t)
+	{
+		mRegisters.C &= ~0b00000100;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 3 in register C
+	 */
+	void CPU::RES_3_C(uint16_t)
+	{
+		mRegisters.C &= ~0b00001000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 4 in register C
+	 */
+	void CPU::RES_4_C(uint16_t)
+	{
+		mRegisters.C &= ~0b00010000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 5 in register C
+	 */
+	void CPU::RES_5_C(uint16_t)
+	{
+		mRegisters.C &= ~0b00100000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 6 in register C
+	 */
+	void CPU::RES_6_C(uint16_t)
+	{
+		mRegisters.C &= ~0b01000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 7 in register C
+	 */
+	void CPU::RES_7_C(uint16_t)
+	{
+		mRegisters.C &= ~0b10000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 0 in register D
+	 */
+	void CPU::RES_0_D(uint16_t)
+	{
+		mRegisters.D &= ~0b00000001;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 1 in register D
+	 */
+	void CPU::RES_1_D(uint16_t)
+	{
+		mRegisters.D &= ~0b00000010;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 2 in register D
+	 */
+	void CPU::RES_2_D(uint16_t)
+	{
+		mRegisters.D &= ~0b00000100;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 3 in register D
+	 */
+	void CPU::RES_3_D(uint16_t)
+	{
+		mRegisters.D &= ~0b00001000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 4 in register D
+	 */
+	void CPU::RES_4_D(uint16_t)
+	{
+		mRegisters.D &= ~0b00010000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 5 in register D
+	 */
+	void CPU::RES_5_D(uint16_t)
+	{
+		mRegisters.D &= ~0b00100000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 6 in register D
+	 */
+	void CPU::RES_6_D(uint16_t)
+	{
+		mRegisters.D &= ~0b01000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 7 in register D
+	 */
+	void CPU::RES_7_D(uint16_t)
+	{
+		mRegisters.D &= ~0b10000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 0 in register E
+	 */
+	void CPU::RES_0_E(uint16_t)
+	{
+		mRegisters.E &= ~0b00000001;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 1 in register E
+	 */
+	void CPU::RES_1_E(uint16_t)
+	{
+		mRegisters.E &= ~0b00000010;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 2 in register E
+	 */
+	void CPU::RES_2_E(uint16_t)
+	{
+		mRegisters.E &= ~0b00000100;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 3 in register E
+	 */
+	void CPU::RES_3_E(uint16_t)
+	{
+		mRegisters.E &= ~0b00001000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 4 in register E
+	 */
+	void CPU::RES_4_E(uint16_t)
+	{
+		mRegisters.E &= ~0b00010000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 5 in register E
+	 */
+	void CPU::RES_5_E(uint16_t)
+	{
+		mRegisters.E &= ~0b00100000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 6 in register E
+	 */
+	void CPU::RES_6_E(uint16_t)
+	{
+		mRegisters.E &= ~0b01000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 7 in register E
+	 */
+	void CPU::RES_7_E(uint16_t)
+	{
+		mRegisters.E &= ~0b10000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 0 in register H
+	 */
+	void CPU::RES_0_H(uint16_t)
+	{
+		mRegisters.H &= ~0b00000001;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 1 in register H
+	 */
+	void CPU::RES_1_H(uint16_t)
+	{
+		mRegisters.H &= ~0b00000010;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 2 in register H
+	 */
+	void CPU::RES_2_H(uint16_t)
+	{
+		mRegisters.H &= ~0b00000100;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 3 in register H
+	 */
+	void CPU::RES_3_H(uint16_t)
+	{
+		mRegisters.H &= ~0b00001000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 4 in register H
+	 */
+	void CPU::RES_4_H(uint16_t)
+	{
+		mRegisters.H &= ~0b00010000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 5 in register H
+	 */
+	void CPU::RES_5_H(uint16_t)
+	{
+		mRegisters.H &= ~0b00100000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 6 in register H
+	 */
+	void CPU::RES_6_H(uint16_t)
+	{
+		mRegisters.H &= ~0b01000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 7 in register H
+	 */
+	void CPU::RES_7_H(uint16_t)
+	{
+		mRegisters.H &= ~0b10000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 0 in register L
+	 */
+	void CPU::RES_0_L(uint16_t)
+	{
+		mRegisters.L &= ~0b00000001;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 1 in register L
+	 */
+	void CPU::RES_1_L(uint16_t)
+	{
+		mRegisters.L &= ~0b00000010;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 2 in register L
+	 */
+	void CPU::RES_2_L(uint16_t)
+	{
+		mRegisters.L &= ~0b00000100;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 3 in register L
+	 */
+	void CPU::RES_3_L(uint16_t)
+	{
+		mRegisters.L &= ~0b00001000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 4 in register L
+	 */
+	void CPU::RES_4_L(uint16_t)
+	{
+		mRegisters.L &= ~0b00010000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 5 in register L
+	 */
+	void CPU::RES_5_L(uint16_t)
+	{
+		mRegisters.L &= ~0b00100000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 6 in register L
+	 */
+	void CPU::RES_6_L(uint16_t)
+	{
+		mRegisters.L &= ~0b01000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 7 in register L
+	 */
+	void CPU::RES_7_L(uint16_t)
+	{
+		mRegisters.L &= ~0b10000000;
+	}
+
+	/**
+	 * \brief Reset (clear) bit 0 in the value at address HL
+	 */
+	void CPU::RES_0_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value &= ~0b00000001;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Reset (clear) bit 1 in the value at address HL
+	 */
+	void CPU::RES_1_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value &= ~0b00000010;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Reset (clear) bit 2 in the value at address HL
+	 */
+	void CPU::RES_2_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value &= ~0b00000100;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Reset (clear) bit 3 in the value at address HL
+	 */
+	void CPU::RES_3_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value &= ~0b00001000;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Reset (clear) bit 4 in the value at address HL
+	 */
+	void CPU::RES_4_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value &= ~0b00010000;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Reset (clear) bit 5 in the value at address HL
+	 */
+	void CPU::RES_5_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value &= ~0b00100000;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Reset (clear) bit 6 in the value at address HL
+	 */
+	void CPU::RES_6_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value &= ~0b01000000;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	/**
+	 * \brief Reset (clear) bit 7 in the value at address HL
+	 */
+	void CPU::RES_7_aHL(uint16_t)
+	{
+		uint8_t value = mMemory.ReadByte(mRegisters.HL);
+		value &= ~0b10000000;
+		mMemory.WriteByte(mRegisters.HL, value);
+	}
+
+	#pragma endregion
+
+	#pragma region Jumps
+
 	/**
 	 * \brief Jump to two byte immediate address
 	 */
@@ -4537,6 +6271,10 @@ namespace GameBoi
 		}
 	}
 
+	#pragma endregion
+
+	#pragma region Calls
+
 	/**
 	 * \brief Push address of next instruction onto stack and then jump to the two byte immediate value
 	 */
@@ -4593,6 +6331,10 @@ namespace GameBoi
 			mRegisters.PC = operand;
 		}
 	}
+
+	#pragma endregion
+
+	#pragma region Restarts
 
 	/**
 	 * \brief Push address of next instruction onto stack and then jump to address 0x0000
@@ -4657,6 +6399,10 @@ namespace GameBoi
 	{
 		CALL_nn(0x0038);
 	}
+
+	#pragma endregion
+
+	#pragma region Returns
 
 	/**
 	 * \brief Pop two bytes from stack & jump to that address
@@ -4723,4 +6469,6 @@ namespace GameBoi
 		RET(operand);
 		EI(operand);
 	}
+
+	#pragma endregion
 }
