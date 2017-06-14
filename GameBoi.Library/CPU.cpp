@@ -6283,7 +6283,8 @@ namespace GameBoi
 	 */
 	void CPU::CALL_nn(uint16_t operand)
 	{
-		PushWordToStack(mRegisters.PC + 3);
+		// PC has already been incremented when execution is happening
+		PushWordToStack(mRegisters.PC);
 		mRegisters.PC = operand;
 	}
 
@@ -6294,8 +6295,7 @@ namespace GameBoi
 	{
 		if (!mRegisters.GetZeroFlag())
 		{
-			PushWordToStack(mRegisters.PC + 3);
-			mRegisters.PC = operand;
+			CALL_nn(operand);
 		}
 	}
 
@@ -6306,8 +6306,7 @@ namespace GameBoi
 	{
 		if (mRegisters.GetZeroFlag())
 		{
-			PushWordToStack(mRegisters.PC + 3);
-			mRegisters.PC = operand;
+			CALL_nn(operand);
 		}
 	}
 
@@ -6318,8 +6317,7 @@ namespace GameBoi
 	{
 		if (!mRegisters.GetCarryFlag())
 		{
-			PushWordToStack(mRegisters.PC + 3);
-			mRegisters.PC = operand;
+			CALL_nn(operand);
 		}
 	}
 
@@ -6330,8 +6328,7 @@ namespace GameBoi
 	{
 		if (mRegisters.GetCarryFlag())
 		{
-			PushWordToStack(mRegisters.PC + 3);
-			mRegisters.PC = operand;
+			CALL_nn(operand);
 		}
 	}
 
@@ -6419,48 +6416,44 @@ namespace GameBoi
 	/**
 	 * \brief Pop two bytes from stack & jump to that address if the zero flag is not set
 	 */
-	void CPU::RET_NZ(uint16_t)
+	void CPU::RET_NZ(uint16_t operand)
 	{
 		if (!mRegisters.GetZeroFlag())
 		{
-			uint16_t address = PopWordFromStack();
-			mRegisters.PC = address;
+			RET(operand);
 		}
 	}
 
 	/**
 	 * \brief Pop two bytes from stack & jump to that address if the zero flag is set
 	 */
-	void CPU::RET_Z(uint16_t)
+	void CPU::RET_Z(uint16_t operand)
 	{
 		if (mRegisters.GetZeroFlag())
 		{
-			uint16_t address = PopWordFromStack();
-			mRegisters.PC = address;
+			RET(operand);
 		}
 	}
 
 	/**
 	 * \brief Pop two bytes from stack & jump to that address if the carry flag is not set
 	 */
-	void CPU::RET_NC(uint16_t)
+	void CPU::RET_NC(uint16_t operand)
 	{
 		if (!mRegisters.GetCarryFlag())
 		{
-			uint16_t address = PopWordFromStack();
-			mRegisters.PC = address;
+			RET(operand);
 		}
 	}
 
 	/**
 	 * \brief Pop two bytes from stack & jump to that address if the carry flag is set
 	 */
-	void CPU::RET_C(uint16_t)
+	void CPU::RET_C(uint16_t operand)
 	{
 		if (mRegisters.GetCarryFlag())
 		{
-			uint16_t address = PopWordFromStack();
-			mRegisters.PC = address;
+			RET(operand);
 		}
 	}
 
