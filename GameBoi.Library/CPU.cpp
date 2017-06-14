@@ -836,20 +836,23 @@ namespace GameBoi
 				mEnableInterruptsAfterNextInstruction = false;
 			}
 
-			opcode = mMemory.ReadByte(mRegisters.PC);
+			// gather instruction information
+			opcode = mMemory.ReadByte(mRegisters.PC++);
 			Instruction instruction = opcode != 0xCB ? sOpcodeDisassembly.at(opcode) : sOpcodeDisassembly_PrefixCB.at(opcode);
 			uint16_t operand = 0x0000;
 			if (instruction.OperandLength == 1)
 			{
 				operand = mMemory.ReadByte(mRegisters.PC);
+				mRegisters.PC += 1;
 			}
 			else if (instruction.OperandLength == 2)
 			{
 				operand = mMemory.ReadWord(mRegisters.PC);
+				mRegisters.PC += 2;
 			}
 
+			// execute instruction
 			invoke(instruction.Function, this, operand);
-			mRegisters.PC += static_cast<uint16_t>(1 + instruction.OperandLength);
 			// increment clock cycles
 
 			if (disableInterrupts)
@@ -4198,7 +4201,7 @@ namespace GameBoi
 	void CPU::SRA_A(uint16_t)
 	{
 		bool carry = (mRegisters.A & 0x1) != 0;
-		bool negative = mRegisters.A & 0x80 != 0;
+		bool negative = (mRegisters.A & 0x80) != 0;
 		uint8_t result = (mRegisters.A >> 1) | (negative ? 0x80 : 0x00);
 
 		mRegisters.A = result;
@@ -4214,7 +4217,7 @@ namespace GameBoi
 	void CPU::SRA_B(uint16_t)
 	{
 		bool carry = (mRegisters.B & 0x1) != 0;
-		bool negative = mRegisters.B & 0x80 != 0;
+		bool negative = (mRegisters.B & 0x80) != 0;
 		uint8_t result = (mRegisters.B >> 1) | (negative ? 0x80 : 0x00);
 
 		mRegisters.B = result;
@@ -4230,7 +4233,7 @@ namespace GameBoi
 	void CPU::SRA_C(uint16_t)
 	{
 		bool carry = (mRegisters.C & 0x1) != 0;
-		bool negative = mRegisters.C & 0x80 != 0;
+		bool negative = (mRegisters.C & 0x80) != 0;
 		uint8_t result = (mRegisters.C >> 1) | (negative ? 0x80 : 0x00);
 
 		mRegisters.C = result;
@@ -4246,7 +4249,7 @@ namespace GameBoi
 	void CPU::SRA_D(uint16_t)
 	{
 		bool carry = (mRegisters.D & 0x1) != 0;
-		bool negative = mRegisters.D & 0x80 != 0;
+		bool negative = (mRegisters.D & 0x80) != 0;
 		uint8_t result = (mRegisters.D >> 1) | (negative ? 0x80 : 0x00);
 
 		mRegisters.D = result;
@@ -4262,7 +4265,7 @@ namespace GameBoi
 	void CPU::SRA_E(uint16_t)
 	{
 		bool carry = (mRegisters.E & 0x1) != 0;
-		bool negative = mRegisters.E & 0x80 != 0;
+		bool negative = (mRegisters.E & 0x80) != 0;
 		uint8_t result = (mRegisters.E >> 1) | (negative ? 0x80 : 0x00);
 
 		mRegisters.E = result;
@@ -4278,7 +4281,7 @@ namespace GameBoi
 	void CPU::SRA_H(uint16_t)
 	{
 		bool carry = (mRegisters.H & 0x1) != 0;
-		bool negative = mRegisters.H & 0x80 != 0;
+		bool negative = (mRegisters.H & 0x80) != 0;
 		uint8_t result = (mRegisters.H >> 1) | (negative ? 0x80 : 0x00);
 
 		mRegisters.H = result;
@@ -4294,7 +4297,7 @@ namespace GameBoi
 	void CPU::SRA_L(uint16_t)
 	{
 		bool carry = (mRegisters.L & 0x1) != 0;
-		bool negative = mRegisters.L & 0x80 != 0;
+		bool negative = (mRegisters.L & 0x80) != 0;
 		uint8_t result = (mRegisters.L >> 1) | (negative ? 0x80 : 0x00);
 
 		mRegisters.L = result;
@@ -4311,7 +4314,7 @@ namespace GameBoi
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
 		bool carry = (value & 0x1) != 0;
-		bool negative = value & 0x80 != 0;
+		bool negative = (value & 0x80) != 0;
 		uint8_t result = (value >> 1) | (negative ? 0x80 : 0x00);
 
 		mMemory.WriteByte(mRegisters.HL, result & 0xFF);
