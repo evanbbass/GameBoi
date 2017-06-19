@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Windows", "GameBoi.Windows\GameBoi.Windows.vcxproj", "{13DB756B-0C07-4B72-B696-39FA66FD8B99}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Windows", "..\source\GameBoi.Windows\GameBoi.Windows.vcxproj", "{13DB756B-0C07-4B72-B696-39FA66FD8B99}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Library", "GameBoi.Library\GameBoi.Library.vcxproj", "{8463DC84-458B-413A-A748-C0BC36743727}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Library", "..\source\GameBoi.Library\GameBoi.Library.vcxproj", "{8463DC84-458B-413A-A748-C0BC36743727}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Library.Test", "GameBoi.Library.Test\GameBoi.Library.Test.vcxproj", "{9A0E1ACB-94AA-4520-99B7-99326A08243F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Library.Test", "..\source\GameBoi.Library.Test\GameBoi.Library.Test.vcxproj", "{9A0E1ACB-94AA-4520-99B7-99326A08243F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
