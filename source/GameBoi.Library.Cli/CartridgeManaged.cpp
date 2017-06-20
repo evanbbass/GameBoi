@@ -21,7 +21,7 @@ namespace GameBoiManaged
 	{
 	}
 
-	Cartridge& CartridgeManaged::GetUnmanaged()
+	Cartridge& CartridgeManaged::Unmanaged::get()
 	{
 		return *mCartridge;
 	}
@@ -61,22 +61,22 @@ namespace GameBoiManaged
 		mCartridge->SetSwitchableBankIndex(index);
 	}
 
-	String^ CartridgeManaged::GetGameTitle()
+	String^ CartridgeManaged::GameTitle::get()
 	{
 		return gcnew String(mCartridge->GetGameTitle().c_str());
 	}
 
-	Cartridge::CartridgeType CartridgeManaged::GetCartrideType()
+	Cartridge::CartridgeType CartridgeManaged::CartrideType::get()
 	{
 		return mCartridge->GetCartrideType();
 	}
 
-	bool CartridgeManaged::GetColorSupport()
+	bool CartridgeManaged::ColorSupport::get()
 	{
 		return mCartridge->GetColorSupport();
 	}
 
-	bool CartridgeManaged::GetSuperSupport()
+	bool CartridgeManaged::SuperSupport::get()
 	{
 		return mCartridge->GetSuperSupport();
 	}

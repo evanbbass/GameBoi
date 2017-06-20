@@ -16,7 +16,7 @@ namespace GameBoiManaged
 	{
 	}
 
-	Registers& RegistersManaged::GetUnmanaged()
+	Registers& RegistersManaged::Unmanaged::get()
 	{
 		return *mRegisters;
 	}

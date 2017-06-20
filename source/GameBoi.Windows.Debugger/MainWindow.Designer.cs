@@ -49,6 +49,7 @@
 			this.textBoxRegF = new System.Windows.Forms.TextBox();
 			this.textBoxRegA = new System.Windows.Forms.TextBox();
 			this.labelRegAF = new System.Windows.Forms.Label();
+			this.buttonStepCPU = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -76,7 +77,7 @@
 			this.groupBox1.Controls.Add(this.labelRegAF);
 			this.groupBox1.Location = new System.Drawing.Point(12, 12);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(237, 197);
+			this.groupBox1.Size = new System.Drawing.Size(267, 197);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Registers";
@@ -84,47 +85,51 @@
 			// checkBoxCarryFlag
 			// 
 			this.checkBoxCarryFlag.AutoSize = true;
-			this.checkBoxCarryFlag.Location = new System.Drawing.Point(106, 108);
+			this.checkBoxCarryFlag.Location = new System.Drawing.Point(136, 108);
 			this.checkBoxCarryFlag.Name = "checkBoxCarryFlag";
 			this.checkBoxCarryFlag.Size = new System.Drawing.Size(95, 21);
 			this.checkBoxCarryFlag.TabIndex = 20;
 			this.checkBoxCarryFlag.Text = "Carry Flag";
 			this.checkBoxCarryFlag.UseVisualStyleBackColor = true;
+			this.checkBoxCarryFlag.CheckedChanged += new System.EventHandler(this.checkBoxCarryFlag_CheckedChanged);
 			// 
 			// checkBoxHalfCarryFlag
 			// 
 			this.checkBoxHalfCarryFlag.AutoSize = true;
-			this.checkBoxHalfCarryFlag.Location = new System.Drawing.Point(106, 80);
+			this.checkBoxHalfCarryFlag.Location = new System.Drawing.Point(136, 80);
 			this.checkBoxHalfCarryFlag.Name = "checkBoxHalfCarryFlag";
 			this.checkBoxHalfCarryFlag.Size = new System.Drawing.Size(125, 21);
 			this.checkBoxHalfCarryFlag.TabIndex = 19;
 			this.checkBoxHalfCarryFlag.Text = "Half-Carry Flag";
 			this.checkBoxHalfCarryFlag.UseVisualStyleBackColor = true;
+			this.checkBoxHalfCarryFlag.CheckedChanged += new System.EventHandler(this.checkBoxHalfCarryFlag_CheckedChanged);
 			// 
 			// checkBoxSubtractFlag
 			// 
 			this.checkBoxSubtractFlag.AutoSize = true;
-			this.checkBoxSubtractFlag.Location = new System.Drawing.Point(106, 52);
+			this.checkBoxSubtractFlag.Location = new System.Drawing.Point(136, 52);
 			this.checkBoxSubtractFlag.Name = "checkBoxSubtractFlag";
 			this.checkBoxSubtractFlag.Size = new System.Drawing.Size(114, 21);
 			this.checkBoxSubtractFlag.TabIndex = 18;
 			this.checkBoxSubtractFlag.Text = "Subtract Flag";
 			this.checkBoxSubtractFlag.UseVisualStyleBackColor = true;
+			this.checkBoxSubtractFlag.CheckedChanged += new System.EventHandler(this.checkBoxSubtractFlag_CheckedChanged);
 			// 
 			// checkBoxZeroFlag
 			// 
 			this.checkBoxZeroFlag.AutoSize = true;
-			this.checkBoxZeroFlag.Location = new System.Drawing.Point(106, 24);
+			this.checkBoxZeroFlag.Location = new System.Drawing.Point(136, 24);
 			this.checkBoxZeroFlag.Name = "checkBoxZeroFlag";
 			this.checkBoxZeroFlag.Size = new System.Drawing.Size(91, 21);
 			this.checkBoxZeroFlag.TabIndex = 17;
 			this.checkBoxZeroFlag.Text = "Zero Flag";
 			this.checkBoxZeroFlag.UseVisualStyleBackColor = true;
+			this.checkBoxZeroFlag.CheckedChanged += new System.EventHandler(this.checkBoxZeroFlag_CheckedChanged);
 			// 
 			// textBoxRegSP
 			// 
 			this.textBoxRegSP.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.textBoxRegSP.Location = new System.Drawing.Point(39, 162);
+			this.textBoxRegSP.Location = new System.Drawing.Point(39, 134);
 			this.textBoxRegSP.MaxLength = 4;
 			this.textBoxRegSP.Name = "textBoxRegSP";
 			this.textBoxRegSP.Size = new System.Drawing.Size(61, 22);
@@ -132,11 +137,12 @@
 			this.textBoxRegSP.Text = "0000";
 			this.textBoxRegSP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.textBoxRegSP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
+			this.textBoxRegSP.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegSP_Validating);
 			// 
 			// labelRegSP
 			// 
 			this.labelRegSP.AutoSize = true;
-			this.labelRegSP.Location = new System.Drawing.Point(8, 165);
+			this.labelRegSP.Location = new System.Drawing.Point(8, 137);
 			this.labelRegSP.Name = "labelRegSP";
 			this.labelRegSP.Size = new System.Drawing.Size(26, 17);
 			this.labelRegSP.TabIndex = 14;
@@ -145,7 +151,7 @@
 			// textBoxRegPC
 			// 
 			this.textBoxRegPC.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.textBoxRegPC.Location = new System.Drawing.Point(39, 134);
+			this.textBoxRegPC.Location = new System.Drawing.Point(39, 162);
 			this.textBoxRegPC.MaxLength = 4;
 			this.textBoxRegPC.Name = "textBoxRegPC";
 			this.textBoxRegPC.Size = new System.Drawing.Size(61, 22);
@@ -153,11 +159,12 @@
 			this.textBoxRegPC.Text = "0000";
 			this.textBoxRegPC.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.textBoxRegPC.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
+			this.textBoxRegPC.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegPC_Validating);
 			// 
 			// labelRegPC
 			// 
 			this.labelRegPC.AutoSize = true;
-			this.labelRegPC.Location = new System.Drawing.Point(8, 137);
+			this.labelRegPC.Location = new System.Drawing.Point(8, 165);
 			this.labelRegPC.Name = "labelRegPC";
 			this.labelRegPC.Size = new System.Drawing.Size(26, 17);
 			this.labelRegPC.TabIndex = 12;
@@ -174,6 +181,7 @@
 			this.textBoxRegL.Text = "00";
 			this.textBoxRegL.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.textBoxRegL.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
+			this.textBoxRegL.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegL_Validating);
 			// 
 			// textBoxRegH
 			// 
@@ -186,6 +194,7 @@
 			this.textBoxRegH.Text = "00";
 			this.textBoxRegH.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.textBoxRegH.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
+			this.textBoxRegH.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegH_Validating);
 			// 
 			// labelRegHL
 			// 
@@ -207,6 +216,7 @@
 			this.textBoxRegE.Text = "00";
 			this.textBoxRegE.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.textBoxRegE.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
+			this.textBoxRegE.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegE_Validating);
 			// 
 			// textBoxRegD
 			// 
@@ -219,6 +229,7 @@
 			this.textBoxRegD.Text = "00";
 			this.textBoxRegD.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.textBoxRegD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
+			this.textBoxRegD.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegD_Validating);
 			// 
 			// labelRegDE
 			// 
@@ -240,6 +251,7 @@
 			this.textBoxRegC.Text = "00";
 			this.textBoxRegC.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.textBoxRegC.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
+			this.textBoxRegC.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegC_Validating);
 			// 
 			// textBoxRegB
 			// 
@@ -252,6 +264,7 @@
 			this.textBoxRegB.Text = "00";
 			this.textBoxRegB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.textBoxRegB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
+			this.textBoxRegB.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegB_Validating);
 			// 
 			// labelRegBC
 			// 
@@ -273,6 +286,7 @@
 			this.textBoxRegF.Text = "00";
 			this.textBoxRegF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.textBoxRegF.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
+			this.textBoxRegF.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegF_Validating);
 			// 
 			// textBoxRegA
 			// 
@@ -285,6 +299,7 @@
 			this.textBoxRegA.Text = "00";
 			this.textBoxRegA.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.textBoxRegA.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
+			this.textBoxRegA.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegA_Validating);
 			// 
 			// labelRegAF
 			// 
@@ -295,11 +310,22 @@
 			this.labelRegAF.TabIndex = 0;
 			this.labelRegAF.Text = "AF";
 			// 
+			// buttonStepCPU
+			// 
+			this.buttonStepCPU.Location = new System.Drawing.Point(894, 684);
+			this.buttonStepCPU.Name = "buttonStepCPU";
+			this.buttonStepCPU.Size = new System.Drawing.Size(100, 25);
+			this.buttonStepCPU.TabIndex = 2;
+			this.buttonStepCPU.Text = "Step CPU";
+			this.buttonStepCPU.UseVisualStyleBackColor = true;
+			this.buttonStepCPU.Click += new System.EventHandler(this.buttonStepCPU_Click);
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1006, 721);
+			this.Controls.Add(this.buttonStepCPU);
 			this.Controls.Add(this.groupBox1);
 			this.Name = "MainWindow";
 			this.Text = "GameBoi Debugger";
@@ -332,6 +358,7 @@
 		private System.Windows.Forms.TextBox textBoxRegF;
 		private System.Windows.Forms.TextBox textBoxRegA;
 		private System.Windows.Forms.Label labelRegAF;
+		private System.Windows.Forms.Button buttonStepCPU;
 	}
 }
 

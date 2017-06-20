@@ -1,6 +1,8 @@
 #pragma once
 
 #include "GameBoy.h"
+#include "CPUManaged.h"
+#include "MemoryMapManaged.h"
 
 namespace GameBoiManaged
 {
@@ -11,10 +13,13 @@ namespace GameBoiManaged
 		explicit GameBoyManaged(System::String^ filename);
 		~GameBoyManaged();
 
-		GameBoi::GameBoy& GetUnmanaged();
+		property GameBoi::GameBoy& Unmanaged { GameBoi::GameBoy& get(); }
 
 		void LoadCartridge(System::String^ filename);
 		void Reset();
+
+		property CPUManaged^ CPU { CPUManaged^ get(); }
+		property MemoryMapManaged^ MemoryMap { MemoryMapManaged^ get(); }
 
 	private:
 		GameBoi::GameBoy* mGameBoy;

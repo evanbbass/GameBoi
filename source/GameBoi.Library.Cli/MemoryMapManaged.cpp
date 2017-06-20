@@ -16,7 +16,7 @@ namespace GameBoiManaged
 	{
 	}
 
-	MemoryMap& MemoryMapManaged::GetUnmanaged()
+	MemoryMap& MemoryMapManaged::Unmanaged::get()
 	{
 		return *mMemoryMap;
 	}
@@ -51,7 +51,7 @@ namespace GameBoiManaged
 		mMemoryMap->LoadCartridgeFromFile(msclr::interop::marshal_as<std::string>(fileName));
 	}
 
-	CartridgeManaged^ MemoryMapManaged::GetCartridge()
+	CartridgeManaged^ MemoryMapManaged::Cartridge::get()
 	{
 		return gcnew CartridgeManaged(mMemoryMap->GetCartridge());
 	}

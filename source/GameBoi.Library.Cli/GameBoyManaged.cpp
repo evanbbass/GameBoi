@@ -21,7 +21,7 @@ namespace GameBoiManaged
 		delete mGameBoy;
 	}
 
-	GameBoy& GameBoyManaged::GetUnmanaged()
+	GameBoy& GameBoyManaged::Unmanaged::get()
 	{
 		return *mGameBoy;
 	}
@@ -31,8 +31,18 @@ namespace GameBoiManaged
 		mGameBoy->LoadCartridge(msclr::interop::marshal_as<std::string>(filename));
 	}
 
-	Void GameBoyManaged::Reset()
+	void GameBoyManaged::Reset()
 	{
 		mGameBoy->Reset();
+	}
+
+	CPUManaged^ GameBoyManaged::CPU::get()
+	{
+		return gcnew CPUManaged(mGameBoy->GetCPU());
+	}
+
+	MemoryMapManaged^ GameBoyManaged::MemoryMap::get()
+	{
+		return gcnew MemoryMapManaged(mGameBoy->GetMemoryMap());
 	}
 }

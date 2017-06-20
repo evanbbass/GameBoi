@@ -7,7 +7,7 @@ using namespace GameBoi;
 namespace GameBoiManaged
 {
 	CPUManaged::CPUManaged(MemoryMapManaged^ memoryMap) :
-		mCPU(new CPU(memoryMap->GetUnmanaged()))
+		mCPU(new CPU(memoryMap->Unmanaged))
 	{
 	}
 
@@ -16,7 +16,7 @@ namespace GameBoiManaged
 	{
 	}
 
-	CPU& CPUManaged::GetUnmanaged()
+	CPU& CPUManaged::Unmanaged::get()
 	{
 		return *mCPU;
 	}
@@ -31,12 +31,12 @@ namespace GameBoiManaged
 		mCPU->Reset();
 	}
 
-	RegistersManaged^ CPUManaged::GetRegisters()
+	RegistersManaged^ CPUManaged::Registers::get()
 	{
 		return gcnew RegistersManaged(mCPU->GetRegisters());
 	}
 
-	MemoryMapManaged^ CPUManaged::GetMemoryMap()
+	MemoryMapManaged^ CPUManaged::MemoryMap::get()
 	{
 		return gcnew MemoryMapManaged(mCPU->GetMemoryMap());
 	}

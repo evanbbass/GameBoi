@@ -10,7 +10,7 @@ namespace GameBoiManaged
 		RegistersManaged();
 		RegistersManaged(GameBoi::Registers& unmanagedRegisters);
 
-		GameBoi::Registers& GetUnmanaged();
+		property GameBoi::Registers& Unmanaged { GameBoi::Registers& get(); }
 
 		property System::Byte A { System::Byte get(); void set(System::Byte value); }
 		property System::Byte F { System::Byte get(); void set(System::Byte value); }

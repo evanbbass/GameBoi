@@ -11,7 +11,7 @@ namespace GameBoiManaged
 		MemoryMapManaged();
 		MemoryMapManaged(GameBoi::MemoryMap& unmanagedMemoryMap);
 
-		GameBoi::MemoryMap& GetUnmanaged();
+		property GameBoi::MemoryMap& Unmanaged { GameBoi::MemoryMap& get(); }
 
 		void Reset();
 
@@ -21,7 +21,7 @@ namespace GameBoiManaged
 		void WriteWord(System::UInt16 address, System::UInt16 value);
 
 		void LoadCartridgeFromFile(System::String^ fileName);
-		CartridgeManaged^ GetCartridge();
+		property CartridgeManaged^ Cartridge { CartridgeManaged^ get(); }
 
 	private:
 		GameBoi::MemoryMap* mMemoryMap;
