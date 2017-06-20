@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "pch.h"
 
 using namespace System;
 using namespace System::Reflection;
@@ -11,11 +11,11 @@ using namespace System::Security::Permissions;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly:AssemblyTitleAttribute(L"GameBoiDebugger")];
+[assembly:AssemblyTitleAttribute(L"GameBoiLibraryCli")];
 [assembly:AssemblyDescriptionAttribute(L"")];
 [assembly:AssemblyConfigurationAttribute(L"")];
 [assembly:AssemblyCompanyAttribute(L"")];
-[assembly:AssemblyProductAttribute(L"GameBoiDebugger")];
+[assembly:AssemblyProductAttribute(L"GameBoiLibraryCli")];
 [assembly:AssemblyCopyrightAttribute(L"Copyright (c)  2017")];
 [assembly:AssemblyTrademarkAttribute(L"")];
 [assembly:AssemblyCultureAttribute(L"")];

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBoyManaged.h">
+      <Filter>Hardware</Filter>
+    </ClInclude>
+    <ClInclude Include="CartridgeManaged.h">
+      <Filter>Hardware\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryMapManaged.h">
+      <Filter>Hardware\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="RegistersManaged.h">
+      <Filter>Hardware\CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="CPUManaged.h">
+      <Filter>Hardware\CPU</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameBoyManaged.cpp">
+      <Filter>Hardware</Filter>
+    </ClCompile>
+    <ClCompile Include="CartridgeManaged.cpp">
+      <Filter>Hardware\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryMapManaged.cpp">
+      <Filter>Hardware\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="RegistersManaged.cpp">
+      <Filter>Hardware\CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="CPUManaged.cpp">
+      <Filter>Hardware\CPU</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Hardware">
+      <UniqueIdentifier>{6e2ca059-64cd-4d51-924d-270c0e83d176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hardware\CPU">
+      <UniqueIdentifier>{c15a4174-c6e2-4564-8d2a-a65b6f12a10d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hardware\Memory">
+      <UniqueIdentifier>{0d947255-9840-482d-8d25-b981eeb5defa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{26da237b-62ce-4c8e-bced-8e5fa20dd42e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
