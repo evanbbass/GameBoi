@@ -2881,11 +2881,11 @@ namespace GameBoi
 	void CPU::CP_n(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
-		uint8_t result = mRegisters.A - n;
+		bool zero = mRegisters.A == n;
 		bool halfCarry = (mRegisters.A & 0xF) < (n & 0xF);
 		bool fullCarry = (mRegisters.A & 0xFF) < (n & 0xFF);
 
-		mRegisters.AssignZeroFlag(result == 0);
+		mRegisters.AssignZeroFlag(zero);
 		mRegisters.SetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
 		mRegisters.AssignCarryFlag(fullCarry);

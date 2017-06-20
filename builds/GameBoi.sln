@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Windows", "..\source\GameBoi.Windows\GameBoi.Windows.vcxproj", "{13DB756B-0C07-4B72-B696-39FA66FD8B99}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Library", "..\source\GameBoi.Library\GameBoi.Library.vcxproj", "{8463DC84-458B-413A-A748-C0BC36743727}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Library.Test", "..\source\GameBoi.Library.Test\GameBoi.Library.Test.vcxproj", "{9A0E1ACB-94AA-4520-99B7-99326A08243F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameBoi.Debugger", "..\source\GameBoi.Debugger\GameBoi.Debugger.vcxproj", "{B37B3D5E-B992-4FA7-85E5-E10FC241CBE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{9A0E1ACB-94AA-4520-99B7-99326A08243F}.Release|x64.Build.0 = Release|x64
 		{9A0E1ACB-94AA-4520-99B7-99326A08243F}.Release|x86.ActiveCfg = Release|Win32
 		{9A0E1ACB-94AA-4520-99B7-99326A08243F}.Release|x86.Build.0 = Release|Win32
+		{B37B3D5E-B992-4FA7-85E5-E10FC241CBE4}.Debug|x64.ActiveCfg = Debug|x64
+		{B37B3D5E-B992-4FA7-85E5-E10FC241CBE4}.Debug|x64.Build.0 = Debug|x64
+		{B37B3D5E-B992-4FA7-85E5-E10FC241CBE4}.Debug|x86.ActiveCfg = Debug|Win32
+		{B37B3D5E-B992-4FA7-85E5-E10FC241CBE4}.Debug|x86.Build.0 = Debug|Win32
+		{B37B3D5E-B992-4FA7-85E5-E10FC241CBE4}.Release|x64.ActiveCfg = Release|x64
+		{B37B3D5E-B992-4FA7-85E5-E10FC241CBE4}.Release|x64.Build.0 = Release|x64
+		{B37B3D5E-B992-4FA7-85E5-E10FC241CBE4}.Release|x86.ActiveCfg = Release|Win32
+		{B37B3D5E-B992-4FA7-85E5-E10FC241CBE4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
