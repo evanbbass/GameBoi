@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "Cartridge.h"
-#include <fstream>
-#include <sstream>
 #include "CPU.h"
+#include <fstream>
 #include <iomanip>
+#include <sstream>
 
 using namespace std;
 
 namespace GameBoi
 {
-	const map<int32_t, int32_t> RomSizeMap =
+	const map<int32_t, int32_t> Cartridge::RomSizeMap =
 	{
 		{ 0x00, 2 },
 		{ 0x01, 4 },
@@ -25,7 +25,7 @@ namespace GameBoi
 		{ 0x54, 96 }
 	};
 
-	const map<int32_t, int32_t> RamSizeMap =
+	const map<int32_t, int32_t> Cartridge::RamSizeMap =
 	{
 		{ 0x00, 0 },
 		{ 0x01, 2 },

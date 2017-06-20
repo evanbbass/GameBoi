@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <map>
 #include <vector>
 
 namespace GameBoi
@@ -69,5 +70,8 @@ namespace GameBoi
 		CartridgeType mCartType;
 		bool mColorSupport;
 		bool mSuperSupport;
+
+		static const std::map<int32_t, int32_t> RomSizeMap;
+		static const std::map<int32_t, int32_t> RamSizeMap;
 	};
 }
