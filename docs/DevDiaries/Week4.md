@@ -122,3 +122,10 @@ And now, the final product:
 
 ![GameBoi Debugger First Pass](../Resources/DebuggerFirstPass.jpg "Debugger Fist Pass")
 
+## 6/21/2017
+
+Today was dedicated to interrupts. I didn't get to implementation this week, but I have a good idea of how to go about it moving forward.
+
+First I dug through the [documentation](http://marc.rawer.de/Gameboy/Docs/GBCPUman.pdf) I already had, which was helpful in a general sense, but didn't get into the level of detail I needed. After reading through that and some sample source code from other emulators, I still didn't quite understand what triggered them and what was needed of me as the emulator writer.
+
+Eventually I found (through links in [Cinoop](https://cturt.github.io/cinoop.html)'s source code) a [website](http://www.codeslinger.co.uk/pages/projects/gameboy.html) that details how the interupts actually work in detail. This site also had detailed descriptions of other systems I haven't implemented yet, so it will serve as a great source moving forward.

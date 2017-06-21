@@ -809,7 +809,7 @@ namespace GameBoi
 	};
 
 	CPU::CPU(MemoryMap& memory) :
-		mMemory(memory), mInterruptsEnabled(false), mHalted(false), mEnableInterruptsAfterNextInstruction(false), mDisableInterruptsAfterNextInstruction(false)
+		mMemory(memory), mInterruptMasterEnabled(false), mHalted(false), mEnableInterruptsAfterNextInstruction(false), mDisableInterruptsAfterNextInstruction(false)
 	{
 	}
 
@@ -857,11 +857,11 @@ namespace GameBoi
 
 			if (disableInterrupts)
 			{
-				mInterruptsEnabled = false;
+				mInterruptMasterEnabled = false;
 			}
 			if (enableInterrupts)
 			{
-				mInterruptsEnabled = true;
+				mInterruptMasterEnabled = true;
 			}
 		}
 		catch (exception& ex)
@@ -896,6 +896,11 @@ namespace GameBoi
 	const MemoryMap& CPU::GetMemoryMap() const
 	{
 		return mMemory;
+	}
+
+	bool CPU::InterruptMasterEnabled() const
+	{
+		return mInterruptMasterEnabled;
 	}
 
 	int32_t CPU::GetOperandLength(uint8_t opcode)
@@ -3031,7 +3036,7 @@ namespace GameBoi
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
-		mRegisters.ResetSubtractFlag();
+		mRegisters.SetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
 		mRegisters.AssignCarryFlag(fullCarry);
 	}
@@ -3047,7 +3052,7 @@ namespace GameBoi
 
 		mRegisters.B = result;
 		mRegisters.AssignZeroFlag(result == 0);
-		mRegisters.ResetSubtractFlag();
+		mRegisters.SetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
 		mRegisters.AssignCarryFlag(fullCarry);
 	}
@@ -3063,7 +3068,7 @@ namespace GameBoi
 
 		mRegisters.C = result;
 		mRegisters.AssignZeroFlag(result == 0);
-		mRegisters.ResetSubtractFlag();
+		mRegisters.SetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
 		mRegisters.AssignCarryFlag(fullCarry);
 	}
@@ -3079,7 +3084,7 @@ namespace GameBoi
 
 		mRegisters.D = result;
 		mRegisters.AssignZeroFlag(result == 0);
-		mRegisters.ResetSubtractFlag();
+		mRegisters.SetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
 		mRegisters.AssignCarryFlag(fullCarry);
 	}
@@ -3095,7 +3100,7 @@ namespace GameBoi
 
 		mRegisters.E = result;
 		mRegisters.AssignZeroFlag(result == 0);
-		mRegisters.ResetSubtractFlag();
+		mRegisters.SetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
 		mRegisters.AssignCarryFlag(fullCarry);
 	}
@@ -3111,7 +3116,7 @@ namespace GameBoi
 
 		mRegisters.H = result;
 		mRegisters.AssignZeroFlag(result == 0);
-		mRegisters.ResetSubtractFlag();
+		mRegisters.SetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
 		mRegisters.AssignCarryFlag(fullCarry);
 	}
@@ -3127,7 +3132,7 @@ namespace GameBoi
 
 		mRegisters.L = result;
 		mRegisters.AssignZeroFlag(result == 0);
-		mRegisters.ResetSubtractFlag();
+		mRegisters.SetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
 		mRegisters.AssignCarryFlag(fullCarry);
 	}
@@ -3144,7 +3149,7 @@ namespace GameBoi
 
 		mMemory.WriteByte(mRegisters.HL, result);
 		mRegisters.AssignZeroFlag(result == 0);
-		mRegisters.ResetSubtractFlag();
+		mRegisters.SetSubtractFlag();
 		mRegisters.AssignHalfCarryFlag(halfCarry);
 		mRegisters.AssignCarryFlag(fullCarry);
 	}

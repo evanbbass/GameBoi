@@ -20,13 +20,15 @@ namespace GameBoi
 		MemoryMap& GetMemoryMap();
 		const MemoryMap& GetMemoryMap() const;
 
+		bool InterruptMasterEnabled() const;
+
 		static int32_t GetOperandLength(uint8_t opcode);
 		static std::string GetDisassembly(uint8_t opcode, uint16_t operand = 0);
 
 	private:
 		Registers mRegisters;
 		MemoryMap& mMemory;
-		bool mInterruptsEnabled;
+		bool mInterruptMasterEnabled;
 		bool mHalted;
 		bool mEnableInterruptsAfterNextInstruction;
 		bool mDisableInterruptsAfterNextInstruction;

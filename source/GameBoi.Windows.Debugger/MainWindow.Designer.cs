@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.checkBoxCarryFlag = new System.Windows.Forms.CheckBox();
 			this.checkBoxHalfCarryFlag = new System.Windows.Forms.CheckBox();
@@ -56,6 +57,7 @@
 			this.textBoxNextInstruction = new System.Windows.Forms.TextBox();
 			this.labelNextInstruction = new System.Windows.Forms.Label();
 			this.buttonReset = new System.Windows.Forms.Button();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -143,6 +145,7 @@
 			this.textBoxRegSP.TabIndex = 9;
 			this.textBoxRegSP.Text = "0000";
 			this.textBoxRegSP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.toolTip1.SetToolTip(this.textBoxRegSP, "Stack Pointer");
 			this.textBoxRegSP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
 			this.textBoxRegSP.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegSP_Validating);
 			// 
@@ -154,6 +157,7 @@
 			this.labelRegSP.Size = new System.Drawing.Size(26, 17);
 			this.labelRegSP.TabIndex = 14;
 			this.labelRegSP.Text = "SP";
+			this.toolTip1.SetToolTip(this.labelRegSP, "Stack Pointer");
 			// 
 			// textBoxRegPC
 			// 
@@ -166,6 +170,7 @@
 			this.textBoxRegPC.TabIndex = 10;
 			this.textBoxRegPC.Text = "0000";
 			this.textBoxRegPC.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.toolTip1.SetToolTip(this.textBoxRegPC, "Program Counter");
 			this.textBoxRegPC.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReg_KeyPress);
 			this.textBoxRegPC.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxRegPC_Validating);
 			// 
@@ -177,6 +182,7 @@
 			this.labelRegPC.Size = new System.Drawing.Size(26, 17);
 			this.labelRegPC.TabIndex = 12;
 			this.labelRegPC.Text = "PC";
+			this.toolTip1.SetToolTip(this.labelRegPC, "Program Counter");
 			// 
 			// textBoxRegL
 			// 
@@ -333,6 +339,7 @@
 			this.buttonStepCPU.Size = new System.Drawing.Size(100, 30);
 			this.buttonStepCPU.TabIndex = 15;
 			this.buttonStepCPU.Text = "Step CPU";
+			this.toolTip1.SetToolTip(this.buttonStepCPU, "Advance the CPU one step");
 			this.buttonStepCPU.UseVisualStyleBackColor = true;
 			this.buttonStepCPU.Click += new System.EventHandler(this.buttonStepCPU_Click);
 			// 
@@ -343,6 +350,7 @@
 			this.buttonLoadCartridge.Size = new System.Drawing.Size(125, 30);
 			this.buttonLoadCartridge.TabIndex = 16;
 			this.buttonLoadCartridge.Text = "Load Cartridge...";
+			this.toolTip1.SetToolTip(this.buttonLoadCartridge, "Load a cartridge into the emulator");
 			this.buttonLoadCartridge.UseVisualStyleBackColor = true;
 			this.buttonLoadCartridge.Click += new System.EventHandler(this.buttonLoadCartridge_Click);
 			// 
@@ -389,6 +397,7 @@
 			this.buttonReset.Size = new System.Drawing.Size(75, 30);
 			this.buttonReset.TabIndex = 21;
 			this.buttonReset.Text = "Reset";
+			this.toolTip1.SetToolTip(this.buttonReset, "Reset the emulator");
 			this.buttonReset.UseVisualStyleBackColor = true;
 			this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
 			// 
@@ -444,6 +453,7 @@
 		private System.Windows.Forms.TextBox textBoxNextInstruction;
 		private System.Windows.Forms.Label labelNextInstruction;
 		private System.Windows.Forms.Button buttonReset;
+		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }
 

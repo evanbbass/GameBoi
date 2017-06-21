@@ -41,12 +41,17 @@ namespace GameBoiManaged
 		return gcnew MemoryMapManaged(mCPU->GetMemoryMap());
 	}
 
+	bool CPUManaged::InterruptMasterEnabled::get()
+	{
+		return mCPU->InterruptMasterEnabled();
+	}
+
 	Int32 CPUManaged::GetOperandLength(Byte opcode)
 	{
 		return CPU::GetOperandLength(opcode);
 	}
 
-	System::String ^ CPUManaged::GetDisassembly(System::Byte opcode)
+	String^ CPUManaged::GetDisassembly(Byte opcode)
 	{
 		return gcnew String(CPU::GetDisassembly(opcode).c_str());
 	}
