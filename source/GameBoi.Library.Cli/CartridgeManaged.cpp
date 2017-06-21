@@ -56,7 +56,7 @@ namespace GameBoiManaged
 		mCartridge->WriteWord(address, value);
 	}
 
-	void CartridgeManaged::SetSwitchableBankIndex(uint32_t index)
+	void CartridgeManaged::SetSwitchableBankIndex(UInt32 index)
 	{
 		mCartridge->SetSwitchableBankIndex(index);
 	}

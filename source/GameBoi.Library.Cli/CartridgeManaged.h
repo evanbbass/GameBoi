@@ -21,7 +21,7 @@ namespace GameBoiManaged
 		void WriteByte(System::UInt16  address, System::Byte value);
 		void WriteWord(System::UInt16  address, System::UInt16  value);
 
-		void SetSwitchableBankIndex(uint32_t index);
+		void SetSwitchableBankIndex(System::UInt32 index);
 
 		property System::String^ GameTitle { System::String^ get(); }
 		property GameBoi::Cartridge::CartridgeType CartrideType { GameBoi::Cartridge::CartridgeType get(); }
