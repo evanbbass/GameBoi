@@ -55,13 +55,13 @@ The managed class has an unmanaged pointer to the unmanaged version of the class
 
 I also added a constructor that takes in a reference to an instance of the unmanaged class in case it already exists, and a property to allow accessing the unmanaged class directly if necessary.
 
-This task proved tediuos, but it was much more interesting than implementing the opcodes. I learned a lot about C++/CLI (which, as my professor says, is basically an entirely different language than C++). I wouldn't use it on its own (I'd rather use C# if I'm making a .NET application), but it's ability to wrap unmanaged code is very helpful.
+This task proved tedious, but it was much more interesting than implementing the opcodes. I learned a lot about C++/CLI (which, as my professor says, is basically an entirely different language than C++). I wouldn't use it on its own (I'd rather use C# if I'm making a .NET application), but it's ability to wrap unmanaged code is very helpful.
 
 ----
 
 And now for the fun part: actually making the debugger!
 
-As I said, initially this was a managed C++ project, but once I got the C++/CLI wrapper done, I decided to switch to C#, as I'm much more comfortable making forms applications in it. My very first pass was just getting text boxes up for each register. The registers are labeled as their 16-bit pairs, but each 8-bit register is its own textbox. I also added checkboxes for the flags. (I won't show the code for this as it's all boilerplate C# Windows Forms code.)
+As I said, initially this was a managed C++ project, but once I got the C++/CLI wrapper done, I decided to switch to C#, as I'm much more comfortable making forms applications in it. My very first pass was just getting text boxes up for each register. The registers are labeled as their 16-bit pairs, but each 8-bit register is its own textbox. I also added checkboxes for the flags. (I won't show the code for this as its all boilerplate C# Windows Forms code.)
 
 Once I got that integrated with the new `GameBoyManaged` class, I added a button to advance the CPU. That way I could begin stepping through the code.
 
