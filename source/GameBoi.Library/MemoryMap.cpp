@@ -32,10 +32,8 @@ namespace GameBoi
 
 	void MemoryMap::Reset()
 	{
-		mIsInBIOS = true;
-		mCart.SetSwitchableBankIndex(1);
+		mIsInBIOS = false;
 		mVideoRAM.fill(0);
-		mSwitchableRAM.fill(0);
 		mWorkingRAM.fill(0);
 		mOAM.fill(0);
 		mIO.fill(0);
@@ -58,7 +56,7 @@ namespace GameBoi
 		}
 		else if (address < SRAM_END)
 		{
-			return mSwitchableRAM[address - SRAM_START];
+			return mCart.ReadByte(address);
 		}
 		else if (address < WRAM_END)
 		{
@@ -84,9 +82,13 @@ namespace GameBoi
 		{
 			throw std::exception("Unusable memory!");
 		}
-		else // if (address < INTERNAL_RAM_END) - this will be to the end of addressable space
+		else if (address < INTERNAL_RAM_END)
 		{
 			return mInternalRAM[address - INTERNAL_RAM_START];
+		}
+		else // if address == 0xFFFF
+		{
+			return mInterruptEnableRegister;
 		}
 	}
 
@@ -107,7 +109,7 @@ namespace GameBoi
 		}
 		else if (address < SRAM_END)
 		{
-			mSwitchableRAM[address - SRAM_START] = value;
+			mCart.WriteByte(address, value);
 		}
 		else if (address < WRAM_END)
 		{
@@ -133,9 +135,13 @@ namespace GameBoi
 		{
 			throw std::exception("Unusable memory!");
 		}
-		else // if (address < INTERNAL_RAM_END) - this will be to the end of addressable space
+		else if (address < INTERNAL_RAM_END)
 		{
 			mInternalRAM[address - INTERNAL_RAM_START] = value;
+		}
+		else // if address == 0xFFF
+		{
+			mInterruptEnableRegister = value;
 		}
 	}
 

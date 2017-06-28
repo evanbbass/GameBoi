@@ -66,9 +66,9 @@ namespace GameBoiManaged
 		return gcnew String(mCartridge->GetGameTitle().c_str());
 	}
 
-	Cartridge::CartridgeType CartridgeManaged::CartrideType::get()
+	CartridgeTypeManaged CartridgeManaged::CartrideType::get()
 	{
-		return mCartridge->GetCartrideType();
+		return static_cast<CartridgeTypeManaged>(mCartridge->GetCartrideType());
 	}
 
 	bool CartridgeManaged::ColorSupport::get()

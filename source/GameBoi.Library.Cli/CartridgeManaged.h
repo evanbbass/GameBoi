@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Cartridge.h"
+#include "CartridgeTypeManaged.h"
 
 namespace GameBoiManaged
 {
@@ -24,7 +25,7 @@ namespace GameBoiManaged
 		void SetSwitchableBankIndex(System::UInt32 index);
 
 		property System::String^ GameTitle { System::String^ get(); }
-		property GameBoi::Cartridge::CartridgeType CartrideType { GameBoi::Cartridge::CartridgeType get(); }
+		property CartridgeTypeManaged CartrideType { CartridgeTypeManaged get(); }
 		property bool ColorSupport { bool get(); }
 		property bool SuperSupport { bool get(); }
 

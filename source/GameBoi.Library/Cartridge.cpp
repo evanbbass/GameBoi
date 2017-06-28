@@ -36,13 +36,13 @@ namespace GameBoi
 	};
 
 	Cartridge::Cartridge() :
-	    mSwitchableBankIndex(1)
+	    mSwitchableRomBankIndex(1)
 	{
 		Reset();
 	}
 
 	Cartridge::Cartridge(const string& filename) :
-		mSwitchableBankIndex(1)
+		mSwitchableRomBankIndex(1)
 	{
 		ReadFromFile(filename);
 	}
@@ -98,17 +98,17 @@ namespace GameBoi
 			int32_t numRomBanks = RomSizeMap.at(romSizeKey);
 
 			// check the file size against the number of rom banks
-			if (static_cast<size_t>(fileSize) != BANK_SIZE * numRomBanks)
+			if (static_cast<size_t>(fileSize) != ROM_BANK_SIZE * numRomBanks)
 			{
 				throw exception("File size mismatch!");
 			}
 
 			// read the rom banks into memory
 			rom.seekg(0, ios::beg);
-			mBanks.resize(numRomBanks);
-			for (array<uint8_t, BANK_SIZE>& bank : mBanks)
+			mRomBanks.resize(numRomBanks);
+			for (array<uint8_t, ROM_BANK_SIZE>& bank : mRomBanks)
 			{
-				rom.read(reinterpret_cast<char*>(bank.data()), BANK_SIZE);
+				rom.read(reinterpret_cast<char*>(bank.data()), ROM_BANK_SIZE);
 			}
 		}
 
@@ -125,22 +125,32 @@ namespace GameBoi
 	void Cartridge::Reset()
 	{
 		// default to 2 banks
-		mBanks.resize(2);
-		for (array<uint8_t, BANK_SIZE>& bank : mBanks)
+		mRomBanks.resize(2);
+		for (array<uint8_t, ROM_BANK_SIZE>& bank : mRomBanks)
 		{
 			bank.fill(0);
 		}
+		mRamBanks.clear();
 	}
 
 	uint8_t Cartridge::ReadByte(uint16_t address) const
 	{
-		if (address < BANK_SIZE)
+		if (address < ROM_BANK_SIZE)
 		{
-			return mBanks[0][address];
+			return mRomBanks[0][address];
 		}
-		else if (address < (BANK_SIZE * 2))
+		else if (address < (ROM_BANK_SIZE * 2))
 		{
-			return mBanks[mSwitchableBankIndex][address - BANK_SIZE];
+			return mRomBanks[mSwitchableRomBankIndex][address - ROM_BANK_SIZE];
+		}
+		else if (address >= MemoryMap::SRAM_START && address < MemoryMap::SRAM_END)
+		{
+			if (mRamBanks.size() == 0)
+			{
+				throw exception("No external RAM available.");
+			}
+
+			return mRamBanks[mSwitchableRamBankIndex][address - MemoryMap::SRAM_START];
 		}
 		else
 		{
@@ -155,13 +165,18 @@ namespace GameBoi
 
 	void Cartridge::WriteByte(uint16_t address, uint8_t value)
 	{
-		if (address < BANK_SIZE)
+		if (address < (ROM_BANK_SIZE * 2))
 		{
-			mBanks[0][address] = value;
+			HandleBankSwitching(address, value);
 		}
-		else if (address < (BANK_SIZE * 2))
+		else if (address >= MemoryMap::SRAM_START && address < MemoryMap::SRAM_END)
 		{
-			mBanks[mSwitchableBankIndex][address - BANK_SIZE] = value;
+			if (mRamBanks.size() == 0)
+			{
+				throw exception("No external RAM available.");
+			}
+
+			mRamBanks[mSwitchableRamBankIndex][address - MemoryMap::SRAM_START] = value;
 		}
 		else
 		{
@@ -175,18 +190,33 @@ namespace GameBoi
 		WriteByte(address + 1, (value & 0xFF00) >> 8);
 	}
 
-	void Cartridge::SetSwitchableBankIndex(uint32_t index)
+	void Cartridge::SetSwitchableRomBankIndex(uint32_t index)
 	{
 		if (index < 1)
 		{
 			index = 1;
 		}
-		else if (index >= mBanks.size())
+		else if (index >= mRomBanks.size())
 		{
 			throw exception("Index not valid.");
 		}
 
-		mSwitchableBankIndex = index;
+		mSwitchableRomBankIndex = index;
+	}
+
+	void Cartridge::SetSwitchableRamBankIndex(uint32_t index)
+	{
+		if (index >= mRamBanks.size())
+		{
+			throw exception("Index not valid.");
+		}
+
+		mSwitchableRamBankIndex = index;
+	}
+
+	void Cartridge::HandleBankSwitching(uint16_t address, uint8_t value)
+	{
+		// TODO
 	}
 
 	const string& Cartridge::GetGameTitle() const

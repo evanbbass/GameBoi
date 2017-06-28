@@ -8,7 +8,8 @@ namespace GameBoi
 	class Cartridge
 	{
 	public:
-		static const size_t BANK_SIZE = 0x4000;
+		static const size_t ROM_BANK_SIZE = 0x4000;
+		static const size_t RAM_BANK_SIZE = 0x2000;
 
 		enum class CartridgeType : uint8_t
 		{
@@ -52,8 +53,6 @@ namespace GameBoi
 		void WriteByte(uint16_t address, uint8_t value);
 		void WriteWord(uint16_t address, uint16_t value);
 
-		void SetSwitchableBankIndex(uint32_t index);
-
 		const std::string& GetGameTitle() const;
 		CartridgeType GetCartrideType() const;
 		bool GetColorSupport() const;
@@ -63,9 +62,17 @@ namespace GameBoi
 		void DisassebleRomToFile(const std::string& filename, uint16_t startAddress, uint16_t length) const;
 
 	private:
-		// Cartridge has 32k of address space and can have multiple 16kB ROM banks
-		std::vector<std::array<uint8_t, BANK_SIZE>> mBanks;
-		uint32_t mSwitchableBankIndex;
+		void SetSwitchableRomBankIndex(uint32_t index);
+		void SetSwitchableRamBankIndex(uint32_t index);
+		void HandleBankSwitching(uint16_t address, uint8_t value);
+
+		// Cartridge ROM has 32k of address space and can have multiple 16kB ROM banks
+		std::vector<std::array<uint8_t, ROM_BANK_SIZE>> mRomBanks;
+		uint32_t mSwitchableRomBankIndex;
+		// Cartridge may also have multiple 8kB RAM banks
+		std::vector<std::array<uint8_t, RAM_BANK_SIZE>> mRamBanks;
+		uint32_t mSwitchableRamBankIndex;
+
 		std::string mGameTitle;
 		CartridgeType mCartType;
 		bool mColorSupport;
