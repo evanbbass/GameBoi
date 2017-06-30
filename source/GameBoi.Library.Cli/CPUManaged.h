@@ -22,6 +22,8 @@ namespace GameBoiManaged
 		property MemoryMapManaged^ MemoryMap { MemoryMapManaged^ get(); }
 
 		property bool InterruptMasterEnabled { bool get(); }
+		property System::Byte InterruptEnabledRegister { System::Byte get(); }
+		property System::Byte InterruptFlagRegister { System::Byte get(); }
 
 		static System::Int32 GetOperandLength(System::Byte opcode);
 		static System::String^ GetDisassembly(System::Byte opcode);

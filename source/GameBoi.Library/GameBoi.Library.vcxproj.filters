@@ -19,6 +19,9 @@
     <ClCompile Include="Registers.cpp">
       <Filter>Hardware\CPU</Filter>
     </ClCompile>
+    <ClCompile Include="CPU.Instructions.cpp">
+      <Filter>Hardware\CPU</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cartridge.h">

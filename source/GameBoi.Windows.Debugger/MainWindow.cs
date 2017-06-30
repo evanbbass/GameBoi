@@ -23,7 +23,7 @@ namespace GameBoi.Windows.Debugger
 
 		private void textBoxReg_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			string input = "" + e.KeyChar;
+			string input = e.KeyChar.ToString();
 			const string regex = "[0-9a-fA-F]";
 
 			if (Char.IsControl(e.KeyChar) || Regex.IsMatch(input, regex))
@@ -113,7 +113,18 @@ namespace GameBoi.Windows.Debugger
 
 		private void buttonStepCPU_Click(object sender, EventArgs e)
 		{
-			mGameBoy.CPU.StepCPU();
+			try
+			{
+				mGameBoy.CPU.StepCPU();
+			}
+			catch (Exception ex)
+			{
+				if (MessageBox.Show(@"Error during execution:" + Environment.NewLine + ex.Message,
+									@"Error During Execution", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK)
+				{
+					Application.Exit();
+				}
+			}
 			UpdateDisassembly();
 			UpdateFields();
 		}

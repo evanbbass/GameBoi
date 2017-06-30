@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CPUManaged.h"
 
+using namespace std;
 using namespace System;
 using namespace GameBoi;
 
@@ -23,7 +24,14 @@ namespace GameBoiManaged
 
 	void CPUManaged::StepCPU()
 	{
-		mCPU->StepCPU();
+		try
+		{
+			mCPU->StepCPU();
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	void CPUManaged::Reset()
@@ -43,21 +51,52 @@ namespace GameBoiManaged
 
 	bool CPUManaged::InterruptMasterEnabled::get()
 	{
-		return mCPU->InterruptMasterEnabled();
+		return mCPU->GetInterruptMasterEnabled();
+	}
+
+	Byte CPUManaged::InterruptEnabledRegister::get()
+	{
+		return mCPU->GetInterruptEnabledRegister();
+	}
+
+	Byte CPUManaged::InterruptFlagRegister::get()
+	{
+		return mCPU->GetInterruptFlagRegister();
 	}
 
 	Int32 CPUManaged::GetOperandLength(Byte opcode)
 	{
-		return CPU::GetOperandLength(opcode);
+		try
+		{
+			return CPU::GetOperandLength(opcode);
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	String^ CPUManaged::GetDisassembly(Byte opcode)
 	{
-		return gcnew String(CPU::GetDisassembly(opcode).c_str());
+		try
+		{
+			return gcnew String(CPU::GetDisassembly(opcode).c_str());
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	String^ CPUManaged::GetDisassembly(Byte opcode, UInt16 operand)
 	{
-		return gcnew String(CPU::GetDisassembly(opcode, operand).c_str());
+		try
+		{
+			return gcnew String(CPU::GetDisassembly(opcode, operand).c_str());
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 }

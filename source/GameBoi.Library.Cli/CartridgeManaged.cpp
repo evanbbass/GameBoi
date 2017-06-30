@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CartridgeManaged.h"
 
+using namespace std;
 using namespace System;
 using namespace GameBoi;
 
@@ -28,7 +29,14 @@ namespace GameBoiManaged
 
 	void CartridgeManaged::ReadFromFile(String^ filename)
 	{
-		mCartridge->ReadFromFile(msclr::interop::marshal_as<std::string>(filename));
+		try
+		{
+			mCartridge->ReadFromFile(msclr::interop::marshal_as<std::string>(filename));
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	void CartridgeManaged::Reset()
@@ -38,27 +46,50 @@ namespace GameBoiManaged
 
 	Byte CartridgeManaged::ReadByte(UInt16 address)
 	{
-		return mCartridge->ReadByte(address);
+		try
+		{
+			return mCartridge->ReadByte(address);
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	UInt16 CartridgeManaged::ReadWord(UInt16 address)
 	{
-		return mCartridge->ReadWord(address);
+		try
+		{
+			return mCartridge->ReadWord(address);
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	void CartridgeManaged::WriteByte(UInt16 address, Byte value)
 	{
-		mCartridge->WriteByte(address, value);
+		try
+		{
+			mCartridge->WriteByte(address, value);
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	void CartridgeManaged::WriteWord(UInt16 address, UInt16 value)
 	{
-		mCartridge->WriteWord(address, value);
-	}
-
-	void CartridgeManaged::SetSwitchableBankIndex(UInt32 index)
-	{
-		mCartridge->SetSwitchableBankIndex(index);
+		try
+		{
+			mCartridge->WriteWord(address, value);
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	String^ CartridgeManaged::GameTitle::get()
@@ -83,11 +114,25 @@ namespace GameBoiManaged
 
 	String^ CartridgeManaged::DisassembleRom(UInt16 startAddress, UInt16 length)
 	{
-		return gcnew String(mCartridge->DisassembleRom(startAddress, length).c_str());
+		try
+		{
+			return gcnew String(mCartridge->DisassembleRom(startAddress, length).c_str());
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	void CartridgeManaged::DisassebleRomToFile(String^ filename, UInt16 startAddress, UInt16 length)
 	{
-		mCartridge->DisassebleRomToFile(msclr::interop::marshal_as<std::string>(filename), startAddress, length);
+		try
+		{
+			mCartridge->DisassebleRomToFile(msclr::interop::marshal_as<std::string>(filename), startAddress, length);
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 }

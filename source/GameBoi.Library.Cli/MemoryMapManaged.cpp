@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MemoryMapManaged.h"
 
+using namespace std;
 using namespace System;
 using namespace GameBoi;
 
@@ -28,22 +29,50 @@ namespace GameBoiManaged
 
 	Byte MemoryMapManaged::ReadByte(UInt16 address)
 	{
-		return mMemoryMap->ReadByte(address);
+		try
+		{
+			return mMemoryMap->ReadByte(address);
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	UInt16 MemoryMapManaged::ReadWord(UInt16 address)
 	{
-		return mMemoryMap->ReadWord(address);
+		try
+		{
+			return mMemoryMap->ReadWord(address);
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	void MemoryMapManaged::WriteByte(UInt16 address, Byte value)
 	{
-		mMemoryMap->WriteByte(address, value);
+		try
+		{
+			mMemoryMap->WriteByte(address, value);
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	void MemoryMapManaged::WriteWord(UInt16 address, UInt16 value)
 	{
-		mMemoryMap->WriteWord(address, value);
+		try
+		{
+			mMemoryMap->WriteWord(address, value);
+		}
+		catch (exception& ex)
+		{
+			throw gcnew Exception(gcnew String(ex.what()));
+		}
 	}
 
 	void MemoryMapManaged::LoadCartridgeFromFile(String^ fileName)

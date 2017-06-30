@@ -216,6 +216,8 @@ namespace GameBoi
 
 	void Cartridge::HandleBankSwitching(uint16_t address, uint8_t value)
 	{
+		address;
+		value;
 		// TODO
 	}
 

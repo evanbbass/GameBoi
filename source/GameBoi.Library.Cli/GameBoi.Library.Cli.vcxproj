@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CartridgeManaged.h" />
+    <ClInclude Include="CartridgeTypeManaged.h" />
     <ClInclude Include="CPUManaged.h" />
     <ClInclude Include="GameBoyManaged.h" />
     <ClInclude Include="MemoryMapManaged.h" />

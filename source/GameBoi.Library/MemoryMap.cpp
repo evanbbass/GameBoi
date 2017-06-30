@@ -72,7 +72,7 @@ namespace GameBoi
 		}
 		else if (address < UNUSABLE0_END)
 		{
-			throw std::exception("Unusable memory!");
+			throw exception("Unusable memory!");
 		}
 		else if (address < IO_END)
 		{
@@ -80,7 +80,7 @@ namespace GameBoi
 		}
 		else if (address < UNUSABLE1_END)
 		{
-			throw std::exception("Unusable memory!");
+			throw exception("Unusable memory!");
 		}
 		else if (address < INTERNAL_RAM_END)
 		{
@@ -125,7 +125,7 @@ namespace GameBoi
 		}
 		else if (address < UNUSABLE0_END)
 		{
-			throw std::exception("Unusable memory!");
+			throw exception("Unusable memory!");
 		}
 		else if (address < IO_END)
 		{
@@ -133,13 +133,13 @@ namespace GameBoi
 		}
 		else if (address < UNUSABLE1_END)
 		{
-			throw std::exception("Unusable memory!");
+			throw exception("Unusable memory!");
 		}
 		else if (address < INTERNAL_RAM_END)
 		{
 			mInternalRAM[address - INTERNAL_RAM_START] = value;
 		}
-		else // if address == 0xFFF
+		else // if address == 0xFFFF
 		{
 			mInterruptEnableRegister = value;
 		}
