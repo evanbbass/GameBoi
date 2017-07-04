@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "MemoryMap.h"
+#include "Utilities.h"
 
 using namespace std;
 
 namespace GameBoi
 {
-	const array<uint8_t, MemoryMap::BIOS_SIZE> MemoryMap::sBIOS =
+	const array<uint8_t, MemoryMap::BIOS_SIZE> MemoryMap::BIOS =
 	{
 		0x31, 0xFE, 0xFF, 0xAF, 0x21, 0xFF, 0x9F, 0x32, 0xCB, 0x7C, 0x20, 0xFB, 0x21, 0x26, 0xFF, 0x0E,
 		0x11, 0x3E, 0x80, 0x32, 0xE2, 0x0C, 0x3E, 0xF3, 0xE2, 0x32, 0x3E, 0x77, 0x77, 0x3E, 0xFC, 0xE0,
@@ -44,7 +45,7 @@ namespace GameBoi
 	{
 		if (mIsInBIOS && address < BIOS_SIZE)
 		{
-			return sBIOS[address];
+			return BIOS[address];
 		}
 		else if (address < CARTRIDGE_END)
 		{
@@ -70,17 +71,13 @@ namespace GameBoi
 		{
 			return mOAM[address - OAM_START];
 		}
-		else if (address < UNUSABLE0_END)
+		else if (address < UNUSABLE_END)
 		{
 			throw exception("Unusable memory!");
 		}
 		else if (address < IO_END)
 		{
 			return mIO[address - IO_START];
-		}
-		else if (address < UNUSABLE1_END)
-		{
-			throw exception("Unusable memory!");
 		}
 		else if (address < INTERNAL_RAM_END)
 		{
@@ -123,17 +120,26 @@ namespace GameBoi
 		{
 			mOAM[address - OAM_START] = value;
 		}
-		else if (address < UNUSABLE0_END)
+		else if (address < UNUSABLE_END)
 		{
 			throw exception("Unusable memory!");
 		}
 		else if (address < IO_END)
 		{
-			mIO[address - IO_START] = value;
-		}
-		else if (address < UNUSABLE1_END)
-		{
-			throw exception("Unusable memory!");
+			// technically this is needed for true hardware emulation, but I need to leave it out as a workaround
+			//if (address == Timer::DividerAddress || address == GPU::CurrentScanlineAddress)
+			//{
+			//	// writing to the divider should always reset it
+			//	mIO[address - IO_START] = 0;
+			//}
+			if (address == DMAAddress)
+			{
+				DMATransfer(value);
+			}
+			else
+			{
+				mIO[address - IO_START] = value;
+			}
 		}
 		else if (address < INTERNAL_RAM_END)
 		{
@@ -164,5 +170,72 @@ namespace GameBoi
 	const Cartridge& MemoryMap::GetCartridge() const
 	{
 		return mCart;
+	}
+
+	uint8_t MemoryMap::GetInterruptEnabledRegister() const
+	{
+		return ReadByte(InterruptEnabledAddress);
+	}
+
+	uint8_t MemoryMap::GetInterruptFlagRegister() const
+	{
+		return ReadByte(InterruptFlagAddress);
+	}
+
+	void MemoryMap::SetVBlankInterruptFlag()
+	{
+		uint8_t interrupts = Utilities::SetBit(GetInterruptFlagRegister(), VBlankInterruptBit);
+		WriteByte(InterruptFlagAddress, interrupts);
+	}
+
+	void MemoryMap::SetLCDInterruptFlag()
+	{
+		uint8_t interrupts = Utilities::SetBit(GetInterruptFlagRegister(), LCDInterruptBit);
+		WriteByte(InterruptFlagAddress, interrupts);
+	}
+
+	void MemoryMap::SetTimerInterruptFlag()
+	{
+		uint8_t interrupts = Utilities::SetBit(GetInterruptFlagRegister(), TimerInterruptBit);
+		WriteByte(InterruptFlagAddress, interrupts);
+	}
+
+	void MemoryMap::SetJoypadInterruptFlag()
+	{
+		uint8_t interrupts = Utilities::SetBit(GetInterruptFlagRegister(), JoypadInterruptBit);
+		WriteByte(InterruptFlagAddress, interrupts);
+	}
+
+	void MemoryMap::DMATransfer(uint8_t value)
+	{
+		uint16_t address = value << 8;
+		for (uint16_t i = 0; i < OAM_SIZE; ++i)
+		{
+			WriteByte(OAM_START + i, ReadByte(address + i));
+		}
+	}
+
+	void MemoryMap::ResetVBlankInterruptFlag()
+	{
+		uint8_t interrupts = Utilities::ResetBit(GetInterruptFlagRegister(), VBlankInterruptBit);
+		WriteByte(InterruptFlagAddress, interrupts);
+	}
+
+	void MemoryMap::ResetLCDInterruptFlag()
+	{
+		uint8_t interrupts = Utilities::ResetBit(GetInterruptFlagRegister(), LCDInterruptBit);
+		WriteByte(InterruptFlagAddress, interrupts);
+	}
+
+	void MemoryMap::ResetTimerInterruptFlag()
+	{
+		uint8_t interrupts = Utilities::ResetBit(GetInterruptFlagRegister(), TimerInterruptBit);
+		WriteByte(InterruptFlagAddress, interrupts);
+	}
+
+	void MemoryMap::ResetJoypadInterruptFlag()
+	{
+		uint8_t interrupts = Utilities::ResetBit(GetInterruptFlagRegister(), JoypadInterruptBit);
+		WriteByte(InterruptFlagAddress, interrupts);
 	}
 }

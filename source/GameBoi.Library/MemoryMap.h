@@ -5,10 +5,8 @@ namespace GameBoi
 {
 	// Interrupt Enable Register
 	// -------------------------- - FFFF
-	// Internal RAM
+	// Internal (High) RAM
 	// -------------------------- - FF80
-	// Empty but unusable for I / O
-	// -------------------------- - FF4C
 	// I / O ports
 	// -------------------------- - FF00
 	// Empty but unusable for I / O
@@ -28,8 +26,10 @@ namespace GameBoi
 	// 16kB ROM bank #0                   |
 	// -------------------------- - 0000 --
 
-	class MemoryMap
+	class MemoryMap final
 	{
+		friend class CPU;
+
 	public:
 		MemoryMap();
 
@@ -44,53 +44,85 @@ namespace GameBoi
 		Cartridge& GetCartridge();
 		const Cartridge& GetCartridge() const;
 
+		uint8_t GetInterruptEnabledRegister() const;
+		uint8_t GetInterruptFlagRegister() const;
+		void SetVBlankInterruptFlag();
+		void SetLCDInterruptFlag();
+		void SetTimerInterruptFlag();
+		void SetJoypadInterruptFlag();
+
+		static const uint16_t InterruptEnabledAddress = 0xFFFF;
+		static const uint16_t InterruptFlagAddress = 0xFF0F;
+		static const uint8_t VBlankInterruptBit = 0;
+		static const uint8_t LCDInterruptBit = 1;
+		static const uint8_t TimerInterruptBit = 2;
+		static const uint8_t JoypadInterruptBit = 3;
+		static const uint16_t VBlankISRAddress = 0x0040;
+		static const uint16_t LCDISRAddress = 0x0048;
+		static const uint16_t TimerISRAddress = 0x0050;
+		static const uint16_t JoypadISRAddress = 0x0060;
+		static const uint16_t DMAAddress = 0xFF46;
+
+		const static uint16_t BIOS_START = 0x0000;
 		const static uint16_t CARTRIDGE_START = 0x0000;
 		const static uint16_t VRAM_START = 0x8000;
 		const static uint16_t SRAM_START = 0xA000;
 		const static uint16_t WRAM_START = 0xC000;
 		const static uint16_t WRAM_ECHO_START = 0xE000;
 		const static uint16_t OAM_START = 0xFE00;
-		const static uint16_t UNUSABLE0_START = 0xFEA0;
+		const static uint16_t UNUSABLE_START = 0xFEA0;
 		const static uint16_t IO_START = 0xFF00;
-		const static uint16_t UNUSABLE1_START = 0xFF4C;
 		const static uint16_t INTERNAL_RAM_START = 0xFF80;
+		const static uint16_t INTERRUPT_ENABLE_START = 0xFFFF;
 
+		const static uint16_t BIOS_END = 0x0100;
 		const static uint16_t CARTRIDGE_END = VRAM_START;
 		const static uint16_t VRAM_END = SRAM_START;
 		const static uint16_t SRAM_END = WRAM_START;
 		const static uint16_t WRAM_END = WRAM_ECHO_START;
 		const static uint16_t WRAM_ECHO_END = OAM_START;
-		const static uint16_t OAM_END = UNUSABLE0_START;
-		const static uint16_t UNUSABLE0_END = IO_START;
-		const static uint16_t IO_END = UNUSABLE1_START;
-		const static uint16_t UNUSABLE1_END = INTERNAL_RAM_START;
-		const static uint16_t INTERNAL_RAM_END = 0xFFFF; // end of addressable space
+		const static uint16_t OAM_END = UNUSABLE_START;
+		const static uint16_t UNUSABLE_END = IO_START;
+		const static uint16_t IO_END = INTERNAL_RAM_START;
+		const static uint16_t INTERNAL_RAM_END = INTERRUPT_ENABLE_START;
 
-		const static uint16_t BIOS_SIZE = 0x100;
+		const static uint16_t BIOS_SIZE = BIOS_END - BIOS_START;
 		const static uint16_t CARTRIDGE_SIZE = CARTRIDGE_END - CARTRIDGE_START;
 		const static uint16_t VRAM_SIZE = VRAM_END - VRAM_START;
 		const static uint16_t SRAM_SIZE = SRAM_END - SRAM_START;
 		const static uint16_t WRAM_SIZE = WRAM_END - WRAM_START;
 		const static uint16_t WRAM_ECHO_SIZE = WRAM_ECHO_END - WRAM_ECHO_START;
 		const static uint16_t OAM_SIZE = OAM_END - OAM_START;
-		const static uint16_t UNUSABLE0_SIZE = UNUSABLE0_END - UNUSABLE0_START;
+		const static uint16_t UNUSABLE_SIZE = UNUSABLE_END - UNUSABLE_START;
 		const static uint16_t IO_SIZE = IO_END - IO_START;
-		const static uint16_t UNUSABLE1_SIZE = UNUSABLE1_END - UNUSABLE1_START;
 		const static uint16_t INTERNAL_RAM_SIZE = INTERNAL_RAM_END - INTERNAL_RAM_START;
 
 	private:
 		bool mIsInBIOS;
-		const static std::array<uint8_t, BIOS_SIZE> sBIOS;		// 0x0000 - 0x0100 if in BIOS
+		const static std::array<uint8_t, BIOS_SIZE> BIOS;		// 0x0000 - 0x0100 if in BIOS
+
+		/// <summary>
+		/// Handles Direct Memory Access, which copies data from <paramref name="value" /> << 8
+		/// to the Sprite (Object) Attribute Memory (OAM).
+		/// 
+		/// e.g. If 0x56 is passed in, memory from 0x5600 through 0x569F will be copied to
+		/// 0xFE00 through 0xFE9F.
+		/// </summary>
+		void DMATransfer(uint8_t value);
+
+		void ResetVBlankInterruptFlag();
+		void ResetLCDInterruptFlag();
+		void ResetTimerInterruptFlag();
+		void ResetJoypadInterruptFlag();
 
 		Cartridge mCart;										// 0x0000 - 0x7FFF
 		std::array<uint8_t, VRAM_SIZE> mVideoRAM;				// 0x8000 - 0x9FFF
 		//std::array<uint8_t, SRAM_SIZE> mSwitchableRAM;		// 0xA000 - 0xBFFF (Located on cartridge)
 		std::array<uint8_t, WRAM_SIZE> mWorkingRAM;				// 0xC000 - 0xDFFF
-		//std::array<uint8_t, WRAM_ECHO_SIZE> mWorkingRAMEcho;	// 0xE000 - 0xFDFF
+		//std::array<uint8_t, WRAM_ECHO_SIZE> mWorkingRAMEcho;	// 0xE000 - 0xFDFF (Echos WRAM, so no need to include again)
 		std::array<uint8_t, OAM_SIZE> mOAM;						// 0xFE00 - 0xFE9F
-		//std::array<uint8_t, UNUSABLE0_SIZE> UNUSABLE0;		// 0xFEA0 - 0xFEFF
-		std::array<uint8_t, IO_SIZE> mIO;						// 0xFF00 - 0xFF4B
-		//std::array<uint8_t, UNUSABLE1_SIZE> UNUSABLE1;		// 0xFF4C - 0xFF7F
+		//std::array<uint8_t, UNUSABLE_SIZE> UNUSABLE0;			// 0xFEA0 - 0xFEFF (Unusable addresses)
+		std::array<uint8_t, IO_SIZE> mIO;						// 0xFF00 - 0xFF7F
 		std::array<uint8_t, INTERNAL_RAM_SIZE> mInternalRAM;	// 0xFF80 - 0xFFFE
 		uint8_t mInterruptEnableRegister;						// 0xFFFF
 	};

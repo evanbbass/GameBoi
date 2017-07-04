@@ -6,12 +6,12 @@ using namespace std;
 namespace GameBoi
 {
 	GameBoy::GameBoy() :
-		mCPU(mMemory)
+		mCPU(mMemory), mGPU(mMemory), mTimer(mMemory)
 	{
 	}
 
 	GameBoy::GameBoy(const string& cartridgeFileName) :
-		mCPU(mMemory)
+		mCPU(mMemory), mGPU(mMemory), mTimer(mMemory)
 	{
 		LoadCartridge(cartridgeFileName);
 	}
@@ -24,6 +24,13 @@ namespace GameBoi
 	void GameBoy::Reset()
 	{
 		mCPU.Reset();
+	}
+
+	void GameBoy::Update()
+	{
+		int32_t cpuCycles = mCPU.StepCPU();
+		mGPU.StepGPU(cpuCycles);
+		mTimer.StepTimer(cpuCycles);
 	}
 
 	CPU& GameBoy::GetCPU()

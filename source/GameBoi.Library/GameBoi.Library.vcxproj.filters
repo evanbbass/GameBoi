@@ -22,6 +22,12 @@
     <ClCompile Include="CPU.Instructions.cpp">
       <Filter>Hardware\CPU</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Hardware\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="GPU.cpp">
+      <Filter>Hardware\GPU</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cartridge.h">
@@ -45,6 +51,15 @@
     <ClInclude Include="Instruction.h">
       <Filter>Hardware\CPU</Filter>
     </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Hardware\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="GPU.h">
+      <Filter>Hardware\GPU</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Hardware">
@@ -58,6 +73,12 @@
     </Filter>
     <Filter Include="Hardware\CPU">
       <UniqueIdentifier>{4f713738-5388-406b-9de9-53b84a9d2bf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hardware\Other">
+      <UniqueIdentifier>{6e27018e-8f7a-4138-a79e-8f44eaf452cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hardware\GPU">
+      <UniqueIdentifier>{61777cd3-cfcc-4679-a938-81ab42c10cbf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

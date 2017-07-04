@@ -147,16 +147,20 @@
   <ItemGroup>
     <ClInclude Include="CPU.h" />
     <ClInclude Include="GameBoy.h" />
+    <ClInclude Include="GPU.h" />
+    <ClInclude Include="Utilities.h" />
     <ClInclude Include="Instruction.h" />
     <ClInclude Include="MemoryMap.h" />
     <ClInclude Include="Cartridge.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Registers.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="CPU.Instructions.cpp" />
     <ClCompile Include="GameBoy.cpp" />
+    <ClCompile Include="GPU.cpp" />
     <ClCompile Include="MemoryMap.cpp" />
     <ClCompile Include="Cartridge.cpp" />
     <ClCompile Include="pch.cpp">
@@ -166,6 +170,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Registers.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

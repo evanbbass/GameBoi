@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "CPU.h"
+#include "Utilities.h"
 
 using namespace std;
 
 namespace GameBoi
 {
-	const map<uint8_t, Instruction> CPU::sOpcodeDisassembly
+	const map<uint8_t, Instruction> CPU::OpcodeInstructionMap
 	{
 		#pragma region 8-bit Loads
 
@@ -515,7 +516,7 @@ namespace GameBoi
 		#pragma endregion
 	};
 
-	const map<uint8_t, Instruction> CPU::sOpcodeDisassembly_PrefixCB
+	const map<uint8_t, Instruction> CPU::OpcodeInstructionMap_PrefixCB
 	{
 		#pragma region Swap
 
@@ -815,8 +816,8 @@ namespace GameBoi
 			return 1;
 		}
 
-		map<uint8_t, Instruction>::const_iterator it = sOpcodeDisassembly.find(opcode);
-		if (it == sOpcodeDisassembly.end())
+		map<uint8_t, Instruction>::const_iterator it = OpcodeInstructionMap.find(opcode);
+		if (it == OpcodeInstructionMap.end())
 		{
 			throw exception("Opcode not found!");
 		}
@@ -830,16 +831,16 @@ namespace GameBoi
 
 		if (opcode == 0xCB)
 		{
-			it = sOpcodeDisassembly_PrefixCB.find(static_cast<uint8_t>(operand));
-			if (it == sOpcodeDisassembly_PrefixCB.end())
+			it = OpcodeInstructionMap_PrefixCB.find(static_cast<uint8_t>(operand));
+			if (it == OpcodeInstructionMap_PrefixCB.end())
 			{
 				throw exception("Opcode not found!");
 			}
 		}
 		else
 		{
-			it = sOpcodeDisassembly.find(opcode);
-			if (it == sOpcodeDisassembly.end())
+			it = OpcodeInstructionMap.find(opcode);
+			if (it == OpcodeInstructionMap.end())
 			{
 				throw exception("Opcode not found!");
 			}
@@ -4364,7 +4365,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.A & 0b00000001) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4374,7 +4375,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.A & 0b00000010) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4384,7 +4385,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.A & 0b00000100) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4394,7 +4395,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.A & 0b00001000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4404,7 +4405,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.A & 0b00010000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4414,7 +4415,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.A & 0b00100000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4424,7 +4425,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.A & 0b01000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4434,7 +4435,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.A & 0b10000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4444,7 +4445,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.B & 0b00000001) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4454,7 +4455,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.B & 0b00000010) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4464,7 +4465,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.B & 0b00000100) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4474,7 +4475,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.B & 0b00001000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4484,7 +4485,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.B & 0b00010000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4494,7 +4495,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.B & 0b00100000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4504,7 +4505,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.B & 0b01000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4514,7 +4515,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.B & 0b10000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4524,7 +4525,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.C & 0b00000001) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4534,7 +4535,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.C & 0b00000010) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4544,7 +4545,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.C & 0b00000100) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4554,7 +4555,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.C & 0b00001000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4564,7 +4565,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.C & 0b00010000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4574,7 +4575,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.C & 0b00100000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4584,7 +4585,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.C & 0b01000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4594,7 +4595,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.C & 0b10000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4604,7 +4605,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.D & 0b00000001) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4614,7 +4615,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.D & 0b00000010) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4624,7 +4625,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.D & 0b00000100) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4634,7 +4635,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.D & 0b00001000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4644,7 +4645,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.D & 0b00010000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4654,7 +4655,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.D & 0b00100000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4664,7 +4665,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.D & 0b01000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4674,7 +4675,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.D & 0b10000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4684,7 +4685,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.E & 0b00000001) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4694,7 +4695,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.E & 0b00000010) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4704,7 +4705,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.E & 0b00000100) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4714,7 +4715,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.E & 0b00001000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4724,7 +4725,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.E & 0b00010000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4734,7 +4735,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.E & 0b00100000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4744,7 +4745,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.E & 0b01000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4754,7 +4755,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.E & 0b10000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4764,7 +4765,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.H & 0b00000001) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4774,7 +4775,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.H & 0b00000010) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4784,7 +4785,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.H & 0b00000100) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4794,7 +4795,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.H & 0b00001000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4804,7 +4805,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.H & 0b00010000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4814,7 +4815,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.H & 0b00100000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4824,7 +4825,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.H & 0b01000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4834,7 +4835,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.H & 0b10000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4844,7 +4845,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.L & 0b00000001) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4854,7 +4855,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.L & 0b00000010) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4864,7 +4865,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.L & 0b00000100) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4874,7 +4875,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.L & 0b00001000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4884,7 +4885,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.L & 0b00010000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4894,7 +4895,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.L & 0b00100000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4904,7 +4905,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.L & 0b01000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4914,7 +4915,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag((mRegisters.L & 0b10000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4925,7 +4926,7 @@ namespace GameBoi
 	void CPU::BIT_0_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag((value & 0b00000001) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4936,7 +4937,7 @@ namespace GameBoi
 	void CPU::BIT_1_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag((value & 0b00000010) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4947,7 +4948,7 @@ namespace GameBoi
 	void CPU::BIT_2_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag((value & 0b00000100) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4958,7 +4959,7 @@ namespace GameBoi
 	void CPU::BIT_3_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag((value & 0b00001000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4969,7 +4970,7 @@ namespace GameBoi
 	void CPU::BIT_4_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag((value & 0b00010000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4980,7 +4981,7 @@ namespace GameBoi
 	void CPU::BIT_5_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag((value & 0b00100000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4991,7 +4992,7 @@ namespace GameBoi
 	void CPU::BIT_6_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag((value & 0b01000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -5002,7 +5003,7 @@ namespace GameBoi
 	void CPU::BIT_7_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag((value & 0b10000000) != 0);
+		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -5012,7 +5013,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_0_A(uint16_t)
 	{
-		mRegisters.A |= 0b00000001;
+		mRegisters.A = Utilities::SetBit(mRegisters.A, 0);
 	}
 
 	/**
@@ -5020,7 +5021,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_1_A(uint16_t)
 	{
-		mRegisters.A |= 0b00000010;
+		mRegisters.A = Utilities::SetBit(mRegisters.A, 1);
 	}
 
 	/**
@@ -5028,7 +5029,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_2_A(uint16_t)
 	{
-		mRegisters.A |= 0b00000100;
+		mRegisters.A = Utilities::SetBit(mRegisters.A, 2);
 	}
 
 	/**
@@ -5036,7 +5037,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_3_A(uint16_t)
 	{
-		mRegisters.A |= 0b00001000;
+		mRegisters.A = Utilities::SetBit(mRegisters.A, 3);
 	}
 
 	/**
@@ -5044,7 +5045,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_4_A(uint16_t)
 	{
-		mRegisters.A |= 0b00010000;
+		mRegisters.A = Utilities::SetBit(mRegisters.A, 4);
 	}
 
 	/**
@@ -5052,7 +5053,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_5_A(uint16_t)
 	{
-		mRegisters.A |= 0b00100000;
+		mRegisters.A = Utilities::SetBit(mRegisters.A, 5);
 	}
 
 	/**
@@ -5060,7 +5061,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_6_A(uint16_t)
 	{
-		mRegisters.A |= 0b01000000;
+		mRegisters.A = Utilities::SetBit(mRegisters.A, 6);
 	}
 
 	/**
@@ -5068,7 +5069,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_7_A(uint16_t)
 	{
-		mRegisters.A |= 0b10000000;
+		mRegisters.A = Utilities::SetBit(mRegisters.A, 7);
 	}
 
 	/**
@@ -5076,7 +5077,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_0_B(uint16_t)
 	{
-		mRegisters.B |= 0b00000001;
+		mRegisters.B = Utilities::SetBit(mRegisters.B, 0);
 	}
 
 	/**
@@ -5084,7 +5085,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_1_B(uint16_t)
 	{
-		mRegisters.B |= 0b00000010;
+		mRegisters.B = Utilities::SetBit(mRegisters.B, 1);
 	}
 
 	/**
@@ -5092,7 +5093,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_2_B(uint16_t)
 	{
-		mRegisters.B |= 0b00000100;
+		mRegisters.B = Utilities::SetBit(mRegisters.B, 2);
 	}
 
 	/**
@@ -5100,7 +5101,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_3_B(uint16_t)
 	{
-		mRegisters.B |= 0b00001000;
+		mRegisters.B = Utilities::SetBit(mRegisters.B, 3);
 	}
 
 	/**
@@ -5108,7 +5109,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_4_B(uint16_t)
 	{
-		mRegisters.B |= 0b00010000;
+		mRegisters.B = Utilities::SetBit(mRegisters.B, 4);
 	}
 
 	/**
@@ -5116,7 +5117,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_5_B(uint16_t)
 	{
-		mRegisters.B |= 0b00100000;
+		mRegisters.B = Utilities::SetBit(mRegisters.B, 5);
 	}
 
 	/**
@@ -5124,7 +5125,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_6_B(uint16_t)
 	{
-		mRegisters.B |= 0b01000000;
+		mRegisters.B = Utilities::SetBit(mRegisters.B, 6);
 	}
 
 	/**
@@ -5132,7 +5133,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_7_B(uint16_t)
 	{
-		mRegisters.B |= 0b10000000;
+		mRegisters.B = Utilities::SetBit(mRegisters.B, 7);
 	}
 
 	/**
@@ -5140,7 +5141,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_0_C(uint16_t)
 	{
-		mRegisters.C |= 0b00000001;
+		mRegisters.C = Utilities::SetBit(mRegisters.C, 0);
 	}
 
 	/**
@@ -5148,7 +5149,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_1_C(uint16_t)
 	{
-		mRegisters.C |= 0b00000010;
+		mRegisters.C = Utilities::SetBit(mRegisters.C, 1);
 	}
 
 	/**
@@ -5156,7 +5157,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_2_C(uint16_t)
 	{
-		mRegisters.C |= 0b00000100;
+		mRegisters.C = Utilities::SetBit(mRegisters.C, 2);
 	}
 
 	/**
@@ -5164,7 +5165,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_3_C(uint16_t)
 	{
-		mRegisters.C |= 0b00001000;
+		mRegisters.C = Utilities::SetBit(mRegisters.C, 3);
 	}
 
 	/**
@@ -5172,7 +5173,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_4_C(uint16_t)
 	{
-		mRegisters.C |= 0b00010000;
+		mRegisters.C = Utilities::SetBit(mRegisters.C, 4);
 	}
 
 	/**
@@ -5180,7 +5181,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_5_C(uint16_t)
 	{
-		mRegisters.C |= 0b00100000;
+		mRegisters.C = Utilities::SetBit(mRegisters.C, 5);
 	}
 
 	/**
@@ -5188,7 +5189,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_6_C(uint16_t)
 	{
-		mRegisters.C |= 0b01000000;
+		mRegisters.C = Utilities::SetBit(mRegisters.C, 6);
 	}
 
 	/**
@@ -5196,7 +5197,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_7_C(uint16_t)
 	{
-		mRegisters.C |= 0b10000000;
+		mRegisters.C = Utilities::SetBit(mRegisters.C, 7);
 	}
 
 	/**
@@ -5204,7 +5205,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_0_D(uint16_t)
 	{
-		mRegisters.D |= 0b00000001;
+		mRegisters.D = Utilities::SetBit(mRegisters.D, 0);
 	}
 
 	/**
@@ -5212,7 +5213,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_1_D(uint16_t)
 	{
-		mRegisters.D |= 0b00000010;
+		mRegisters.D = Utilities::SetBit(mRegisters.D, 1);
 	}
 
 	/**
@@ -5220,7 +5221,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_2_D(uint16_t)
 	{
-		mRegisters.D |= 0b00000100;
+		mRegisters.D = Utilities::SetBit(mRegisters.D, 2);
 	}
 
 	/**
@@ -5228,7 +5229,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_3_D(uint16_t)
 	{
-		mRegisters.D |= 0b00001000;
+		mRegisters.D = Utilities::SetBit(mRegisters.D, 3);
 	}
 
 	/**
@@ -5236,7 +5237,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_4_D(uint16_t)
 	{
-		mRegisters.D |= 0b00010000;
+		mRegisters.D = Utilities::SetBit(mRegisters.D, 4);
 	}
 
 	/**
@@ -5244,7 +5245,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_5_D(uint16_t)
 	{
-		mRegisters.D |= 0b00100000;
+		mRegisters.D = Utilities::SetBit(mRegisters.D, 5);
 	}
 
 	/**
@@ -5252,7 +5253,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_6_D(uint16_t)
 	{
-		mRegisters.D |= 0b01000000;
+		mRegisters.D = Utilities::SetBit(mRegisters.D, 6);
 	}
 
 	/**
@@ -5260,7 +5261,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_7_D(uint16_t)
 	{
-		mRegisters.D |= 0b10000000;
+		mRegisters.D = Utilities::SetBit(mRegisters.D, 7);
 	}
 
 	/**
@@ -5268,7 +5269,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_0_E(uint16_t)
 	{
-		mRegisters.E |= 0b00000001;
+		mRegisters.E = Utilities::SetBit(mRegisters.E, 0);
 	}
 
 	/**
@@ -5276,7 +5277,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_1_E(uint16_t)
 	{
-		mRegisters.E |= 0b00000010;
+		mRegisters.E = Utilities::SetBit(mRegisters.E, 1);
 	}
 
 	/**
@@ -5284,7 +5285,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_2_E(uint16_t)
 	{
-		mRegisters.E |= 0b00000100;
+		mRegisters.E = Utilities::SetBit(mRegisters.E, 2);
 	}
 
 	/**
@@ -5292,7 +5293,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_3_E(uint16_t)
 	{
-		mRegisters.E |= 0b00001000;
+		mRegisters.E = Utilities::SetBit(mRegisters.E, 3);
 	}
 
 	/**
@@ -5300,7 +5301,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_4_E(uint16_t)
 	{
-		mRegisters.E |= 0b00010000;
+		mRegisters.E = Utilities::SetBit(mRegisters.E, 4);
 	}
 
 	/**
@@ -5308,7 +5309,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_5_E(uint16_t)
 	{
-		mRegisters.E |= 0b00100000;
+		mRegisters.E = Utilities::SetBit(mRegisters.E, 5);
 	}
 
 	/**
@@ -5316,7 +5317,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_6_E(uint16_t)
 	{
-		mRegisters.E |= 0b01000000;
+		mRegisters.E = Utilities::SetBit(mRegisters.E, 6);
 	}
 
 	/**
@@ -5324,7 +5325,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_7_E(uint16_t)
 	{
-		mRegisters.E |= 0b10000000;
+		mRegisters.E = Utilities::SetBit(mRegisters.E, 7);
 	}
 
 	/**
@@ -5332,7 +5333,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_0_H(uint16_t)
 	{
-		mRegisters.H |= 0b00000001;
+		mRegisters.H = Utilities::SetBit(mRegisters.H, 0);
 	}
 
 	/**
@@ -5340,7 +5341,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_1_H(uint16_t)
 	{
-		mRegisters.H |= 0b00000010;
+		mRegisters.H = Utilities::SetBit(mRegisters.H, 1);
 	}
 
 	/**
@@ -5348,7 +5349,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_2_H(uint16_t)
 	{
-		mRegisters.H |= 0b00000100;
+		mRegisters.H = Utilities::SetBit(mRegisters.H, 2);
 	}
 
 	/**
@@ -5356,7 +5357,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_3_H(uint16_t)
 	{
-		mRegisters.H |= 0b00001000;
+		mRegisters.H = Utilities::SetBit(mRegisters.H, 3);
 	}
 
 	/**
@@ -5364,7 +5365,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_4_H(uint16_t)
 	{
-		mRegisters.H |= 0b00010000;
+		mRegisters.H = Utilities::SetBit(mRegisters.H, 4);
 	}
 
 	/**
@@ -5372,7 +5373,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_5_H(uint16_t)
 	{
-		mRegisters.H |= 0b00100000;
+		mRegisters.H = Utilities::SetBit(mRegisters.H, 5);
 	}
 
 	/**
@@ -5380,7 +5381,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_6_H(uint16_t)
 	{
-		mRegisters.H |= 0b01000000;
+		mRegisters.H = Utilities::SetBit(mRegisters.H, 6);
 	}
 
 	/**
@@ -5388,7 +5389,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_7_H(uint16_t)
 	{
-		mRegisters.H |= 0b10000000;
+		mRegisters.H = Utilities::SetBit(mRegisters.H, 7);
 	}
 
 	/**
@@ -5396,7 +5397,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_0_L(uint16_t)
 	{
-		mRegisters.L |= 0b00000001;
+		mRegisters.L = Utilities::SetBit(mRegisters.L, 0);
 	}
 
 	/**
@@ -5404,7 +5405,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_1_L(uint16_t)
 	{
-		mRegisters.L |= 0b00000010;
+		mRegisters.L = Utilities::SetBit(mRegisters.L, 1);
 	}
 
 	/**
@@ -5412,7 +5413,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_2_L(uint16_t)
 	{
-		mRegisters.L |= 0b00000100;
+		mRegisters.L = Utilities::SetBit(mRegisters.L, 2);
 	}
 
 	/**
@@ -5420,7 +5421,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_3_L(uint16_t)
 	{
-		mRegisters.L |= 0b00001000;
+		mRegisters.L = Utilities::SetBit(mRegisters.L, 3);
 	}
 
 	/**
@@ -5428,7 +5429,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_4_L(uint16_t)
 	{
-		mRegisters.L |= 0b00010000;
+		mRegisters.L = Utilities::SetBit(mRegisters.L, 4);
 	}
 
 	/**
@@ -5436,7 +5437,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_5_L(uint16_t)
 	{
-		mRegisters.L |= 0b00100000;
+		mRegisters.L = Utilities::SetBit(mRegisters.L, 5);
 	}
 
 	/**
@@ -5444,7 +5445,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_6_L(uint16_t)
 	{
-		mRegisters.L |= 0b01000000;
+		mRegisters.L = Utilities::SetBit(mRegisters.L, 6);
 	}
 
 	/**
@@ -5452,7 +5453,7 @@ namespace GameBoi
 	 */
 	void CPU::SET_7_L(uint16_t)
 	{
-		mRegisters.L |= 0b10000000;
+		mRegisters.L = Utilities::SetBit(mRegisters.L, 7);
 	}
 
 	/**
@@ -5461,8 +5462,7 @@ namespace GameBoi
 	void CPU::SET_0_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value |= 0b00000001;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::SetBit(value, 0));
 	}
 
 	/**
@@ -5471,8 +5471,7 @@ namespace GameBoi
 	void CPU::SET_1_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value |= 0b00000010;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::SetBit(value, 1));
 	}
 
 	/**
@@ -5481,8 +5480,7 @@ namespace GameBoi
 	void CPU::SET_2_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value |= 0b00000100;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::SetBit(value, 2));
 	}
 
 	/**
@@ -5491,8 +5489,7 @@ namespace GameBoi
 	void CPU::SET_3_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value |= 0b00001000;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::SetBit(value, 3));
 	}
 
 	/**
@@ -5501,8 +5498,7 @@ namespace GameBoi
 	void CPU::SET_4_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value |= 0b00010000;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::SetBit(value, 4));
 	}
 
 	/**
@@ -5511,8 +5507,7 @@ namespace GameBoi
 	void CPU::SET_5_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value |= 0b00100000;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::SetBit(value, 5));
 	}
 
 	/**
@@ -5521,8 +5516,7 @@ namespace GameBoi
 	void CPU::SET_6_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value |= 0b01000000;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::SetBit(value, 6));
 	}
 
 	/**
@@ -5531,8 +5525,7 @@ namespace GameBoi
 	void CPU::SET_7_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value |= 0b10000000;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::SetBit(value, 7));
 	}
 
 	/**
@@ -5540,7 +5533,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_0_A(uint16_t)
 	{
-		mRegisters.A &= ~0b00000001;
+		mRegisters.A = Utilities::ResetBit(mRegisters.A, 0);
 	}
 
 	/**
@@ -5548,7 +5541,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_1_A(uint16_t)
 	{
-		mRegisters.A &= ~0b00000010;
+		mRegisters.A = Utilities::ResetBit(mRegisters.A, 1);
 	}
 
 	/**
@@ -5556,7 +5549,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_2_A(uint16_t)
 	{
-		mRegisters.A &= ~0b00000100;
+		mRegisters.A = Utilities::ResetBit(mRegisters.A, 2);
 	}
 
 	/**
@@ -5564,7 +5557,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_3_A(uint16_t)
 	{
-		mRegisters.A &= ~0b00001000;
+		mRegisters.A = Utilities::ResetBit(mRegisters.A, 3);
 	}
 
 	/**
@@ -5572,7 +5565,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_4_A(uint16_t)
 	{
-		mRegisters.A &= ~0b00010000;
+		mRegisters.A = Utilities::ResetBit(mRegisters.A, 4);
 	}
 
 	/**
@@ -5580,7 +5573,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_5_A(uint16_t)
 	{
-		mRegisters.A &= ~0b00100000;
+		mRegisters.A = Utilities::ResetBit(mRegisters.A, 5);
 	}
 
 	/**
@@ -5588,7 +5581,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_6_A(uint16_t)
 	{
-		mRegisters.A &= ~0b01000000;
+		mRegisters.A = Utilities::ResetBit(mRegisters.A, 6);
 	}
 
 	/**
@@ -5596,7 +5589,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_7_A(uint16_t)
 	{
-		mRegisters.A &= ~0b10000000;
+		mRegisters.A = Utilities::ResetBit(mRegisters.A, 7);
 	}
 
 	/**
@@ -5604,7 +5597,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_0_B(uint16_t)
 	{
-		mRegisters.B &= ~0b00000001;
+		mRegisters.B = Utilities::ResetBit(mRegisters.B, 0);
 	}
 
 	/**
@@ -5612,7 +5605,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_1_B(uint16_t)
 	{
-		mRegisters.B &= ~0b00000010;
+		mRegisters.B = Utilities::ResetBit(mRegisters.B, 1);
 	}
 
 	/**
@@ -5620,7 +5613,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_2_B(uint16_t)
 	{
-		mRegisters.B &= ~0b00000100;
+		mRegisters.B = Utilities::ResetBit(mRegisters.B, 2);
 	}
 
 	/**
@@ -5628,7 +5621,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_3_B(uint16_t)
 	{
-		mRegisters.B &= ~0b00001000;
+		mRegisters.B = Utilities::ResetBit(mRegisters.B, 3);
 	}
 
 	/**
@@ -5636,7 +5629,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_4_B(uint16_t)
 	{
-		mRegisters.B &= ~0b00010000;
+		mRegisters.B = Utilities::ResetBit(mRegisters.B, 4);
 	}
 
 	/**
@@ -5644,7 +5637,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_5_B(uint16_t)
 	{
-		mRegisters.B &= ~0b00100000;
+		mRegisters.B = Utilities::ResetBit(mRegisters.B, 5);
 	}
 
 	/**
@@ -5652,7 +5645,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_6_B(uint16_t)
 	{
-		mRegisters.B &= ~0b01000000;
+		mRegisters.B = Utilities::ResetBit(mRegisters.B, 6);
 	}
 
 	/**
@@ -5660,7 +5653,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_7_B(uint16_t)
 	{
-		mRegisters.B &= ~0b10000000;
+		mRegisters.B = Utilities::ResetBit(mRegisters.B, 7);
 	}
 
 	/**
@@ -5668,7 +5661,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_0_C(uint16_t)
 	{
-		mRegisters.C &= ~0b00000001;
+		mRegisters.C = Utilities::ResetBit(mRegisters.C, 0);
 	}
 
 	/**
@@ -5676,7 +5669,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_1_C(uint16_t)
 	{
-		mRegisters.C &= ~0b00000010;
+		mRegisters.C = Utilities::ResetBit(mRegisters.C, 1);
 	}
 
 	/**
@@ -5684,7 +5677,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_2_C(uint16_t)
 	{
-		mRegisters.C &= ~0b00000100;
+		mRegisters.C = Utilities::ResetBit(mRegisters.C, 2);
 	}
 
 	/**
@@ -5692,7 +5685,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_3_C(uint16_t)
 	{
-		mRegisters.C &= ~0b00001000;
+		mRegisters.C = Utilities::ResetBit(mRegisters.C, 3);
 	}
 
 	/**
@@ -5700,7 +5693,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_4_C(uint16_t)
 	{
-		mRegisters.C &= ~0b00010000;
+		mRegisters.C = Utilities::ResetBit(mRegisters.C, 4);
 	}
 
 	/**
@@ -5708,7 +5701,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_5_C(uint16_t)
 	{
-		mRegisters.C &= ~0b00100000;
+		mRegisters.C = Utilities::ResetBit(mRegisters.C, 5);
 	}
 
 	/**
@@ -5716,7 +5709,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_6_C(uint16_t)
 	{
-		mRegisters.C &= ~0b01000000;
+		mRegisters.C = Utilities::ResetBit(mRegisters.C, 6);
 	}
 
 	/**
@@ -5724,7 +5717,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_7_C(uint16_t)
 	{
-		mRegisters.C &= ~0b10000000;
+		mRegisters.C = Utilities::ResetBit(mRegisters.C, 7);
 	}
 
 	/**
@@ -5732,7 +5725,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_0_D(uint16_t)
 	{
-		mRegisters.D &= ~0b00000001;
+		mRegisters.D = Utilities::ResetBit(mRegisters.D, 0);
 	}
 
 	/**
@@ -5740,7 +5733,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_1_D(uint16_t)
 	{
-		mRegisters.D &= ~0b00000010;
+		mRegisters.D = Utilities::ResetBit(mRegisters.D, 1);
 	}
 
 	/**
@@ -5748,7 +5741,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_2_D(uint16_t)
 	{
-		mRegisters.D &= ~0b00000100;
+		mRegisters.D = Utilities::ResetBit(mRegisters.D, 2);
 	}
 
 	/**
@@ -5756,7 +5749,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_3_D(uint16_t)
 	{
-		mRegisters.D &= ~0b00001000;
+		mRegisters.D = Utilities::ResetBit(mRegisters.D, 3);
 	}
 
 	/**
@@ -5764,7 +5757,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_4_D(uint16_t)
 	{
-		mRegisters.D &= ~0b00010000;
+		mRegisters.D = Utilities::ResetBit(mRegisters.D, 4);
 	}
 
 	/**
@@ -5772,7 +5765,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_5_D(uint16_t)
 	{
-		mRegisters.D &= ~0b00100000;
+		mRegisters.D = Utilities::ResetBit(mRegisters.D, 5);
 	}
 
 	/**
@@ -5780,7 +5773,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_6_D(uint16_t)
 	{
-		mRegisters.D &= ~0b01000000;
+		mRegisters.D = Utilities::ResetBit(mRegisters.D, 6);
 	}
 
 	/**
@@ -5788,7 +5781,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_7_D(uint16_t)
 	{
-		mRegisters.D &= ~0b10000000;
+		mRegisters.D = Utilities::ResetBit(mRegisters.D, 7);
 	}
 
 	/**
@@ -5796,7 +5789,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_0_E(uint16_t)
 	{
-		mRegisters.E &= ~0b00000001;
+		mRegisters.E = Utilities::ResetBit(mRegisters.E, 0);
 	}
 
 	/**
@@ -5804,7 +5797,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_1_E(uint16_t)
 	{
-		mRegisters.E &= ~0b00000010;
+		mRegisters.E = Utilities::ResetBit(mRegisters.E, 1);
 	}
 
 	/**
@@ -5812,7 +5805,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_2_E(uint16_t)
 	{
-		mRegisters.E &= ~0b00000100;
+		mRegisters.E = Utilities::ResetBit(mRegisters.E, 2);
 	}
 
 	/**
@@ -5820,7 +5813,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_3_E(uint16_t)
 	{
-		mRegisters.E &= ~0b00001000;
+		mRegisters.E = Utilities::ResetBit(mRegisters.E, 3);
 	}
 
 	/**
@@ -5828,7 +5821,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_4_E(uint16_t)
 	{
-		mRegisters.E &= ~0b00010000;
+		mRegisters.E = Utilities::ResetBit(mRegisters.E, 4);
 	}
 
 	/**
@@ -5836,7 +5829,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_5_E(uint16_t)
 	{
-		mRegisters.E &= ~0b00100000;
+		mRegisters.E = Utilities::ResetBit(mRegisters.E, 5);
 	}
 
 	/**
@@ -5844,7 +5837,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_6_E(uint16_t)
 	{
-		mRegisters.E &= ~0b01000000;
+		mRegisters.E = Utilities::ResetBit(mRegisters.E, 6);
 	}
 
 	/**
@@ -5852,7 +5845,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_7_E(uint16_t)
 	{
-		mRegisters.E &= ~0b10000000;
+		mRegisters.E = Utilities::ResetBit(mRegisters.E, 7);
 	}
 
 	/**
@@ -5860,7 +5853,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_0_H(uint16_t)
 	{
-		mRegisters.H &= ~0b00000001;
+		mRegisters.H = Utilities::ResetBit(mRegisters.H, 0);
 	}
 
 	/**
@@ -5868,7 +5861,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_1_H(uint16_t)
 	{
-		mRegisters.H &= ~0b00000010;
+		mRegisters.H = Utilities::ResetBit(mRegisters.H, 1);
 	}
 
 	/**
@@ -5876,7 +5869,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_2_H(uint16_t)
 	{
-		mRegisters.H &= ~0b00000100;
+		mRegisters.H = Utilities::ResetBit(mRegisters.H, 2);
 	}
 
 	/**
@@ -5884,7 +5877,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_3_H(uint16_t)
 	{
-		mRegisters.H &= ~0b00001000;
+		mRegisters.H = Utilities::ResetBit(mRegisters.H, 3);
 	}
 
 	/**
@@ -5892,7 +5885,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_4_H(uint16_t)
 	{
-		mRegisters.H &= ~0b00010000;
+		mRegisters.H = Utilities::ResetBit(mRegisters.H, 4);
 	}
 
 	/**
@@ -5900,7 +5893,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_5_H(uint16_t)
 	{
-		mRegisters.H &= ~0b00100000;
+		mRegisters.H = Utilities::ResetBit(mRegisters.H, 5);
 	}
 
 	/**
@@ -5908,7 +5901,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_6_H(uint16_t)
 	{
-		mRegisters.H &= ~0b01000000;
+		mRegisters.H = Utilities::ResetBit(mRegisters.H, 6);
 	}
 
 	/**
@@ -5916,7 +5909,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_7_H(uint16_t)
 	{
-		mRegisters.H &= ~0b10000000;
+		mRegisters.H = Utilities::ResetBit(mRegisters.H, 7);
 	}
 
 	/**
@@ -5924,7 +5917,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_0_L(uint16_t)
 	{
-		mRegisters.L &= ~0b00000001;
+		mRegisters.L = Utilities::ResetBit(mRegisters.L, 0);
 	}
 
 	/**
@@ -5932,7 +5925,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_1_L(uint16_t)
 	{
-		mRegisters.L &= ~0b00000010;
+		mRegisters.L = Utilities::ResetBit(mRegisters.L, 1);
 	}
 
 	/**
@@ -5940,7 +5933,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_2_L(uint16_t)
 	{
-		mRegisters.L &= ~0b00000100;
+		mRegisters.L = Utilities::ResetBit(mRegisters.L, 2);
 	}
 
 	/**
@@ -5948,7 +5941,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_3_L(uint16_t)
 	{
-		mRegisters.L &= ~0b00001000;
+		mRegisters.L = Utilities::ResetBit(mRegisters.L, 3);
 	}
 
 	/**
@@ -5956,7 +5949,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_4_L(uint16_t)
 	{
-		mRegisters.L &= ~0b00010000;
+		mRegisters.L = Utilities::ResetBit(mRegisters.L, 4);
 	}
 
 	/**
@@ -5964,7 +5957,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_5_L(uint16_t)
 	{
-		mRegisters.L &= ~0b00100000;
+		mRegisters.L = Utilities::ResetBit(mRegisters.L, 5);
 	}
 
 	/**
@@ -5972,7 +5965,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_6_L(uint16_t)
 	{
-		mRegisters.L &= ~0b01000000;
+		mRegisters.L = Utilities::ResetBit(mRegisters.L, 6);
 	}
 
 	/**
@@ -5980,7 +5973,7 @@ namespace GameBoi
 	 */
 	void CPU::RES_7_L(uint16_t)
 	{
-		mRegisters.L &= ~0b10000000;
+		mRegisters.L = Utilities::ResetBit(mRegisters.L, 7);
 	}
 
 	/**
@@ -5989,8 +5982,7 @@ namespace GameBoi
 	void CPU::RES_0_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value &= ~0b00000001;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::ResetBit(value, 0));
 	}
 
 	/**
@@ -5999,8 +5991,7 @@ namespace GameBoi
 	void CPU::RES_1_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value &= ~0b00000010;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::ResetBit(value, 1));
 	}
 
 	/**
@@ -6009,8 +6000,7 @@ namespace GameBoi
 	void CPU::RES_2_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value &= ~0b00000100;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::ResetBit(value, 2));
 	}
 
 	/**
@@ -6019,8 +6009,7 @@ namespace GameBoi
 	void CPU::RES_3_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value &= ~0b00001000;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::ResetBit(value, 3));
 	}
 
 	/**
@@ -6029,8 +6018,7 @@ namespace GameBoi
 	void CPU::RES_4_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value &= ~0b00010000;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::ResetBit(value, 4));
 	}
 
 	/**
@@ -6039,8 +6027,7 @@ namespace GameBoi
 	void CPU::RES_5_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value &= ~0b00100000;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::ResetBit(value, 5));
 	}
 
 	/**
@@ -6049,8 +6036,7 @@ namespace GameBoi
 	void CPU::RES_6_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value &= ~0b01000000;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::ResetBit(value, 6));
 	}
 
 	/**
@@ -6059,8 +6045,7 @@ namespace GameBoi
 	void CPU::RES_7_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		value &= ~0b10000000;
-		mMemory.WriteByte(mRegisters.HL, value);
+		mMemory.WriteByte(mRegisters.HL, Utilities::ResetBit(value, 7));
 	}
 
 	#pragma endregion

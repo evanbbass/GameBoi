@@ -4,7 +4,7 @@ namespace GameBoi
 {
 	class CPU;
 
-	struct Instruction
+	struct Instruction final
 	{
 		typedef void (CPU::*InstructionFunction)(uint16_t);
 

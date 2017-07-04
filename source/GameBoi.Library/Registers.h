@@ -5,7 +5,7 @@
 #pragma warning(disable : 4201)
 namespace GameBoi
 {
-	struct Registers
+	struct Registers final
 	{
 		Registers();
 		~Registers() = default;
@@ -81,10 +81,10 @@ namespace GameBoi
 		void AssignCarryFlag(bool value);
 
 	private:
-		static const uint8_t ZERO_FLAG = 0b10000000;
-		static const uint8_t SUBTRACT_FLAG = 0b01000000;
-		static const uint8_t HALF_CARRY_FLAG = 0b00100000;
-		static const uint8_t CARRY_FLAG = 0b00010000;
+		static const uint8_t ZeroBit = 7;
+		static const uint8_t SubtractBit = 6;
+		static const uint8_t HalfCarryBit = 5;
+		static const uint8_t CarryBit = 4;
 	};
 }
 #pragma warning(pop)

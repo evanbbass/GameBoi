@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Registers.h"
+#include "Utilities.h"
 
 namespace GameBoi
 {
@@ -20,81 +21,81 @@ namespace GameBoi
 
 	bool Registers::GetZeroFlag() const
 	{
-		return Flags & ZERO_FLAG;
+		return Utilities::TestBit(Flags, ZeroBit);
 	}
 
 	void Registers::SetZeroFlag()
 	{
-		Flags |= ZERO_FLAG;
+		Flags = Utilities::SetBit(Flags, ZeroBit);
 	}
 
 	void Registers::ResetZeroFlag()
 	{
-		Flags &= ~ZERO_FLAG;
+		Flags = Utilities::ResetBit(Flags, ZeroBit);
 	}
 
 	void Registers::AssignZeroFlag(bool value)
 	{
-		Flags = value ? Flags | ZERO_FLAG : Flags & ~ZERO_FLAG;
+		Flags = value ? Utilities::SetBit(Flags, ZeroBit) : Utilities::ResetBit(Flags, ZeroBit);
 	}
 
 	bool Registers::GetSubtractFlag() const
 	{
-		return Flags & SUBTRACT_FLAG;
+		return Utilities::TestBit(Flags, SubtractBit);
 	}
 
 	void Registers::SetSubtractFlag()
 	{
-		Flags |= SUBTRACT_FLAG;
+		Flags = Utilities::SetBit(Flags, SubtractBit);
 	}
 
 	void Registers::ResetSubtractFlag()
 	{
-		Flags &= ~SUBTRACT_FLAG;
+		Flags = Utilities::ResetBit(Flags, SubtractBit);
 	}
 
 	void Registers::AssignSubtractFlag(bool value)
 	{
-		Flags = value ? Flags | SUBTRACT_FLAG : Flags & ~SUBTRACT_FLAG;
+		Flags = value ? Utilities::SetBit(Flags, SubtractBit) : Utilities::ResetBit(Flags, SubtractBit);
 	}
 
 	bool Registers::GetHalfCarryFlag() const
 	{
-		return Flags & HALF_CARRY_FLAG;
+		return Utilities::TestBit(Flags, HalfCarryBit);
 	}
 
 	void Registers::SetHalfCarryFlag()
 	{
-		Flags |= HALF_CARRY_FLAG;
+		Flags = Utilities::SetBit(Flags, HalfCarryBit);
 	}
 
 	void Registers::ResetHalfCarryFlag()
 	{
-		Flags &= ~HALF_CARRY_FLAG;
+		Flags = Utilities::ResetBit(Flags, HalfCarryBit);
 	}
 
 	void Registers::AssignHalfCarryFlag(bool value)
 	{
-		Flags = value ? Flags | HALF_CARRY_FLAG : Flags & ~HALF_CARRY_FLAG;
+		Flags = value ? Utilities::SetBit(Flags, HalfCarryBit) : Utilities::ResetBit(Flags, HalfCarryBit);
 	}
 
 	bool Registers::GetCarryFlag() const
 	{
-		return Flags & CARRY_FLAG;
+		return Utilities::TestBit(Flags, CarryBit);
 	}
 
 	void Registers::SetCarryFlag()
 	{
-		Flags |= CARRY_FLAG;
+		Flags = Utilities::SetBit(Flags, CarryBit);
 	}
 
 	void Registers::ResetCarryFlag()
 	{
-		Flags &= ~CARRY_FLAG;
+		Flags = Utilities::ResetBit(Flags, CarryBit);
 	}
 
 	void Registers::AssignCarryFlag(bool value)
 	{
-		Flags = value ? Flags | CARRY_FLAG : Flags & ~CARRY_FLAG;
+		Flags = value ? Utilities::SetBit(Flags, CarryBit) : Utilities::ResetBit(Flags, CarryBit);
 	}
 }

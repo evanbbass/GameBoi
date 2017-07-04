@@ -5,7 +5,7 @@
 
 namespace GameBoi
 {
-	class Cartridge
+	class Cartridge final
 	{
 	public:
 		static const size_t ROM_BANK_SIZE = 0x4000;

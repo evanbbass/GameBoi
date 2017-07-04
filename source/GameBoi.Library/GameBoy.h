@@ -1,5 +1,7 @@
 #pragma once
 #include "CPU.h"
+#include "Timer.h"
+#include "GPU.h"
 
 namespace GameBoi
 {
@@ -12,6 +14,7 @@ namespace GameBoi
 
 		void LoadCartridge(const std::string& fileName);
 		void Reset();
+		void Update();
 
 		CPU& GetCPU();
 		const CPU& GetCPU() const;
@@ -20,6 +23,8 @@ namespace GameBoi
 
 	private:
 		CPU mCPU;
+		GPU mGPU;
 		MemoryMap mMemory;
+		Timer mTimer;
 	};
 }

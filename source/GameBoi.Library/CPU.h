@@ -1,4 +1,5 @@
 #pragma once
+
 #include "MemoryMap.h"
 #include "Registers.h"
 #include "Instruction.h"
@@ -6,12 +7,12 @@
 
 namespace GameBoi
 {
-	class CPU
+	class CPU final
 	{
 	public:
 		explicit CPU(MemoryMap& memory);
 
-		void StepCPU();
+		int32_t StepCPU();
 
 		void Reset();
 
@@ -23,13 +24,11 @@ namespace GameBoi
 		bool GetInterruptMasterEnabled() const;
 		uint8_t GetInterruptEnabledRegister() const;
 		uint8_t GetInterruptFlagRegister() const;
-		void SetVBlankInterruptFlag();
-		void SetLCDInterruptFlag();
-		void SetTimerInterruptFlag();
-		void SetJoypadInterruptFlag();
 
 		static int32_t GetOperandLength(uint8_t opcode);
 		static std::string GetDisassembly(uint8_t opcode, uint16_t operand = 0);
+
+		static const int32_t CPUClockSpeed = 4194304; // Hz
 
 	private:
 		Registers mRegisters;
@@ -39,28 +38,10 @@ namespace GameBoi
 		bool mEnableInterruptsAfterNextInstruction;
 		bool mDisableInterruptsAfterNextInstruction;
 
-		static const uint16_t sInterruptEnabledAddress;
-		static const uint16_t sInterruptFlagAddress;
-		static const uint16_t sDividerAddress;
-		static const uint16_t sTimerAddress;
-		static const uint16_t sTimerModulatorAddress;
-		static const uint16_t sTimerControllerAddress;
-		static const uint8_t sVBlankInterruptFlag;
-		static const uint8_t sLCDInterruptFlag;
-		static const uint8_t sTimerInterruptFlag;
-		static const uint8_t sJoypadInterruptFlag;
-		static const uint16_t sVBlankISRAddress;
-		static const uint16_t sLCDISRAddress;
-		static const uint16_t sTimerISRAddress;
-		static const uint16_t sJoypadISRAddress;
-		static const std::map<uint8_t, Instruction> sOpcodeDisassembly;
-		static const std::map<uint8_t, Instruction> sOpcodeDisassembly_PrefixCB;
+		static const std::map<uint8_t, Instruction> OpcodeInstructionMap;
+		static const std::map<uint8_t, Instruction> OpcodeInstructionMap_PrefixCB;
 
 		void HandleInterrupts();
-		void ResetVBlankInterruptFlag();
-		void ResetLCDInterruptFlag();
-		void ResetTimerInterruptFlag();
-		void ResetJoypadInterruptFlag();
 
 		void PushWordToStack(uint16_t value);
 		uint16_t PopWordFromStack();
