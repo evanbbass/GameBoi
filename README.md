@@ -3,12 +3,12 @@ Game Boy Emulator
 
 ## Dev Diaries
 Check out my Dev Diaries!
-* [Week 1](DevDiaries/Week1.md)
-* [Week 2](DevDiaries/Week2.md)
-* [Week 3](DevDiaries/Week3.md)
-* [Week 4](DevDiaries/Week4.md)
-* [Week 5](DevDiaries/Week5.md)
-* [Week 6](DevDiaries/Week6.md)
+* [Week 1](docs/DevDiaries/Week1.md)
+* [Week 2](docs/DevDiaries/Week2.md)
+* [Week 3](docs/DevDiaries/Week3.md)
+* [Week 4](docs/DevDiaries/Week4.md)
+* [Week 5](docs/DevDiaries/Week5.md)
+* [Week 6](docs/DevDiaries/Week6.md)
 
 ## Schedule
 This is the currently predicted schedule. The bold line is the current week.
