@@ -45,6 +45,8 @@ int main(int argc, char* argv[])
 		//}
 		HandleKeyPress(keypad);
 
+		// draw
+
 		window.display();
 	}
 

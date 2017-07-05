@@ -80,11 +80,12 @@ namespace GameBoi
 
 	void Keypad::SetButtonAPressed(bool pressed)
 	{
+		bool wasPressed = GetButtonAPressed();
 		mButtonRegister = pressed ?
 			Utilities::ResetBit(mButtonRegister, ButtonABit) :
 			Utilities::SetBit(mButtonRegister, ButtonABit);
 
-		if (pressed && mButtonModeSelected)
+		if (pressed && !wasPressed && mButtonModeSelected)
 		{
 			mMemory.SetKeypadInterruptFlag();
 		}
@@ -92,11 +93,12 @@ namespace GameBoi
 
 	void Keypad::SetButtonBPressed(bool pressed)
 	{
+		bool wasPressed = GetButtonBPressed();
 		mButtonRegister = pressed ?
 			Utilities::ResetBit(mButtonRegister, ButtonBBit) :
 			Utilities::SetBit(mButtonRegister, ButtonBBit);
 
-		if (pressed && mButtonModeSelected)
+		if (pressed && !wasPressed && mButtonModeSelected)
 		{
 			mMemory.SetKeypadInterruptFlag();
 		}
@@ -104,11 +106,12 @@ namespace GameBoi
 
 	void Keypad::SetButtonStartPressed(bool pressed)
 	{
+		bool wasPressed = GetButtonStartPressed();
 		mButtonRegister = pressed ?
 			Utilities::ResetBit(mButtonRegister, ButtonStartBit) :
 			Utilities::SetBit(mButtonRegister, ButtonStartBit);
 
-		if (pressed && mButtonModeSelected)
+		if (pressed && !wasPressed && mButtonModeSelected)
 		{
 			mMemory.SetKeypadInterruptFlag();
 		}
@@ -116,11 +119,12 @@ namespace GameBoi
 
 	void Keypad::SetButtonSelectPressed(bool pressed)
 	{
+		bool wasPressed = GetButtonSelectPressed();
 		mButtonRegister = pressed ?
 			Utilities::ResetBit(mButtonRegister, ButtonSelectBit) :
 			Utilities::SetBit(mButtonRegister, ButtonSelectBit);
 
-		if (pressed && mButtonModeSelected)
+		if (pressed && !wasPressed && mButtonModeSelected)
 		{
 			mMemory.SetKeypadInterruptFlag();
 		}
@@ -128,11 +132,12 @@ namespace GameBoi
 
 	void Keypad::SetDirectionRightPressed(bool pressed)
 	{
+		bool wasPressed = GetDirectionRightPressed();
 		mDirectionRegister = pressed ?
 			Utilities::ResetBit(mDirectionRegister, DirectionRightBit) :
 			Utilities::SetBit(mDirectionRegister, DirectionRightBit);
 
-		if (pressed && mDirectionModeSelected)
+		if (pressed && !wasPressed && mButtonModeSelected)
 		{
 			mMemory.SetKeypadInterruptFlag();
 		}
@@ -140,11 +145,12 @@ namespace GameBoi
 
 	void Keypad::SetDirectionLeftPressed(bool pressed)
 	{
+		bool wasPressed = GetDirectionLeftPressed();
 		mDirectionRegister = pressed ?
 			Utilities::ResetBit(mDirectionRegister, DirectionLeftBit) :
 			Utilities::SetBit(mDirectionRegister, DirectionLeftBit);
 
-		if (pressed && mDirectionModeSelected)
+		if (pressed && !wasPressed && mButtonModeSelected)
 		{
 			mMemory.SetKeypadInterruptFlag();
 		}
@@ -152,11 +158,12 @@ namespace GameBoi
 
 	void Keypad::SetDirectionUpPressed(bool pressed)
 	{
+		bool wasPressed = GetDirectionUpPressed();
 		mDirectionRegister = pressed ?
 			Utilities::ResetBit(mDirectionRegister, DirectionUpBit) :
 			Utilities::SetBit(mDirectionRegister, DirectionUpBit);
 
-		if (pressed && mDirectionModeSelected)
+		if (pressed && !wasPressed && mButtonModeSelected)
 		{
 			mMemory.SetKeypadInterruptFlag();
 		}
@@ -164,11 +171,12 @@ namespace GameBoi
 
 	void Keypad::SetDirectionDownPressed(bool pressed)
 	{
+		bool wasPressed = GetDirectionDownPressed();
 		mDirectionRegister = pressed ?
 			Utilities::ResetBit(mDirectionRegister, DirectionDownBit) :
 			Utilities::SetBit(mDirectionRegister, DirectionDownBit);
 
-		if (pressed && mDirectionModeSelected)
+		if (pressed && !wasPressed && mButtonModeSelected)
 		{
 			mMemory.SetKeypadInterruptFlag();
 		}

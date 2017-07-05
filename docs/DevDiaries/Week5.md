@@ -13,10 +13,10 @@ One thing I did to improve the debugger was wrap all of the C++/CLI calls to unm
 ```c++
 String^ CPUManaged::GetDisassembly(Byte opcode, UInt16 operand)
 {
-    // old way doesn't handle exceptions, and when something breaks it isn't helpful
+	// old way doesn't handle exceptions, and when something breaks it isn't helpful
 	// return gcnew String(CPU::GetDisassembly(opcode, operand).c_str());
     
-    // new way catches the exception and wraps it in a managed exception for better debugging
+	// new way catches the exception and wraps it in a managed exception for better debugging
 	try
 	{
 		return gcnew String(CPU::GetDisassembly(opcode, operand).c_str());
