@@ -28,4 +28,4 @@ String^ CPUManaged::GetDisassembly(Byte opcode, UInt16 operand)
 }
 ```
 
-This week was also the mid-point update in class. You can see the slides for my presentation [here](..\Resources\Update.pptx).
+This week was also the mid-point update in class. You can see the slides for my presentation [here](../Resources/Update.pptx).
