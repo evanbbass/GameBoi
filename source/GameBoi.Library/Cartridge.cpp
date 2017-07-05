@@ -158,11 +158,6 @@ namespace GameBoi
 		}
 	}
 
-	uint16_t Cartridge::ReadWord(uint16_t address) const
-	{
-		return (ReadByte(address + 1) << 8) | ReadByte(address);
-	}
-
 	void Cartridge::WriteByte(uint16_t address, uint8_t value)
 	{
 		if (address < (ROM_BANK_SIZE * 2))
@@ -182,12 +177,6 @@ namespace GameBoi
 		{
 			throw exception("Address out of Cartridge range.");
 		}
-	}
-
-	void Cartridge::WriteWord(uint16_t address, uint16_t value)
-	{
-		WriteByte(address, value & 0x00FF);
-		WriteByte(address + 1, (value & 0xFF00) >> 8);
 	}
 
 	void Cartridge::SetSwitchableRomBankIndex(uint32_t index)

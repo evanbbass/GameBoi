@@ -2,10 +2,11 @@
 #include <array>
 #include <map>
 #include <vector>
+#include "IAddressable.h"
 
 namespace GameBoi
 {
-	class Cartridge final
+	class Cartridge final : public IAddressable
 	{
 	public:
 		static const size_t ROM_BANK_SIZE = 0x4000;
@@ -48,10 +49,8 @@ namespace GameBoi
 		void ReadFromFile(const std::string& filename);
 		void Reset();
 
-		uint8_t ReadByte(uint16_t address) const;
-		uint16_t ReadWord(uint16_t address) const;
-		void WriteByte(uint16_t address, uint8_t value);
-		void WriteWord(uint16_t address, uint16_t value);
+		uint8_t ReadByte(uint16_t address) const override;
+		void WriteByte(uint16_t address, uint8_t value) override;
 
 		const std::string& GetGameTitle() const;
 		CartridgeType GetCartrideType() const;

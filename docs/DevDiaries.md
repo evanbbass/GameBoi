@@ -3,3 +3,5 @@
 * [Week 2](DevDiaries/Week2.md)
 * [Week 3](DevDiaries/Week3.md)
 * [Week 4](DevDiaries/Week4.md)
+* [Week 5](DevDiaries/Week5.md)
+* [Week 6](DevDiaries/Week6.md)

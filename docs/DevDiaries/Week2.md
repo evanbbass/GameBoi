@@ -1,4 +1,9 @@
-[Back to Dev Diaries](../DevDiaries.md)
+[Back to Home](../../README.md)
+
+[Back to Week 1](Week1.md)
+
+[Next to Week 3](Week3.md)
+
 ## 6/03-6/04/2017
 [Related Commit](https://github.com/evanbbass/GameBoi/commit/6b0429b410fc939c95096aa4909de31ff38f2c3d)
 

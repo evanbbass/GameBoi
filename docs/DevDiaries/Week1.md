@@ -1,4 +1,7 @@
-[Back to Dev Diaries](../DevDiaries.md)
+[Back to Home](../../README.md)
+
+[Next to Week 2](Week2.md)
+
 ## 5/23/2017
 Using the [Game Boy Hardware Documentation](http://marc.rawer.de/Gameboy/Docs/GBCPUman.pdf), I set up the initial classes for the Game Boy's memory. Initially everything was done in one monolithic Memory class, with each segment (Cartridge ROM, Video RAM, Switchable RAM, etc.) contained within its own byte array:
 

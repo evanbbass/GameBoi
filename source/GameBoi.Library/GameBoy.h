@@ -14,7 +14,7 @@ namespace GameBoi
 
 		void LoadCartridge(const std::string& fileName);
 		void Reset();
-		void Update();
+		int32_t Update();
 
 		CPU& GetCPU();
 		const CPU& GetCPU() const;

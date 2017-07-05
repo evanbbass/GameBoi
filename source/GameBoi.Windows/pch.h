@@ -5,6 +5,11 @@
 
 #pragma once
 
+// standard library
 #include <cstdint>
 #include <map>
 #include <string>
+
+// SFML
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>

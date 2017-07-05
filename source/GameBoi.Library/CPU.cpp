@@ -148,10 +148,10 @@ namespace GameBoi
 				mRegisters.PC = MemoryMap::TimerISRAddress;
 				mMemory.ResetTimerInterruptFlag();
 			}
-			else if (Utilities::TestBit(interrupts, MemoryMap::JoypadInterruptBit))
+			else if (Utilities::TestBit(interrupts, MemoryMap::KeypadInterruptBit))
 			{
-				mRegisters.PC = MemoryMap::JoypadISRAddress;
-				mMemory.ResetJoypadInterruptFlag();
+				mRegisters.PC = MemoryMap::KeypadISRAddress;
+				mMemory.ResetKeypadInterruptFlag();
 			}
 
 			mHalted = false;

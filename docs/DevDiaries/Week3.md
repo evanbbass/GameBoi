@@ -1,4 +1,9 @@
-[Back to Dev Diaries](../DevDiaries.md)
+[Back to Home](../../README.md)
+
+[Back to Week 2](Week2.md)
+
+[Next to Week 4](Week4.md)
+
 ## 6/14/2017
 
 This was a busy week, so I haven't had time to update this dev diary properly. For most of the week I was busy with another assignment, so most of the work on this was pushed to the last couple days.

@@ -1,15 +1,14 @@
 # GameBoi
 Game Boy Emulator
 
-## References:
-* [Cinoop (Article about creating a Game Boy emulator)](https://cturt.github.io/cinoop.html)
-* [Game Boy Hardware Documentation](http://marc.rawer.de/Gameboy/Docs/GBCPUman.pdf)
-* [Opcode Summary](http://gameboy.mongenel.com/dmg/opcodes.html)
-* [Alternate Opcode Chart](http://pastraiser.com/cpu/gameboy/gameboy_opcodes.html)
-* [Detailed Hardware Descriptions](http://www.codeslinger.co.uk/pages/projects/gameboy.html)
-
 ## Dev Diaries
-Check out my [Dev Diaries](docs/DevDiaries.md)!
+Check out my Dev Diaries!
+* [Week 1](DevDiaries/Week1.md)
+* [Week 2](DevDiaries/Week2.md)
+* [Week 3](DevDiaries/Week3.md)
+* [Week 4](DevDiaries/Week4.md)
+* [Week 5](DevDiaries/Week5.md)
+* [Week 6](DevDiaries/Week6.md)
 
 ## Schedule
 This is the currently predicted schedule. The bold line is the current week.
@@ -17,11 +16,17 @@ This is the currently predicted schedule. The bold line is the current week.
 * Week 2 - Set up opcode interpreter/disassembler
 * Week 3 - Implement opcodes
 * Week 4 - Create debugger first pass
-* **Week 5 - Interrupts and GPU first pass**
-* Week 6 - Flesh out debugger with memory window and contextual disassembly
-* Weeks 7 - Final pass on graphics and GPU and input handling
+* Weeks 5-6 - Interrupts, Timers, Input, and first-pass GPU
+* **Weeks 7 - Final pass on graphics and GPU**
 * Week 8 - Implement audio
-* Weeks 9-11 - Advanced features
-  * MBC3 cartridge architecture
-  * Timers
+* Week 9 - Add full support for MBC1, MBC2, and MBC3 cartridges
+* Weeks 10-11 - Other Advanced features
+  * Game Boy Color support
   * Super Game Boy features if time permits
+
+## References:
+* [Cinoop (Article about creating a Game Boy emulator)](https://cturt.github.io/cinoop.html)
+* [Game Boy Hardware Documentation](http://marc.rawer.de/Gameboy/Docs/GBCPUman.pdf)
+* [Opcode Summary](http://gameboy.mongenel.com/dmg/opcodes.html)
+* [Alternate Opcode Chart](http://pastraiser.com/cpu/gameboy/gameboy_opcodes.html)
+* [Detailed Hardware Descriptions](http://www.codeslinger.co.uk/pages/projects/gameboy.html)

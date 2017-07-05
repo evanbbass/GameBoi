@@ -26,7 +26,8 @@ namespace GameBoi
 		0xF5, 0x06, 0x19, 0x78, 0x86, 0x23, 0x05, 0x20, 0xFB, 0x86, 0x20, 0xFE, 0x3E, 0x01, 0xE0, 0x50
 	};
 
-	MemoryMap::MemoryMap()
+	MemoryMap::MemoryMap() :
+		mIO(*this)
 	{
 		Reset();
 	}
@@ -37,7 +38,6 @@ namespace GameBoi
 		mVideoRAM.fill(0);
 		mWorkingRAM.fill(0);
 		mOAM.fill(0);
-		mIO.fill(0);
 		mInternalRAM.fill(0);
 	}
 
@@ -77,7 +77,7 @@ namespace GameBoi
 		}
 		else if (address < IO_END)
 		{
-			return mIO[address - IO_START];
+			return mIO.ReadByte(address - IO_START);
 		}
 		else if (address < INTERNAL_RAM_END)
 		{
@@ -87,11 +87,6 @@ namespace GameBoi
 		{
 			return mInterruptEnableRegister;
 		}
-	}
-
-	uint16_t MemoryMap::ReadWord(uint16_t address) const
-	{
-		return (ReadByte(address + 1) << 8) | ReadByte(address);
 	}
 
 	void MemoryMap::WriteByte(uint16_t address, uint8_t value)
@@ -138,7 +133,7 @@ namespace GameBoi
 			}
 			else
 			{
-				mIO[address - IO_START] = value;
+				mIO.WriteByte(address, value);
 			}
 		}
 		else if (address < INTERNAL_RAM_END)
@@ -149,12 +144,6 @@ namespace GameBoi
 		{
 			mInterruptEnableRegister = value;
 		}
-	}
-
-	void MemoryMap::WriteWord(uint16_t address, uint16_t value)
-	{
-		WriteByte(address, value & 0x00FF);
-		WriteByte(address + 1, (value & 0xFF00) >> 8);
 	}
 
 	void MemoryMap::LoadCartridgeFromFile(const string& fileName)
@@ -170,6 +159,16 @@ namespace GameBoi
 	const Cartridge& MemoryMap::GetCartridge() const
 	{
 		return mCart;
+	}
+
+	IO& MemoryMap::GetIO()
+	{
+		return mIO;
+	}
+
+	const IO& MemoryMap::GetIO() const
+	{
+		return mIO;
 	}
 
 	uint8_t MemoryMap::GetInterruptEnabledRegister() const
@@ -200,9 +199,9 @@ namespace GameBoi
 		WriteByte(InterruptFlagAddress, interrupts);
 	}
 
-	void MemoryMap::SetJoypadInterruptFlag()
+	void MemoryMap::SetKeypadInterruptFlag()
 	{
-		uint8_t interrupts = Utilities::SetBit(GetInterruptFlagRegister(), JoypadInterruptBit);
+		uint8_t interrupts = Utilities::SetBit(GetInterruptFlagRegister(), KeypadInterruptBit);
 		WriteByte(InterruptFlagAddress, interrupts);
 	}
 
@@ -233,9 +232,9 @@ namespace GameBoi
 		WriteByte(InterruptFlagAddress, interrupts);
 	}
 
-	void MemoryMap::ResetJoypadInterruptFlag()
+	void MemoryMap::ResetKeypadInterruptFlag()
 	{
-		uint8_t interrupts = Utilities::ResetBit(GetInterruptFlagRegister(), JoypadInterruptBit);
+		uint8_t interrupts = Utilities::ResetBit(GetInterruptFlagRegister(), KeypadInterruptBit);
 		WriteByte(InterruptFlagAddress, interrupts);
 	}
 }

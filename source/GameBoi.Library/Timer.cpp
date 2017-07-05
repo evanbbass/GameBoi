@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Timer.h"
-#include "MemoryMap.h"
 #include "CPU.h"
 
 using namespace std;
@@ -19,7 +18,9 @@ namespace GameBoi
 	const int32_t Timer::DividerFrequency = 16382;
 
 	Timer::Timer(MemoryMap& memory) :
-		mMemory(memory), mTimerCounter(0), mDividerCounter(0), mCurrentFrequency(TimerFrequencyMap[0])
+		mMemory(memory),
+		mTimerCounter(0), mDividerCounter(0), mCurrentFrequency(TimerFrequencyMap[0]),
+		mDivider(0), mTimer(0), mTimerModulator(0), mTimerController(0)
 	{
 	}
 
@@ -38,43 +39,62 @@ namespace GameBoi
 				// reset counter
 				mTimerCounter -= rate;
 
-				uint8_t timer = mMemory.ReadByte(TimerAddress);
-				if (timer == 0xFF)
+				if (mTimer == 0xFF)
 				{
 					mMemory.SetTimerInterruptFlag();
-					mMemory.WriteByte(TimerAddress, GetTimerModulator());
+					mTimer = mTimerModulator;
 				}
 				else
 				{
-					mMemory.WriteByte(TimerAddress, timer + 1);
+					mTimer++;
 				}
 			}
 		}
 	}
 
-	bool Timer::IsEnabled() const
-	{
-		return (GetTimerController() & TimerEnabledBit) != 0;
-	}
-
 	uint8_t Timer::GetDivider() const
 	{
-		return mMemory.ReadByte(DividerAddress);
+		return mDivider;
 	}
 
 	uint8_t Timer::GetTimer() const
 	{
-		return mMemory.ReadByte(TimerAddress);
+		return mTimer;
 	}
 
 	uint8_t Timer::GetTimerModulator() const
 	{
-		return mMemory.ReadByte(TimerModulatorAddress);
+		return mTimerModulator;
 	}
 
 	uint8_t Timer::GetTimerController() const
 	{
-		return mMemory.ReadByte(TimerControllerAddress);
+		return mTimerController;
+	}
+
+	void Timer::SetDivider(uint8_t value)
+	{
+		mDivider = value;
+	}
+
+	void Timer::SetTimer(uint8_t value)
+	{
+		mTimer = value;
+	}
+
+	void Timer::SetTimerModulator(uint8_t value)
+	{
+		mTimerModulator = value;
+	}
+
+	void Timer::SetTimerController(uint8_t value)
+	{
+		mTimerController = value;
+	}
+
+	bool Timer::IsEnabled() const
+	{
+		return (GetTimerController() & TimerEnabledBit) != 0;
 	}
 
 	int32_t Timer::GetTimerFrequency() const
@@ -90,8 +110,7 @@ namespace GameBoi
 		if (mDividerCounter >= frequency)
 		{
 			mDividerCounter -= frequency;
-			// TODO technically this isn't allowed
-			mMemory.WriteByte(DividerAddress, GetDivider() + 1);
+			mDivider++;
 		}
 	}
 

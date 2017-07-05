@@ -23,7 +23,6 @@
     <ProjectGuid>{8463DC84-458B-413A-A748-C0BC36743727}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GameBoiLibrary</RootNamespace>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -145,6 +144,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="IO.h" />
+    <ClInclude Include="Keypad.h" />
     <ClInclude Include="CPU.h" />
     <ClInclude Include="GameBoy.h" />
     <ClInclude Include="GPU.h" />
@@ -157,6 +158,8 @@
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IO.cpp" />
+    <ClCompile Include="Keypad.cpp" />
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="CPU.Instructions.cpp" />
     <ClCompile Include="GameBoy.cpp" />

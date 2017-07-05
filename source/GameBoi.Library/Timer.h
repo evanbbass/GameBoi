@@ -22,11 +22,16 @@ namespace GameBoi
 		void StepTimer(int32_t cpuCycles);
 
 		bool IsEnabled() const;
+		int32_t GetTimerFrequency() const;
+
 		uint8_t GetDivider() const;
 		uint8_t GetTimer() const;
 		uint8_t GetTimerModulator() const;
 		uint8_t GetTimerController() const;
-		int32_t GetTimerFrequency() const;
+		void SetDivider(uint8_t value);
+		void SetTimer(uint8_t value);
+		void SetTimerModulator(uint8_t value);
+		void SetTimerController(uint8_t value);
 
 		static const uint16_t DividerAddress = 0xFF04;
 		static const uint16_t TimerAddress = 0xFF05;
@@ -38,6 +43,11 @@ namespace GameBoi
 		int32_t mTimerCounter;
 		int32_t mDividerCounter;
 		int32_t mCurrentFrequency;
+
+		uint8_t mDivider;
+		uint8_t mTimer;
+		uint8_t mTimerModulator;
+		uint8_t mTimerController;
 
 		void StepDivider(int32_t cpuCycles);
 		void CheckFrequencyChange();

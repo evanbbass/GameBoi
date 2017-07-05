@@ -22,11 +22,17 @@
     <ClCompile Include="CPU.Instructions.cpp">
       <Filter>Hardware\CPU</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Hardware\Other</Filter>
-    </ClCompile>
     <ClCompile Include="GPU.cpp">
       <Filter>Hardware\GPU</Filter>
+    </ClCompile>
+    <ClCompile Include="IO.cpp">
+      <Filter>Hardware\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Keypad.cpp">
+      <Filter>Hardware\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Hardware\IO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,14 +57,23 @@
     <ClInclude Include="Instruction.h">
       <Filter>Hardware\CPU</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Hardware\Other</Filter>
-    </ClInclude>
     <ClInclude Include="GPU.h">
       <Filter>Hardware\GPU</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Keypad.h">
+      <Filter>Hardware\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO.h">
+      <Filter>Hardware\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IAddressable.h">
+      <Filter>Hardware\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Hardware\IO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,11 +89,11 @@
     <Filter Include="Hardware\CPU">
       <UniqueIdentifier>{4f713738-5388-406b-9de9-53b84a9d2bf6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Hardware\Other">
-      <UniqueIdentifier>{6e27018e-8f7a-4138-a79e-8f44eaf452cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Hardware\GPU">
       <UniqueIdentifier>{61777cd3-cfcc-4679-a938-81ab42c10cbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hardware\IO">
+      <UniqueIdentifier>{81646926-a56a-4f64-b554-43839cb3ed18}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,4 +1,9 @@
-[Back to Dev Diaries](../DevDiaries.md)
+[Back to Home](../../README.md)
+
+[Back to Week 3](Week3.md)
+
+[Next to Week 4](Week4.md)
+
 ## 6/20/2017
 
 Finally I have something interesting to post! Work has begun on my debugger, which I'll be using to verify the execution of the ROMs.

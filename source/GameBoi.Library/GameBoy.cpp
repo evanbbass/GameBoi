@@ -26,11 +26,12 @@ namespace GameBoi
 		mCPU.Reset();
 	}
 
-	void GameBoy::Update()
+	int32_t GameBoy::Update()
 	{
 		int32_t cpuCycles = mCPU.StepCPU();
 		mGPU.StepGPU(cpuCycles);
 		mTimer.StepTimer(cpuCycles);
+		return cpuCycles;
 	}
 
 	CPU& GameBoy::GetCPU()

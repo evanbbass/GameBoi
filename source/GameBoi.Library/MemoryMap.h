@@ -1,5 +1,7 @@
 #pragma once
 #include "Cartridge.h"
+#include "IAddressable.h"
+#include "IO.h"
 
 namespace GameBoi
 {
@@ -26,7 +28,7 @@ namespace GameBoi
 	// 16kB ROM bank #0                   |
 	// -------------------------- - 0000 --
 
-	class MemoryMap final
+	class MemoryMap final : public IAddressable
 	{
 		friend class CPU;
 
@@ -35,32 +37,32 @@ namespace GameBoi
 
 		void Reset();
 
-		uint8_t ReadByte(uint16_t address) const;
-		uint16_t ReadWord(uint16_t address) const;
-		void WriteByte(uint16_t address, uint8_t value);
-		void WriteWord(uint16_t address, uint16_t value);
+		uint8_t ReadByte(uint16_t address) const override;
+		void WriteByte(uint16_t address, uint8_t value) override;
 
 		void LoadCartridgeFromFile(const std::string& fileName);
 		Cartridge& GetCartridge();
 		const Cartridge& GetCartridge() const;
+		IO& GetIO();
+		const IO& GetIO() const;
 
 		uint8_t GetInterruptEnabledRegister() const;
 		uint8_t GetInterruptFlagRegister() const;
 		void SetVBlankInterruptFlag();
 		void SetLCDInterruptFlag();
 		void SetTimerInterruptFlag();
-		void SetJoypadInterruptFlag();
+		void SetKeypadInterruptFlag();
 
 		static const uint16_t InterruptEnabledAddress = 0xFFFF;
 		static const uint16_t InterruptFlagAddress = 0xFF0F;
 		static const uint8_t VBlankInterruptBit = 0;
 		static const uint8_t LCDInterruptBit = 1;
 		static const uint8_t TimerInterruptBit = 2;
-		static const uint8_t JoypadInterruptBit = 3;
+		static const uint8_t KeypadInterruptBit = 3;
 		static const uint16_t VBlankISRAddress = 0x0040;
 		static const uint16_t LCDISRAddress = 0x0048;
 		static const uint16_t TimerISRAddress = 0x0050;
-		static const uint16_t JoypadISRAddress = 0x0060;
+		static const uint16_t KeypadISRAddress = 0x0060;
 		static const uint16_t DMAAddress = 0xFF46;
 
 		const static uint16_t BIOS_START = 0x0000;
@@ -113,7 +115,7 @@ namespace GameBoi
 		void ResetVBlankInterruptFlag();
 		void ResetLCDInterruptFlag();
 		void ResetTimerInterruptFlag();
-		void ResetJoypadInterruptFlag();
+		void ResetKeypadInterruptFlag();
 
 		Cartridge mCart;										// 0x0000 - 0x7FFF
 		std::array<uint8_t, VRAM_SIZE> mVideoRAM;				// 0x8000 - 0x9FFF
@@ -122,7 +124,7 @@ namespace GameBoi
 		//std::array<uint8_t, WRAM_ECHO_SIZE> mWorkingRAMEcho;	// 0xE000 - 0xFDFF (Echos WRAM, so no need to include again)
 		std::array<uint8_t, OAM_SIZE> mOAM;						// 0xFE00 - 0xFE9F
 		//std::array<uint8_t, UNUSABLE_SIZE> UNUSABLE0;			// 0xFEA0 - 0xFEFF (Unusable addresses)
-		std::array<uint8_t, IO_SIZE> mIO;						// 0xFF00 - 0xFF7F
+		IO mIO;													// 0xFF00 - 0xFF7F
 		std::array<uint8_t, INTERNAL_RAM_SIZE> mInternalRAM;	// 0xFF80 - 0xFFFE
 		uint8_t mInterruptEnableRegister;						// 0xFFFF
 	};
