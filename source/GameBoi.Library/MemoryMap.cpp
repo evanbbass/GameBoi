@@ -37,7 +37,6 @@ namespace GameBoi
 		mIsInBIOS = false;
 		mVideoRAM.fill(0);
 		mWorkingRAM.fill(0);
-		mOAM.fill(0);
 		mInternalRAM.fill(0);
 	}
 
@@ -53,7 +52,15 @@ namespace GameBoi
 		}
 		else if (address < VRAM_END)
 		{
-			return mVideoRAM[address - VRAM_START];
+			if (mIO.GetGPU().GetLCDStatus() != GPU::LCDStatus::VRAM)
+			{
+				return mVideoRAM[address - VRAM_START];
+			}
+			else
+			{
+				// when the LCD Controller is drawing the screen, do not allow access to VRAM
+				return 0xFF;
+			}
 		}
 		else if (address < SRAM_END)
 		{
@@ -69,11 +76,20 @@ namespace GameBoi
 		}
 		else if (address < OAM_END)
 		{
-			return mOAM[address - OAM_START];
+			GPU::LCDStatus status = mIO.GetGPU().GetLCDStatus();
+			if (status != GPU::LCDStatus::OAM && status != GPU::LCDStatus::VRAM)
+			{
+				return mOAM.ReadByte(address);
+			}
+			else
+			{
+				return 0xFF;
+			}
 		}
 		else if (address < UNUSABLE_END)
 		{
-			throw exception("Unusable memory!");
+			// Do nothing
+			return 0;
 		}
 		else if (address < IO_END)
 		{
@@ -97,7 +113,10 @@ namespace GameBoi
 		}
 		else if (address < VRAM_END)
 		{
-			mVideoRAM[address - VRAM_START] = value;
+			if (mIO.GetGPU().GetLCDStatus() != GPU::LCDStatus::VRAM)
+			{
+				mVideoRAM[address - VRAM_START] = value;
+			}
 		}
 		else if (address < SRAM_END)
 		{
@@ -113,28 +132,19 @@ namespace GameBoi
 		}
 		else if (address < OAM_END)
 		{
-			mOAM[address - OAM_START] = value;
+			GPU::LCDStatus status = mIO.GetGPU().GetLCDStatus();
+			if (status != GPU::LCDStatus::OAM && status != GPU::LCDStatus::VRAM)
+			{
+				mOAM.WriteByte(address, value);
+			}
 		}
 		else if (address < UNUSABLE_END)
 		{
-			throw exception("Unusable memory!");
+			// Do nothing
 		}
 		else if (address < IO_END)
 		{
-			// technically this is needed for true hardware emulation, but I need to leave it out as a workaround
-			//if (address == Timer::DividerAddress || address == GPU::CurrentScanlineAddress)
-			//{
-			//	// writing to the divider should always reset it
-			//	mIO[address - IO_START] = 0;
-			//}
-			if (address == DMAAddress)
-			{
-				DMATransfer(value);
-			}
-			else
-			{
-				mIO.WriteByte(address, value);
-			}
+			mIO.WriteByte(address, value);
 		}
 		else if (address < INTERNAL_RAM_END)
 		{
@@ -159,6 +169,16 @@ namespace GameBoi
 	const Cartridge& MemoryMap::GetCartridge() const
 	{
 		return mCart;
+	}
+
+	ObjectAttributeMemory& MemoryMap::GetOAM()
+	{
+		return mOAM;
+	}
+
+	const ObjectAttributeMemory& MemoryMap::GetOAM() const
+	{
+		return mOAM;
 	}
 
 	IO& MemoryMap::GetIO()

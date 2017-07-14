@@ -4,6 +4,7 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="TestMemory.cpp" />
     <ClCompile Include="TestRegisters.cpp" />
+    <ClCompile Include="TestGraphics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

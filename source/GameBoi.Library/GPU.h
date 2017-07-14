@@ -1,4 +1,5 @@
 #pragma once
+#include "Pallet.h"
 
 namespace GameBoi
 {
@@ -28,17 +29,65 @@ namespace GameBoi
 		/// <param name="cpuCycles">Number of CPU clock cycles since the last step.</param>
 		void StepGPU(int32_t cpuCycles);
 
-		bool IsEnabled() const;
+		Display& GetDisplay();
+		const Display& GetDisplay() const;
+
 		uint8_t GetCurrentScanline() const;
 		uint8_t GetLCDStatusRegister() const;
-		LCDStatus GetLCDStatus() const;
 		uint8_t GetLCDControlRegister() const;
 		uint8_t GetCoincidenceRegister() const;
+
+		uint8_t GetScrollY() const;
+		uint8_t GetScrollX() const;
+		uint8_t GetWindowY() const;
+		uint8_t GetWindowX() const;
+
+		uint8_t GetBackgroundPallet() const;
+		uint8_t GetSpritePallet0() const;
+		uint8_t GetSpritePallet1() const;
+
+		void SetCurrentScanline(uint8_t value);
+		void SetLCDStatusRegister(uint8_t value);
+		void SetLCDControlRegister(uint8_t value);
+		void SetCoincidenceRegister(uint8_t value);
+
+		void SetScrollY(uint8_t value);
+		void SetScrollX(uint8_t value);
+		void SetWindowY(uint8_t value);
+		void SetWindowX(uint8_t value);
+
+		void SetBackgroundPallet(uint8_t value);
+		void SetSpritePallet0(uint8_t value);
+		void SetSpritePallet1(uint8_t value);
+
+		LCDStatus GetLCDStatus() const;
+		bool LCDEnabled() const;
+		uint16_t GetWindowTileMapDisplayAddress() const;
+		bool WindowEnabled() const;
+		uint16_t GetWindowTileDataAddress() const;
+		bool TileIdentifiersAreUnsigned() const;
+		uint16_t GetBackgroundTileMapDisplayAddress() const;
+		uint8_t GetSpriteWidth() const;
+		uint8_t GetSpriteHeight() const;
+		bool SpriteEnabled() const;
+		bool BackgroundEnabled() const;
 
 		static const uint16_t CurrentScanlineAddress = 0xFF44;
 		static const uint16_t LCDStatusRegisterAddress = 0xFF41;
 		static const uint16_t LCDControlRegisterAddress = 0xFF40;
 		static const uint16_t CoincidenceRegisterAddress = 0xFF45;
+
+		static const uint16_t DMAAddress = 0xFF46;
+
+		static const uint16_t ScrollYAddress = 0xFF42;
+		static const uint16_t ScrollXAddress = 0xFF43;
+		static const uint16_t WindowYAddress = 0xFF4A;
+		static const uint16_t WindowXAddress = 0xFF4B;
+
+		static const uint16_t BackgroundPalletAddress = 0xFF47;
+		static const uint16_t SpritePallet0Address = 0xFF48;
+		static const uint16_t SpritePallet1Address = 0xFF49;
+
 		static const uint8_t CoincidenceBit = 2;
 		static const uint8_t HBlankInterruptBit = 3;
 		static const uint8_t VBlankInterruptBit = 4;
@@ -55,12 +104,33 @@ namespace GameBoi
 
 	private:
 		MemoryMap& mMemory;
+		Display mDisplay;
 		int32_t mScanlineCounter;
+		uint8_t mCurrentScanline;
+		uint8_t mLCDStatusRegister;
+		uint8_t mLCDControlRegister;
+		uint8_t mCoincidenceRegister;
+		uint8_t mScrollY;
+		uint8_t mScrollX;
+		uint8_t mWindowY;
+		uint8_t mWindowX;
+		Pallet mBackgroundPallet;
+		Pallet mSpritePallet0;
+		Pallet mSpritePallet1;
 
 		void DrawScanLine();
+		void RenderTiles();
+		void RenderSprites();
 		void HandleHBlank();
 		void UpdateLCDStatus();
-		void CheckCoincidenceFlag();
+		void CheckCoincidence();
 		void SetLCDStatus(LCDStatus status);
+
+		static const uint16_t TileMapDisplay0Start = 0x9800;
+		static const uint16_t TileMapDisplay1Start = 0x9C00;
+		static const uint16_t TileMapDisplaySize = 0x0400;
+		static const uint16_t TileData0Start = 0x8800;
+		static const uint16_t TileData1Start = 0x8000;
+		static const uint16_t TileDataSize = 0x1000;
 	};
 }

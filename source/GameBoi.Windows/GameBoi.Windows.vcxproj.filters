@@ -3,10 +3,14 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="OldCode.h" />
+    <ClInclude Include="SFMLDisplay.h" />
+    <ClInclude Include="GameBoyWindows.h" />
+    <ClInclude Include="Helpers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="GameBoyWindows.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

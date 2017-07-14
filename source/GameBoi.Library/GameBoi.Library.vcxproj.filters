@@ -34,6 +34,9 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Hardware\IO</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectAttributeMemory.cpp">
+      <Filter>Hardware\GPU</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cartridge.h">
@@ -69,11 +72,20 @@
     <ClInclude Include="IO.h">
       <Filter>Hardware\IO</Filter>
     </ClInclude>
-    <ClInclude Include="IAddressable.h">
-      <Filter>Hardware\Memory</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Hardware\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAttributes.h">
+      <Filter>Hardware\GPU</Filter>
+    </ClInclude>
+    <ClInclude Include="Display.h">
+      <Filter>Hardware\GPU</Filter>
+    </ClInclude>
+    <ClInclude Include="Pallet.h">
+      <Filter>Hardware\GPU</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectAttributeMemory.h">
+      <Filter>Hardware\GPU</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

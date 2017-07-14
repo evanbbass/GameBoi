@@ -6,9 +6,14 @@
 #pragma once
 
 // standard library
+#include <array>
 #include <cstdint>
 #include <map>
+#include <memory>
 #include <string>
+
+// Windows
+#include <windows.h>
 
 // SFML
 #include <SFML/Graphics.hpp>

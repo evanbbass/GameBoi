@@ -144,10 +144,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GameBoyWindows.h" />
+    <ClInclude Include="Helpers.h" />
     <ClInclude Include="OldCode.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SFMLDisplay.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameBoyWindows.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

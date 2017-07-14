@@ -1,11 +1,12 @@
 #pragma once
 #include "CPU.h"
 #include "Timer.h"
-#include "GPU.h"
 
 namespace GameBoi
 {
-	class GameBoy
+	class GPU;
+
+	class GameBoy final
 	{
 	public:
 		GameBoy();
@@ -23,8 +24,8 @@ namespace GameBoi
 
 	private:
 		CPU mCPU;
-		GPU mGPU;
 		MemoryMap mMemory;
 		Timer mTimer;
+		GPU& mGPU;
 	};
 }

@@ -2,6 +2,7 @@
 #include "Keypad.h"
 #include "IAddressable.h"
 #include "Timer.h"
+#include "GPU.h"
 
 namespace GameBoi
 {
@@ -19,10 +20,14 @@ namespace GameBoi
 		const Timer& GetTimer() const;
 		Keypad& GetKeypad();
 		const Keypad& GetKeypad() const;
+		GPU& GetGPU();
+		const GPU& GetGPU() const;
 
 	private:
 		MemoryMap& mMemory;
+		GPU mGPU;
 		Timer mTimer;
 		Keypad mKeypad;
+		uint8_t mInterruptFlags;
 	};
 }

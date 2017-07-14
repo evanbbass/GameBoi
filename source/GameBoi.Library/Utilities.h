@@ -16,6 +16,11 @@ public:
 
 	static bool TestBit(uint8_t value, uint8_t bit)
 	{
-		return (value | (1 << bit)) != 0;
+		return (value & (1 << bit)) != 0;
+	}
+
+	static uint8_t GetBit(uint8_t value, uint8_t bit)
+	{
+		return (value & (1 << bit)) >> bit;
 	}
 };

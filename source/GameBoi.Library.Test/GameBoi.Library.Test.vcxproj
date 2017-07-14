@@ -172,6 +172,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TestGraphics.cpp" />
     <ClCompile Include="TestMemory.cpp" />
     <ClCompile Include="TestRegisters.cpp" />
   </ItemGroup>

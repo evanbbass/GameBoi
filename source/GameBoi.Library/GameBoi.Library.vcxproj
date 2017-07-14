@@ -144,11 +144,15 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Display.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="Keypad.h" />
     <ClInclude Include="CPU.h" />
     <ClInclude Include="GameBoy.h" />
     <ClInclude Include="GPU.h" />
+    <ClInclude Include="ObjectAttributeMemory.h" />
+    <ClInclude Include="Pallet.h" />
+    <ClInclude Include="SpriteAttributes.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Instruction.h" />
     <ClInclude Include="MemoryMap.h" />
@@ -166,6 +170,7 @@
     <ClCompile Include="GPU.cpp" />
     <ClCompile Include="MemoryMap.cpp" />
     <ClCompile Include="Cartridge.cpp" />
+    <ClCompile Include="ObjectAttributeMemory.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

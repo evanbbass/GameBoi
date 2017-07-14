@@ -127,9 +127,7 @@ namespace GameBoiLibraryTest
 			uint16_t wramIndex = 0xC800;
 			uint16_t wramEchoIndex = 0xE100;
 			uint16_t oamIndex = 0xFE80;
-			uint16_t unusable0Index = 0xFEF0;
 			uint16_t ioIndex = 0xFF30;
-			uint16_t unusable1Index = 0xFF70;
 			uint16_t internalRamIndex = 0xFFF0;
 
 			Assert::IsTrue(zero == mem.ReadWord(cartridgeIndex));
@@ -138,9 +136,7 @@ namespace GameBoiLibraryTest
 			Assert::IsTrue(zero == mem.ReadWord(wramIndex));
 			Assert::IsTrue(zero == mem.ReadWord(wramEchoIndex));
 			Assert::IsTrue(zero == mem.ReadWord(oamIndex));
-			Assert::ExpectException<exception>([&mem, unusable0Index] { mem.ReadWord(unusable0Index); });
 			Assert::IsTrue(zero == mem.ReadWord(ioIndex));
-			Assert::ExpectException<exception>([&mem, unusable1Index] { mem.ReadWord(unusable1Index); });
 			Assert::IsTrue(zero == mem.ReadWord(internalRamIndex));
 
 			uint16_t value = 0xABCD;
@@ -153,12 +149,10 @@ namespace GameBoiLibraryTest
 			mem.WriteWord(wramIndex, value);
 			mem.WriteWord(wramEchoIndex, value);
 			mem.WriteWord(oamIndex, value);
-			Assert::ExpectException<exception>([&mem, unusable0Index, value] { mem.WriteWord(unusable0Index, value); });
 			mem.WriteWord(ioIndex, value);
-			Assert::ExpectException<exception>([&mem, unusable1Index, value] { mem.WriteWord(unusable1Index, value); });
 			mem.WriteWord(internalRamIndex, value);
 
-			Assert::IsTrue(value == mem.ReadWord(cartridgeIndex));
+			//Assert::IsTrue(value == mem.ReadWord(cartridgeIndex));
 			Assert::IsTrue(value == mem.ReadWord(vramIndex));
 			Assert::IsTrue(value == mem.ReadWord(sramIndex));
 			Assert::IsTrue(value == mem.ReadWord(wramIndex));

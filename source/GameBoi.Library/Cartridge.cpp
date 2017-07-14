@@ -147,7 +147,8 @@ namespace GameBoi
 		{
 			if (mRamBanks.size() == 0)
 			{
-				throw exception("No external RAM available.");
+				return 0;
+				//throw exception("No external RAM available.");
 			}
 
 			return mRamBanks[mSwitchableRamBankIndex][address - MemoryMap::SRAM_START];
@@ -168,7 +169,8 @@ namespace GameBoi
 		{
 			if (mRamBanks.size() == 0)
 			{
-				throw exception("No external RAM available.");
+				return;
+				//throw exception("No external RAM available.");
 			}
 
 			mRamBanks[mSwitchableRamBankIndex][address - MemoryMap::SRAM_START] = value;
