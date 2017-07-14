@@ -3,7 +3,7 @@
  
 This is a work in progress. Below is a list of Developer Diaries for each week, a rough schedule that will be updated as I go along, and links to resources that I've been using.
 
-Note that the Dev Diaries are not intended to explain the Game Boy hardware; links for that can be found in the referenes section. This is intended to describe my process for creating the emulator and any obsticles I ran into along the way.
+Note that the Dev Diaries are not intended to explain the Game Boy hardware; links for that can be found in the referenes section. This is intended to describe my process for creating the emulator and any obstacles I ran into along the way.
 
 ## Dev Diaries
 Check out my Dev Diaries!
