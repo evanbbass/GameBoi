@@ -7,7 +7,7 @@ using namespace std;
 namespace GameBoi
 {
 	CPU::CPU(MemoryMap& memory) :
-		mMemory(memory), mInterruptMasterEnabled(false), mHalted(false), mEnableInterruptsAfterNextInstruction(false), mDisableInterruptsAfterNextInstruction(false)
+		mMemory(memory), mInterruptMasterEnabled(true), mHalted(false), mEnableInterruptsAfterNextInstruction(false), mDisableInterruptsAfterNextInstruction(false)
 	{
 	}
 

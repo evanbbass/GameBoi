@@ -112,6 +112,15 @@ namespace GameBoi
 			case GPU::DMAAddress:
 				mMemory.DMATransfer(value);
 				break;
+			case GPU::BackgroundPalletAddress:
+				mGPU.SetBackgroundPallet(value);
+				break;
+			case GPU::SpritePallet0Address:
+				mGPU.SetSpritePallet0(value);
+				break;
+			case GPU::SpritePallet1Address:
+				mGPU.SetSpritePallet1(value);
+				break;
 			case GPU::WindowYAddress:
 				mGPU.SetWindowY(value);
 				break;

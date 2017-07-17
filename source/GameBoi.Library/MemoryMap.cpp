@@ -27,7 +27,7 @@ namespace GameBoi
 	};
 
 	MemoryMap::MemoryMap() :
-		mIO(*this)
+		mIO(*this), mInterruptEnableRegister(0)
 	{
 		Reset();
 	}
@@ -93,7 +93,7 @@ namespace GameBoi
 		}
 		else if (address < IO_END)
 		{
-			return mIO.ReadByte(address - IO_START);
+			return mIO.ReadByte(address);
 		}
 		else if (address < INTERNAL_RAM_END)
 		{

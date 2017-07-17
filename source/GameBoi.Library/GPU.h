@@ -121,6 +121,7 @@ namespace GameBoi
 		void DrawScanLine();
 		void RenderTiles();
 		void RenderSprites();
+		void DrawDebug();
 		void HandleHBlank();
 		void UpdateLCDStatus();
 		void CheckCoincidence();

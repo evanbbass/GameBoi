@@ -71,7 +71,7 @@ namespace GameBoi
 		static const uint8_t VBlankInterruptBit = 0;
 		static const uint8_t LCDInterruptBit = 1;
 		static const uint8_t TimerInterruptBit = 2;
-		static const uint8_t KeypadInterruptBit = 3;
+		static const uint8_t KeypadInterruptBit = 4;
 		static const uint16_t VBlankISRAddress = 0x0040;
 		static const uint16_t LCDISRAddress = 0x0048;
 		static const uint16_t TimerISRAddress = 0x0050;

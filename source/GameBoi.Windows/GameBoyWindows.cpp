@@ -12,9 +12,10 @@ namespace GameBoiWindows
 	{
 		mFont.loadFromFile("Calibri.ttf");
 		mFPS.setFont(mFont);
-		mFPS.setCharacterSize(24);
+		mFPS.setCharacterSize(12);
 		mFPS.setFillColor(Color::White);
 		mFPS.setOutlineColor(Color::Black);
+		mFPS.setOutlineThickness(1.0f);
 
 		mGameBoy.LoadCartridge(cartridgeName);
 

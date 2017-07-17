@@ -847,7 +847,7 @@ namespace GameBoi
 		}
 
 		char str[20];
-		sprintf_s(str, sizeof(str), it->second.Disassebly, operand);
+		sprintf_s(str, sizeof(str), it->second.Disassembly, operand);
 		return str;
 	}
 

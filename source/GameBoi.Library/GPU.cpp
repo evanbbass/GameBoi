@@ -227,6 +227,11 @@ namespace GameBoi
 		{
 			RenderSprites();
 		}
+
+		if (!BackgroundEnabled() && !SpriteEnabled())
+		{
+			DrawDebug();
+		}
 	}
 
 	void GPU::RenderTiles()
@@ -323,8 +328,8 @@ namespace GameBoi
 				uint8_t colorNum = (Utilities::GetBit(data2, colorBit) << 1) | Utilities::GetBit(data1, colorBit);
 
 				Display::Color color = attributes.GetPalletNumber() == 0 ?
-					mSpritePallet0.GetPalletColor(colorNum) :
-					mSpritePallet1.GetPalletColor(colorNum);
+										   mSpritePallet0.GetPalletColor(colorNum) :
+										   mSpritePallet1.GetPalletColor(colorNum);
 
 				uint8_t xPix = 7 - tilePixel;
 				uint8_t pixel = xPos + xPix;
@@ -334,6 +339,14 @@ namespace GameBoi
 					mDisplay.SetPixel(mCurrentScanline, pixel, color);
 				}
 			}
+		}
+	}
+
+	void GPU::DrawDebug()
+	{
+		for (uint8_t x = 0; x < ScreenWidth; ++x)
+		{
+			mDisplay.SetPixel(mCurrentScanline, x, static_cast<Display::Color>((x >> 2) % 4));
 		}
 	}
 
