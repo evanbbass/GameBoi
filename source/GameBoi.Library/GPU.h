@@ -1,5 +1,6 @@
 #pragma once
 #include "Pallet.h"
+#include "LCDControl.h"
 
 namespace GameBoi
 {
@@ -61,20 +62,9 @@ namespace GameBoi
 		void SetSpritePallet1(uint8_t value);
 
 		LCDStatus GetLCDStatus() const;
-		bool LCDEnabled() const;
-		uint16_t GetWindowTileMapDisplayAddress() const;
-		bool WindowEnabled() const;
-		uint16_t GetWindowTileDataAddress() const;
-		bool TileIdentifiersAreUnsigned() const;
-		uint16_t GetBackgroundTileMapDisplayAddress() const;
-		uint8_t GetSpriteWidth() const;
-		uint8_t GetSpriteHeight() const;
-		bool SpriteEnabled() const;
-		bool BackgroundEnabled() const;
 
 		static const uint16_t CurrentScanlineAddress = 0xFF44;
 		static const uint16_t LCDStatusRegisterAddress = 0xFF41;
-		static const uint16_t LCDControlRegisterAddress = 0xFF40;
 		static const uint16_t CoincidenceRegisterAddress = 0xFF45;
 
 		static const uint16_t DMAAddress = 0xFF46;
@@ -108,7 +98,7 @@ namespace GameBoi
 		int32_t mScanlineCounter;
 		uint8_t mCurrentScanline;
 		uint8_t mLCDStatusRegister;
-		uint8_t mLCDControlRegister;
+		LCDControl mLCDControlRegister;
 		uint8_t mCoincidenceRegister;
 		uint8_t mScrollY;
 		uint8_t mScrollX;
@@ -126,12 +116,5 @@ namespace GameBoi
 		void UpdateLCDStatus();
 		void CheckCoincidence();
 		void SetLCDStatus(LCDStatus status);
-
-		static const uint16_t TileMapDisplay0Start = 0x9800;
-		static const uint16_t TileMapDisplay1Start = 0x9C00;
-		static const uint16_t TileMapDisplaySize = 0x0400;
-		static const uint16_t TileData0Start = 0x8800;
-		static const uint16_t TileData1Start = 0x8000;
-		static const uint16_t TileDataSize = 0x1000;
 	};
 }

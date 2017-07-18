@@ -87,6 +87,9 @@
     <ClInclude Include="ObjectAttributeMemory.h">
       <Filter>Hardware\GPU</Filter>
     </ClInclude>
+    <ClInclude Include="LCDControl.h">
+      <Filter>Hardware\GPU</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Hardware">

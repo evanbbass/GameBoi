@@ -59,6 +59,12 @@ namespace GameBoi
 				mRegisters.PC += 2;
 			}
 
+			if (pc == 0x27E9)
+			{
+				volatile int x = 0;
+				x;
+			}
+
 			// execute instruction
 			invoke(instruction.Function, this, operand);
 

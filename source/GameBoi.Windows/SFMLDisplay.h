@@ -24,29 +24,6 @@ namespace GameBoiWindows
 				{
 					uint8_t value = static_cast<uint8_t>(display.GetPixel(row, col));
 
-					/*if (col < GameBoi::GPU::ScreenWidth / 2)
-					{
-						if (row < GameBoi::GPU::ScreenHeight / 2)
-						{
-							value = 0;
-						}
-						else
-						{
-							value = 1;
-						}
-					}
-					else
-					{
-						if (row < GameBoi::GPU::ScreenHeight / 2)
-						{
-							value = 2;
-						}
-						else
-						{
-							value = 3;
-						}
-					}*/
-
 					sf::Color color = Helpers::InterpolateColors(mWhiteColor, mBlackColor, value / 3.0f);
 
 					mPixels[(col + GameBoi::GPU::ScreenWidth * row) * 4    ] = color.r;

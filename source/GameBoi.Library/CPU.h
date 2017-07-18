@@ -5,10 +5,17 @@
 #include "Instruction.h"
 #include <map>
 
+namespace GameBoiLibraryTest
+{
+	class TestCPUInstructions;
+}
+
 namespace GameBoi
 {
 	class CPU final
 	{
+		friend class GameBoiLibraryTest::TestCPUInstructions;
+
 	public:
 		explicit CPU(MemoryMap& memory);
 
@@ -146,8 +153,8 @@ namespace GameBoi
 		void LDI_aHL_A(uint16_t operand);
 
 		// LDH (n),A and reverse
-		void LD_an_A(uint16_t operand);
-		void LD_A_an(uint16_t operand);
+		void LDH_an_A(uint16_t operand);
+		void LDH_A_an(uint16_t operand);
 
 		#pragma endregion
 

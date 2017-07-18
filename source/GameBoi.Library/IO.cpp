@@ -31,7 +31,7 @@ namespace GameBoi
 				return mTimer.GetTimerController();
 
 			// GPU registers
-			case GPU::LCDControlRegisterAddress:
+			case LCDControl::LCDControlRegisterAddress:
 				return mGPU.GetLCDControlRegister();
 			case GPU::LCDStatusRegisterAddress:
 				return mGPU.GetLCDStatusRegister();
@@ -44,7 +44,7 @@ namespace GameBoi
 			case GPU::CoincidenceRegisterAddress:
 				return mGPU.GetCoincidenceRegister();
 			case GPU::DMAAddress:
-				return 0;
+				return 0xFF;
 			case GPU::BackgroundPalletAddress:
 				return mGPU.GetBackgroundPallet();
 			case GPU::SpritePallet0Address:
@@ -57,7 +57,7 @@ namespace GameBoi
 				return mGPU.GetWindowX();
 
 			default:
-				return 0;
+				return 0xFF;
 		}
 	}
 
@@ -90,7 +90,7 @@ namespace GameBoi
 				break;
 
 			// GPU registers
-			case GPU::LCDControlRegisterAddress:
+			case LCDControl::LCDControlRegisterAddress:
 				mGPU.SetLCDControlRegister(value);
 				break;
 			case GPU::LCDStatusRegisterAddress:

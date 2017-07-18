@@ -115,8 +115,8 @@ namespace GameBoi
 		{ 0x22, { "LD   (HL+),A", 0, 8, &LDI_aHL_A } }, // also LD (HLI),A or LDI (HL),A
 
 		// LDH (n),A and reverse
-		{ 0xE0, { "LD   ($%02X),A", 1, 12, &LD_an_A } },
-		{ 0xF0, { "LD   A,($%02X)", 1, 12, &LD_A_an } },
+		{ 0xE0, { "LDH  ($%02X),A", 1, 12, &LDH_an_A } },
+		{ 0xF0, { "LDH  A,($%02X)", 1, 12, &LDH_A_an } },
 
 		#pragma endregion
 
@@ -1546,7 +1546,7 @@ namespace GameBoi
 	/**
 	 * \brief Put A into memory location 0xFF00 + a one byte immediate value
 	 */
-	void CPU::LD_an_A(uint16_t operand)
+	void CPU::LDH_an_A(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand);
 		mMemory.WriteByte(0xFF00 + n, mRegisters.A);
@@ -1555,7 +1555,7 @@ namespace GameBoi
 	/**
 	 * \brief Put value at memory location 0xFF00 + a one byte immediate value into register A
 	 */
-	void CPU::LD_A_an(uint16_t operand)
+	void CPU::LDH_A_an(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand);
 		mRegisters.A = mMemory.ReadByte(0xFF00 + n);
@@ -1600,9 +1600,9 @@ namespace GameBoi
 	/**
 	 * \brief Put HL into the stack pointer
 	 */
-	void CPU::LD_SP_HL(uint16_t operand)
+	void CPU::LD_SP_HL(uint16_t)
 	{
-		mRegisters.SP = operand;
+		mRegisters.SP = mRegisters.HL;
 	}
 
 	/**
@@ -1617,7 +1617,7 @@ namespace GameBoi
 		mRegisters.AssignHalfCarryFlag((mRegisters.HL & 0xF) + (operand & 0xF) > 0xF);
 		mRegisters.AssignCarryFlag((mRegisters.HL & 0xFF) + (operand & 0xFF) > 0xFF);
 
-		mRegisters.HL = mRegisters.HL + n;
+		mRegisters.HL = mRegisters.SP + n;
 	}
 
 	/**
@@ -1848,9 +1848,9 @@ namespace GameBoi
 	 */
 	void CPU::ADC_A_A(uint16_t)
 	{
-		uint8_t result = mRegisters.A + mRegisters.A + mRegisters.GetCarryFlag() ? 1 : 0;
-		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.A & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
-		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.A & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+		uint8_t result = mRegisters.A + mRegisters.A + (mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.A & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.A & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xFF;
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -1864,9 +1864,9 @@ namespace GameBoi
 	 */
 	void CPU::ADC_A_B(uint16_t)
 	{
-		uint8_t result = mRegisters.A + mRegisters.B + mRegisters.GetCarryFlag() ? 1 : 0;
-		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.B & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
-		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.B & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+		uint8_t result = mRegisters.A + mRegisters.B + (mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.B & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.B & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xFF;
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -1880,9 +1880,9 @@ namespace GameBoi
 	 */
 	void CPU::ADC_A_C(uint16_t)
 	{
-		uint8_t result = mRegisters.A + mRegisters.C + mRegisters.GetCarryFlag() ? 1 : 0;
-		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.C & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
-		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.C & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+		uint8_t result = mRegisters.A + mRegisters.C + (mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.C & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.C & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xFF;
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -1896,9 +1896,9 @@ namespace GameBoi
 	 */
 	void CPU::ADC_A_D(uint16_t)
 	{
-		uint8_t result = mRegisters.A + mRegisters.D + mRegisters.GetCarryFlag() ? 1 : 0;
-		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.D & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
-		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.D & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+		uint8_t result = mRegisters.A + mRegisters.D + (mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.D & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.D & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xFF;
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -1912,9 +1912,9 @@ namespace GameBoi
 	 */
 	void CPU::ADC_A_E(uint16_t)
 	{
-		uint8_t result = mRegisters.A + mRegisters.E + mRegisters.GetCarryFlag() ? 1 : 0;
-		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.E & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
-		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.E & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+		uint8_t result = mRegisters.A + mRegisters.E + (mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.E & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.E & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xFF;
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -1928,9 +1928,9 @@ namespace GameBoi
 	 */
 	void CPU::ADC_A_H(uint16_t)
 	{
-		uint8_t result = mRegisters.A + mRegisters.H + mRegisters.GetCarryFlag() ? 1 : 0;
-		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.H & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
-		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.H & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+		uint8_t result = mRegisters.A + mRegisters.H + (mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.H & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.H & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xFF;
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -1944,9 +1944,9 @@ namespace GameBoi
 	 */
 	void CPU::ADC_A_L(uint16_t)
 	{
-		uint8_t result = mRegisters.A + mRegisters.L + mRegisters.GetCarryFlag() ? 1 : 0;
-		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.L & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
-		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.L & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+		uint8_t result = mRegisters.A + mRegisters.L + (mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) + (mRegisters.L & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (mRegisters.L & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xFF;
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -1961,9 +1961,9 @@ namespace GameBoi
 	void CPU::ADC_A_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		uint8_t result = mRegisters.A + value + mRegisters.GetCarryFlag() ? 1 : 0;
-		bool halfCarry = (mRegisters.A & 0xF) + (value & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
-		bool fullCarry = (mRegisters.A & 0xFF) + (value & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+		uint8_t result = mRegisters.A + value + (mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) + (value & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (value & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xFF;
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -1978,9 +1978,9 @@ namespace GameBoi
 	void CPU::ADC_A_n(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
-		uint8_t result = mRegisters.A + n + mRegisters.GetCarryFlag() ? 1 : 0;
-		bool halfCarry = (mRegisters.A & 0xF) + (n & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xF;
-		bool fullCarry = (mRegisters.A & 0xFF) + (n & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0 > 0xFF;
+		uint8_t result = mRegisters.A + n + (mRegisters.GetCarryFlag() ? 1 : 0);
+		bool halfCarry = (mRegisters.A & 0xF) + (n & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xF;
+		bool fullCarry = (mRegisters.A & 0xFF) + (n & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0) > 0xFF;
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2140,9 +2140,9 @@ namespace GameBoi
 	 */
 	void CPU::SBC_A_A(uint16_t)
 	{
-		uint8_t result = mRegisters.A - (mRegisters.A + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.A & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.A & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		uint8_t result = mRegisters.A - (mRegisters.A + ((mRegisters.GetCarryFlag() ? 1 : 0)));
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.A & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.A & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0));
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2156,9 +2156,9 @@ namespace GameBoi
 	 */
 	void CPU::SBC_A_B(uint16_t)
 	{
-		uint8_t result = mRegisters.A - (mRegisters.B + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.B & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.B & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		uint8_t result = mRegisters.A - (mRegisters.B + ((mRegisters.GetCarryFlag() ? 1 : 0)));
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.B & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.B & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0));
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2172,9 +2172,9 @@ namespace GameBoi
 	 */
 	void CPU::SBC_A_C(uint16_t)
 	{
-		uint8_t result = mRegisters.A - (mRegisters.C + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.C & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.C & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		uint8_t result = mRegisters.A - (mRegisters.C + ((mRegisters.GetCarryFlag() ? 1 : 0)));
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.C & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.C & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0));
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2188,9 +2188,9 @@ namespace GameBoi
 	 */
 	void CPU::SBC_A_D(uint16_t)
 	{
-		uint8_t result = mRegisters.A - (mRegisters.D + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.D & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.D & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		uint8_t result = mRegisters.A - (mRegisters.D + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.D & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.D & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0));
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2204,9 +2204,9 @@ namespace GameBoi
 	 */
 	void CPU::SBC_A_E(uint16_t)
 	{
-		uint8_t result = mRegisters.A - (mRegisters.E + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.E & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.E & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		uint8_t result = mRegisters.A - (mRegisters.E + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.E & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.E & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0));
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2220,9 +2220,9 @@ namespace GameBoi
 	 */
 	void CPU::SBC_A_H(uint16_t)
 	{
-		uint8_t result = mRegisters.A - (mRegisters.H + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.H & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.H & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		uint8_t result = mRegisters.A - (mRegisters.H + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.H & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.H & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0));
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2236,9 +2236,9 @@ namespace GameBoi
 	 */
 	void CPU::SBC_A_L(uint16_t)
 	{
-		uint8_t result = mRegisters.A - (mRegisters.L + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.L & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.L & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		uint8_t result = mRegisters.A - (mRegisters.L + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool halfCarry = (mRegisters.A & 0xF) < ((mRegisters.L & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool fullCarry = (mRegisters.A & 0xFF) < ((mRegisters.L & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0));
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2253,9 +2253,9 @@ namespace GameBoi
 	void CPU::SBC_A_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		uint8_t result = mRegisters.A - (value + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool halfCarry = (mRegisters.A & 0xF) < ((value & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool fullCarry = (mRegisters.A & 0xFF) < ((value & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		uint8_t result = mRegisters.A - (value + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool halfCarry = (mRegisters.A & 0xF) < ((value & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool fullCarry = (mRegisters.A & 0xFF) < ((value & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0));
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2270,9 +2270,9 @@ namespace GameBoi
 	void CPU::SBC_A_n(uint16_t operand)
 	{
 		uint8_t n = static_cast<uint8_t>(operand & 0xFF);
-		uint8_t result = mRegisters.A - (n + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool halfCarry = (mRegisters.A & 0xF) < ((n & 0xF) + mRegisters.GetCarryFlag() ? 1 : 0);
-		bool fullCarry = (mRegisters.A & 0xFF) < ((n & 0xFF) + mRegisters.GetCarryFlag() ? 1 : 0);
+		uint8_t result = mRegisters.A - (n + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool halfCarry = (mRegisters.A & 0xF) < ((n & 0xF) + (mRegisters.GetCarryFlag() ? 1 : 0));
+		bool fullCarry = (mRegisters.A & 0xFF) < ((n & 0xFF) + (mRegisters.GetCarryFlag() ? 1 : 0));
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2920,7 +2920,7 @@ namespace GameBoi
 	void CPU::INC_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		uint8_t result = mRegisters.A + value;
+		uint8_t result = value + 1;
 		bool halfCarry = (mRegisters.A & 0xF) + (value & 0xF) > 0xF;
 		bool fullCarry = (mRegisters.A & 0xFF) + (value & 0xFF) > 0xFF;
 
@@ -2937,8 +2937,8 @@ namespace GameBoi
 	void CPU::DEC_A(uint16_t)
 	{
 		uint8_t result = mRegisters.A - 1;
-		bool halfCarry = (mRegisters.A & 0xF) - 1 > 0xF;
-		bool fullCarry = (mRegisters.A & 0xFF) - 1 > 0xFF;
+		bool halfCarry = (mRegisters.A & 0xF) == 0;
+		bool fullCarry = (mRegisters.A & 0xFF) == 0;
 
 		mRegisters.A = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2953,8 +2953,8 @@ namespace GameBoi
 	void CPU::DEC_B(uint16_t)
 	{
 		uint8_t result = mRegisters.B - 1;
-		bool halfCarry = (mRegisters.B & 0xF) - 1 > 0xF;
-		bool fullCarry = (mRegisters.B & 0xFF) - 1 > 0xFF;
+		bool halfCarry = (mRegisters.B & 0xF) == 0;
+		bool fullCarry = (mRegisters.B & 0xFF) == 0;
 
 		mRegisters.B = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2969,8 +2969,8 @@ namespace GameBoi
 	void CPU::DEC_C(uint16_t)
 	{
 		uint8_t result = mRegisters.C - 1;
-		bool halfCarry = (mRegisters.C & 0xF) - 1 > 0xF;
-		bool fullCarry = (mRegisters.C & 0xFF) - 1 > 0xFF;
+		bool halfCarry = (mRegisters.C & 0xF) == 0;
+		bool fullCarry = (mRegisters.C & 0xFF) == 0;
 
 		mRegisters.C = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -2985,8 +2985,8 @@ namespace GameBoi
 	void CPU::DEC_D(uint16_t)
 	{
 		uint8_t result = mRegisters.D - 1;
-		bool halfCarry = (mRegisters.D & 0xF) - 1 > 0xF;
-		bool fullCarry = (mRegisters.D & 0xFF) - 1 > 0xFF;
+		bool halfCarry = (mRegisters.D & 0xF) == 0;
+		bool fullCarry = (mRegisters.D & 0xFF) == 0;
 
 		mRegisters.D = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -3001,8 +3001,8 @@ namespace GameBoi
 	void CPU::DEC_E(uint16_t)
 	{
 		uint8_t result = mRegisters.E - 1;
-		bool halfCarry = (mRegisters.E & 0xF) - 1 > 0xF;
-		bool fullCarry = (mRegisters.E & 0xFF) - 1 > 0xFF;
+		bool halfCarry = (mRegisters.E & 0xF) == 0;
+		bool fullCarry = (mRegisters.E & 0xFF) == 0;
 
 		mRegisters.E = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -3017,8 +3017,8 @@ namespace GameBoi
 	void CPU::DEC_H(uint16_t)
 	{
 		uint8_t result = mRegisters.H - 1;
-		bool halfCarry = (mRegisters.H & 0xF) - 1 > 0xF;
-		bool fullCarry = (mRegisters.H & 0xFF) - 1 > 0xFF;
+		bool halfCarry = (mRegisters.H & 0xF) == 0;
+		bool fullCarry = (mRegisters.H & 0xFF) == 0;
 
 		mRegisters.H = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -3033,8 +3033,8 @@ namespace GameBoi
 	void CPU::DEC_L(uint16_t)
 	{
 		uint8_t result = mRegisters.L - 1;
-		bool halfCarry = (mRegisters.L & 0xF) - 1 > 0xF;
-		bool fullCarry = (mRegisters.L & 0xFF) - 1 > 0xFF;
+		bool halfCarry = (mRegisters.L & 0xF) == 0;
+		bool fullCarry = (mRegisters.L & 0xFF) == 0;
 
 		mRegisters.L = result;
 		mRegisters.AssignZeroFlag(result == 0);
@@ -3049,9 +3049,9 @@ namespace GameBoi
 	void CPU::DEC_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		uint8_t result = mRegisters.A - value;
-		bool halfCarry = (mRegisters.A & 0xF) - (value & 0xF) > 0xF;
-		bool fullCarry = (mRegisters.A & 0xFF) - (value & 0xFF) > 0xFF;
+		uint8_t result = value - 1;
+		bool halfCarry = (value & 0xF) == 0;
+		bool fullCarry = (value & 0xFF) == 0;
 
 		mMemory.WriteByte(mRegisters.HL, result);
 		mRegisters.AssignZeroFlag(result == 0);
@@ -3125,7 +3125,7 @@ namespace GameBoi
 	}
 
 	/**
-	 * \brief Add a two byte immediate value into SP
+	 * \brief Add a one byte immediate value into SP
 	 */
 	void CPU::ADD_SP_n(uint16_t operand)
 	{
@@ -3146,7 +3146,7 @@ namespace GameBoi
 	 */
 	void CPU::INC_BC(uint16_t)
 	{
-		mRegisters.BC = mRegisters.BC + 1;
+		++mRegisters.BC;
 	}
 
 	/**
@@ -3154,7 +3154,7 @@ namespace GameBoi
 	 */
 	void CPU::INC_DE(uint16_t)
 	{
-		mRegisters.DE = mRegisters.DE + 1;
+		++mRegisters.DE;
 	}
 
 	/**
@@ -3162,7 +3162,7 @@ namespace GameBoi
 	 */
 	void CPU::INC_HL(uint16_t)
 	{
-		mRegisters.HL = mRegisters.HL + 1;
+		++mRegisters.HL;
 	}
 
 	/**
@@ -3170,7 +3170,7 @@ namespace GameBoi
 	 */
 	void CPU::INC_SP(uint16_t)
 	{
-		mRegisters.SP = mRegisters.SP + 1;
+		++mRegisters.SP;
 	}
 
 	/**
@@ -3178,7 +3178,7 @@ namespace GameBoi
 	 */
 	void CPU::DEC_BC(uint16_t)
 	{
-		mRegisters.BC = mRegisters.BC + 1;
+		--mRegisters.BC;
 	}
 
 	/**
@@ -3186,7 +3186,7 @@ namespace GameBoi
 	 */
 	void CPU::DEC_DE(uint16_t)
 	{
-		mRegisters.DE = mRegisters.DE + 1;
+		--mRegisters.DE;
 	}
 
 	/**
@@ -3194,7 +3194,7 @@ namespace GameBoi
 	 */
 	void CPU::DEC_HL(uint16_t)
 	{
-		mRegisters.HL = mRegisters.HL + 1;
+		--mRegisters.HL;
 	}
 
 	/**
@@ -3202,7 +3202,7 @@ namespace GameBoi
 	 */
 	void CPU::DEC_SP(uint16_t)
 	{
-		mRegisters.SP = mRegisters.SP + 1;
+		--mRegisters.SP;
 	}
 
 	#pragma endregion
@@ -3210,7 +3210,7 @@ namespace GameBoi
 	#pragma region Miscellaneous
 
 	/**
-	 * \brief Swap upper & lower nibles of A
+	 * \brief Swap upper & lower nybles of A
 	 */
 	void CPU::SWAP_A(uint16_t)
 	{
@@ -3224,7 +3224,7 @@ namespace GameBoi
 	}
 
 	/**
-	 * \brief Swap upper & lower nibles of B
+	 * \brief Swap upper & lower nybles of B
 	 */
 	void CPU::SWAP_B(uint16_t)
 	{
@@ -3238,7 +3238,7 @@ namespace GameBoi
 	}
 
 	/**
-	 * \brief Swap upper & lower nibles of C
+	 * \brief Swap upper & lower nybles of C
 	 */
 	void CPU::SWAP_C(uint16_t)
 	{
@@ -3252,7 +3252,7 @@ namespace GameBoi
 	}
 
 	/**
-	 * \brief Swap upper & lower nibles of D
+	 * \brief Swap upper & lower nybles of D
 	 */
 	void CPU::SWAP_D(uint16_t)
 	{
@@ -3266,7 +3266,7 @@ namespace GameBoi
 	}
 
 	/**
-	 * \brief Swap upper & lower nibles of E
+	 * \brief Swap upper & lower nybles of E
 	 */
 	void CPU::SWAP_E(uint16_t)
 	{
@@ -3280,7 +3280,7 @@ namespace GameBoi
 	}
 
 	/**
-	 * \brief Swap upper & lower nibles of H
+	 * \brief Swap upper & lower nybles of H
 	 */
 	void CPU::SWAP_H(uint16_t)
 	{
@@ -3294,7 +3294,7 @@ namespace GameBoi
 	}
 
 	/**
-	 * \brief Swap upper & lower nibles of L
+	 * \brief Swap upper & lower nybles of L
 	 */
 	void CPU::SWAP_L(uint16_t)
 	{
@@ -3308,7 +3308,7 @@ namespace GameBoi
 	}
 
 	/**
-	 * \brief Swap upper & lower nibles of the value at address HL
+	 * \brief Swap upper & lower nybles of the value at address HL
 	 */
 	void CPU::SWAP_aHL(uint16_t)
 	{
@@ -3445,7 +3445,7 @@ namespace GameBoi
 	void CPU::RLA(uint16_t)
 	{
 		uint16_t result = mRegisters.A << 1;
-		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		result += (mRegisters.GetCarryFlag() ? 1 : 0);
 		bool carry = result > 0xFF;
 
 		mRegisters.A = result & 0xFF;
@@ -3620,7 +3620,7 @@ namespace GameBoi
 	void CPU::RL_A(uint16_t)
 	{
 		uint16_t result = mRegisters.A << 1;
-		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		result += (mRegisters.GetCarryFlag() ? 1 : 0);
 		bool carry = result > 0xFF;
 
 		mRegisters.A = result & 0xFF;
@@ -3636,7 +3636,7 @@ namespace GameBoi
 	void CPU::RL_B(uint16_t)
 	{
 		uint16_t result = mRegisters.B << 1;
-		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		result += (mRegisters.GetCarryFlag() ? 1 : 0);
 		bool carry = result > 0xFF;
 
 		mRegisters.B = result & 0xFF;
@@ -3652,7 +3652,7 @@ namespace GameBoi
 	void CPU::RL_C(uint16_t)
 	{
 		uint16_t result = mRegisters.C << 1;
-		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		result += (mRegisters.GetCarryFlag() ? 1 : 0);
 		bool carry = result > 0xFF;
 
 		mRegisters.C = result & 0xFF;
@@ -3668,7 +3668,7 @@ namespace GameBoi
 	void CPU::RL_D(uint16_t)
 	{
 		uint16_t result = mRegisters.D << 1;
-		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		result += (mRegisters.GetCarryFlag() ? 1 : 0);
 		bool carry = result > 0xFF;
 
 		mRegisters.D = result & 0xFF;
@@ -3684,7 +3684,7 @@ namespace GameBoi
 	void CPU::RL_E(uint16_t)
 	{
 		uint16_t result = mRegisters.E << 1;
-		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		result += (mRegisters.GetCarryFlag() ? 1 : 0);
 		bool carry = result > 0xFF;
 
 		mRegisters.E = result & 0xFF;
@@ -3700,7 +3700,7 @@ namespace GameBoi
 	void CPU::RL_H(uint16_t)
 	{
 		uint16_t result = mRegisters.H << 1;
-		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		result += (mRegisters.GetCarryFlag() ? 1 : 0);
 		bool carry = result > 0xFF;
 
 		mRegisters.H = result & 0xFF;
@@ -3716,7 +3716,7 @@ namespace GameBoi
 	void CPU::RL_L(uint16_t)
 	{
 		uint16_t result = mRegisters.L << 1;
-		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		result += (mRegisters.GetCarryFlag() ? 1 : 0);
 		bool carry = result > 0xFF;
 
 		mRegisters.L = result & 0xFF;
@@ -3733,7 +3733,7 @@ namespace GameBoi
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
 		uint16_t result = value << 1;
-		result += mRegisters.GetCarryFlag() ? 1 : 0;
+		result += (mRegisters.GetCarryFlag() ? 1 : 0);
 		bool carry = result > 0xFF;
 
 		mMemory.WriteByte(mRegisters.HL, result & 0xFF);
@@ -4365,7 +4365,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 0));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.A, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4375,7 +4375,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 1));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.A, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4385,7 +4385,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 2));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.A, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4395,7 +4395,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 3));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.A, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4405,7 +4405,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 4));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.A, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4415,7 +4415,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 5));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.A, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4425,7 +4425,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 6));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.A, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4435,7 +4435,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_A(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.A, 7));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.A, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4445,7 +4445,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 0));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.B, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4455,7 +4455,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 1));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.B, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4465,7 +4465,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 2));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.B, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4475,7 +4475,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 3));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.B, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4485,7 +4485,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 4));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.B, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4495,7 +4495,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 5));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.B, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4505,7 +4505,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 6));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.B, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4515,7 +4515,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_B(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.B, 7));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.B, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4525,7 +4525,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 0));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.C, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4535,7 +4535,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 1));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.C, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4545,7 +4545,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 2));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.C, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4555,7 +4555,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 3));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.C, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4565,7 +4565,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 4));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.C, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4575,7 +4575,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 5));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.C, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4585,7 +4585,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 6));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.C, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4595,7 +4595,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_C(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.C, 7));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.C, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4605,7 +4605,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 0));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.D, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4615,7 +4615,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 1));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.D, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4625,7 +4625,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 2));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.D, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4635,7 +4635,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 3));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.D, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4645,7 +4645,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 4));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.D, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4655,7 +4655,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 5));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.D, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4665,7 +4665,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 6));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.D, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4675,7 +4675,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_D(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.D, 7));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.D, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4685,7 +4685,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 0));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.E, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4695,7 +4695,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 1));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.E, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4705,7 +4705,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 2));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.E, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4715,7 +4715,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 3));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.E, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4725,7 +4725,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 4));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.E, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4745,7 +4745,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 6));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.E, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4755,7 +4755,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_E(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.E, 7));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.E, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4765,7 +4765,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 0));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.H, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4775,7 +4775,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 1));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.H, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4785,7 +4785,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 2));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.H, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4795,7 +4795,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 3));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.H, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4805,7 +4805,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 4));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.H, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4815,7 +4815,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 5));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.H, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4825,7 +4825,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 6));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.H, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4835,7 +4835,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_H(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.H, 7));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.H, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4845,7 +4845,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_0_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 0));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.L, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4855,7 +4855,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_1_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 1));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.L, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4865,7 +4865,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_2_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 2));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.L, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4875,7 +4875,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_3_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 3));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.L, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4885,7 +4885,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_4_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 4));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.L, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4895,7 +4895,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_5_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 5));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.L, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4905,7 +4905,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_6_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 6));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.L, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4915,7 +4915,7 @@ namespace GameBoi
 	 */
 	void CPU::BIT_7_L(uint16_t)
 	{
-		mRegisters.AssignZeroFlag(Utilities::TestBit(mRegisters.L, 7));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(mRegisters.L, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4926,7 +4926,7 @@ namespace GameBoi
 	void CPU::BIT_0_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 0));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(value, 0));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4937,7 +4937,7 @@ namespace GameBoi
 	void CPU::BIT_1_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 1));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(value, 1));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4948,7 +4948,7 @@ namespace GameBoi
 	void CPU::BIT_2_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 2));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(value, 2));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4959,7 +4959,7 @@ namespace GameBoi
 	void CPU::BIT_3_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 3));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(value, 3));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4970,7 +4970,7 @@ namespace GameBoi
 	void CPU::BIT_4_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 4));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(value, 4));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4981,7 +4981,7 @@ namespace GameBoi
 	void CPU::BIT_5_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 5));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(value, 5));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -4992,7 +4992,7 @@ namespace GameBoi
 	void CPU::BIT_6_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 6));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(value, 6));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}
@@ -5003,7 +5003,7 @@ namespace GameBoi
 	void CPU::BIT_7_aHL(uint16_t)
 	{
 		uint8_t value = mMemory.ReadByte(mRegisters.HL);
-		mRegisters.AssignZeroFlag(Utilities::TestBit(value, 7));
+		mRegisters.AssignZeroFlag(!Utilities::TestBit(value, 7));
 		mRegisters.ResetSubtractFlag();
 		mRegisters.SetHalfCarryFlag();
 	}

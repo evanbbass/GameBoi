@@ -11,7 +11,7 @@ namespace GameBoi
 	Keypad::Keypad(MemoryMap& memory) :
 		mMemory(memory),
 		mButtonModeSelected(false), mDirectionModeSelected(false),
-		mButtonRegister((1 << ButtonBit) | 0x0F), mDirectionRegister((1 << DirectionBit) | 0x0F)
+		mButtonRegister(~(1 << ButtonBit) & 0xFF), mDirectionRegister(~(1 << DirectionBit) & 0xFF)
 	{
 	}
 
@@ -28,14 +28,15 @@ namespace GameBoi
 		else
 		{
 			// If neither state was selected, treat all buttons as not pressed
-			return 0x0F;
+			return 0xFF;
 		}
 	}
 
 	void Keypad::SetKeypadRegister(uint8_t value)
 	{
-		mButtonModeSelected = Utilities::TestBit(value, ButtonBit);
-		mDirectionModeSelected = Utilities::TestBit(value, DirectionBit);
+		// 0 = select
+		mButtonModeSelected = !Utilities::TestBit(value, ButtonBit);
+		mDirectionModeSelected = !Utilities::TestBit(value, DirectionBit);
 	}
 
 	bool Keypad::GetButtonAPressed() const
@@ -80,105 +81,153 @@ namespace GameBoi
 
 	void Keypad::SetButtonAPressed(bool pressed)
 	{
-		bool wasPressed = GetButtonAPressed();
-		mButtonRegister = pressed ?
-			Utilities::ResetBit(mButtonRegister, ButtonABit) :
-			Utilities::SetBit(mButtonRegister, ButtonABit);
-
-		if (pressed && !wasPressed && mButtonModeSelected)
+		if (pressed)
 		{
-			mMemory.SetKeypadInterruptFlag();
+			bool wasPressed = GetButtonAPressed();
+			
+			mButtonRegister = Utilities::ResetBit(mButtonRegister, ButtonABit);
+
+			if (!wasPressed && mButtonModeSelected)
+			{
+				mMemory.SetKeypadInterruptFlag();
+			}
+		}
+		else
+		{
+			mButtonRegister = Utilities::SetBit(mButtonRegister, ButtonABit);
 		}
 	}
 
 	void Keypad::SetButtonBPressed(bool pressed)
 	{
-		bool wasPressed = GetButtonBPressed();
-		mButtonRegister = pressed ?
-			Utilities::ResetBit(mButtonRegister, ButtonBBit) :
-			Utilities::SetBit(mButtonRegister, ButtonBBit);
-
-		if (pressed && !wasPressed && mButtonModeSelected)
+		if (pressed)
 		{
-			mMemory.SetKeypadInterruptFlag();
+			bool wasPressed = GetButtonBPressed();
+
+			mButtonRegister = Utilities::ResetBit(mButtonRegister, ButtonBBit);
+
+			if (!wasPressed && mButtonModeSelected)
+			{
+				mMemory.SetKeypadInterruptFlag();
+			}
+		}
+		else
+		{
+			mButtonRegister = Utilities::SetBit(mButtonRegister, ButtonBBit);
 		}
 	}
 
 	void Keypad::SetButtonStartPressed(bool pressed)
 	{
-		bool wasPressed = GetButtonStartPressed();
-		mButtonRegister = pressed ?
-			Utilities::ResetBit(mButtonRegister, ButtonStartBit) :
-			Utilities::SetBit(mButtonRegister, ButtonStartBit);
-
-		if (pressed && !wasPressed && mButtonModeSelected)
+		if (pressed)
 		{
-			mMemory.SetKeypadInterruptFlag();
+			bool wasPressed = GetButtonStartPressed();
+
+			mButtonRegister = Utilities::ResetBit(mButtonRegister, ButtonStartBit);
+
+			if (!wasPressed && mButtonModeSelected)
+			{
+				mMemory.SetKeypadInterruptFlag();
+			}
+		}
+		else
+		{
+			mButtonRegister = Utilities::SetBit(mButtonRegister, ButtonStartBit);
 		}
 	}
 
 	void Keypad::SetButtonSelectPressed(bool pressed)
 	{
-		bool wasPressed = GetButtonSelectPressed();
-		mButtonRegister = pressed ?
-			Utilities::ResetBit(mButtonRegister, ButtonSelectBit) :
-			Utilities::SetBit(mButtonRegister, ButtonSelectBit);
-
-		if (pressed && !wasPressed && mButtonModeSelected)
+		if (pressed)
 		{
-			mMemory.SetKeypadInterruptFlag();
+			bool wasPressed = GetButtonSelectPressed();
+
+			mButtonRegister = Utilities::ResetBit(mButtonRegister, ButtonSelectBit);
+
+			if (!wasPressed && mButtonModeSelected)
+			{
+				mMemory.SetKeypadInterruptFlag();
+			}
+		}
+		else
+		{
+			mButtonRegister = Utilities::SetBit(mButtonRegister, ButtonSelectBit);
 		}
 	}
 
 	void Keypad::SetDirectionRightPressed(bool pressed)
 	{
-		bool wasPressed = GetDirectionRightPressed();
-		mDirectionRegister = pressed ?
-			Utilities::ResetBit(mDirectionRegister, DirectionRightBit) :
-			Utilities::SetBit(mDirectionRegister, DirectionRightBit);
-
-		if (pressed && !wasPressed && mButtonModeSelected)
+		if (pressed)
 		{
-			mMemory.SetKeypadInterruptFlag();
+			bool wasPressed = GetDirectionRightPressed();
+
+			mDirectionRegister = Utilities::ResetBit(mDirectionRegister, DirectionRightBit);
+
+			if (!wasPressed && mDirectionModeSelected)
+			{
+				mMemory.SetKeypadInterruptFlag();
+			}
+		}
+		else
+		{
+			mDirectionRegister = Utilities::SetBit(mDirectionRegister, DirectionRightBit);
 		}
 	}
 
 	void Keypad::SetDirectionLeftPressed(bool pressed)
 	{
-		bool wasPressed = GetDirectionLeftPressed();
-		mDirectionRegister = pressed ?
-			Utilities::ResetBit(mDirectionRegister, DirectionLeftBit) :
-			Utilities::SetBit(mDirectionRegister, DirectionLeftBit);
-
-		if (pressed && !wasPressed && mButtonModeSelected)
+		if (pressed)
 		{
-			mMemory.SetKeypadInterruptFlag();
+			bool wasPressed = GetDirectionLeftPressed();
+
+			mDirectionRegister = Utilities::ResetBit(mDirectionRegister, DirectionLeftBit);
+
+			if (!wasPressed && mDirectionModeSelected)
+			{
+				mMemory.SetKeypadInterruptFlag();
+			}
+		}
+		else
+		{
+			mDirectionRegister = Utilities::SetBit(mDirectionRegister, DirectionLeftBit);
 		}
 	}
 
 	void Keypad::SetDirectionUpPressed(bool pressed)
 	{
-		bool wasPressed = GetDirectionUpPressed();
-		mDirectionRegister = pressed ?
-			Utilities::ResetBit(mDirectionRegister, DirectionUpBit) :
-			Utilities::SetBit(mDirectionRegister, DirectionUpBit);
-
-		if (pressed && !wasPressed && mButtonModeSelected)
+		if (pressed)
 		{
-			mMemory.SetKeypadInterruptFlag();
+			bool wasPressed = GetDirectionUpPressed();
+
+			mDirectionRegister = Utilities::ResetBit(mDirectionRegister, DirectionUpBit);
+
+			if (!wasPressed && mDirectionModeSelected)
+			{
+				mMemory.SetKeypadInterruptFlag();
+			}
+		}
+		else
+		{
+			mDirectionRegister = Utilities::SetBit(mDirectionRegister, DirectionUpBit);
 		}
 	}
 
 	void Keypad::SetDirectionDownPressed(bool pressed)
 	{
-		bool wasPressed = GetDirectionDownPressed();
-		mDirectionRegister = pressed ?
-			Utilities::ResetBit(mDirectionRegister, DirectionDownBit) :
-			Utilities::SetBit(mDirectionRegister, DirectionDownBit);
-
-		if (pressed && !wasPressed && mButtonModeSelected)
+		if (pressed)
 		{
-			mMemory.SetKeypadInterruptFlag();
+			bool wasPressed = GetDirectionDownPressed();
+
+			mDirectionRegister = Utilities::ResetBit(mDirectionRegister, DirectionDownBit);
+
+			if (!wasPressed && mDirectionModeSelected)
+			{
+				mMemory.SetKeypadInterruptFlag();
+			}
+		}
+		else
+		{
+			mDirectionRegister = Utilities::SetBit(mDirectionRegister, DirectionDownBit);
 		}
 	}
 }
