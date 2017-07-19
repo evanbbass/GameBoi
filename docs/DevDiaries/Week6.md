@@ -2,6 +2,8 @@
 
 [Back to Week 5](Week5.md)
 
+[Next to Week 7](Week7.md)
+
 ## 7/05/2017
 This week was a LOT of refactoring, as well as a whole bunch of new features. I had to make up time for last week while still being busy with other commitments. While I didn't quite make up the time, I still made good progress. After this week, all that's left before I can fully run a game (probably just Tetris for now) is graphics.
 

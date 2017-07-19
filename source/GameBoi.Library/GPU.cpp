@@ -200,7 +200,7 @@ namespace GameBoi
 		uint16_t tileRow = (yPos >> 3) << 5;
 
 		// for each column in the current row of pixels
-		for (uint8_t pixel = 0; pixel < ScreenWidth; pixel++)
+		for (uint8_t pixel = 0; pixel < ScreenWidth; ++pixel)
 		{
 			uint8_t xPos = pixel + scrollX;
 
@@ -240,7 +240,6 @@ namespace GameBoi
 
 	void GPU::RenderSprites()
 	{
-		bool use8x16 = mLCDControlRegister.GetSpriteHeight() == 16;
 		ObjectAttributeMemory& oam = mMemory.GetOAM();
 
 		for (uint8_t sprite = 0; sprite < 40; sprite++)
@@ -248,48 +247,41 @@ namespace GameBoi
 			SpriteAttributes& attributes = oam[sprite];
 			uint8_t yPos = attributes.PositionY - 16;
 			uint8_t xPos = attributes.PositionX - 8;
-			uint8_t tileLocation = attributes.TileNumber;
 
-			bool yFlip = attributes.FlipY();
-			bool xFlip = attributes.FlipX();
+			uint8_t ysize = mLCDControlRegister.GetSpriteHeight();
 
-			uint8_t ysize = 8;
-
-			if (use8x16)
-				ysize = 16;
-
+			// if the current scanline intersects the sprite, draw the appropriate line from the sprite
 			if ((mCurrentScanline >= yPos) && (mCurrentScanline < (yPos + ysize)))
 			{
 				uint8_t line = mCurrentScanline - yPos;
 
-				if (yFlip)
+				if (attributes.FlipY())
 				{
 					line = ysize - line;
 				}
 
-				line *= 2;
-				uint8_t data1 = mMemory.ReadByte((0x8000 + (tileLocation << 4)) + line);
-				uint8_t data2 = mMemory.ReadByte((0x8000 + (tileLocation << 4)) + line + 1);
+				line <<= 1;
 
+				uint8_t data1 = mMemory.ReadByte((0x8000 + (attributes.TileNumber << 4)) + line);
+				uint8_t data2 = mMemory.ReadByte((0x8000 + (attributes.TileNumber << 4)) + line + 1);
 
-				for (int tilePixel = 7; tilePixel >= 0; tilePixel--)
+				// loop through each column of the sprite and set the corresponding pixels for the current row
+				for (uint8_t tilePixel = 0; tilePixel < 8; ++tilePixel)
 				{
-					uint8_t colourbit = static_cast<uint8_t>(tilePixel);
-					if (xFlip)
-					{
-						colourbit = 7 - colourbit;
-					}
+					uint8_t colourbit = attributes.FlipX() ? 7 - tilePixel : tilePixel;
 					uint8_t colourNum = (Utilities::GetBit(data2, colourbit) << 1) | Utilities::GetBit(data1, colourbit);
 
-					Display::Color col = attributes.GetPalletNumber() == 1 ? mSpritePallet1.GetPalletColor(colourNum) : mSpritePallet0.GetPalletColor(colourNum);
+					Display::Color col = attributes.GetPalletNumber() == 1 ?
+						mSpritePallet1.GetPalletColor(colourNum) :
+						mSpritePallet0.GetPalletColor(colourNum);
 
-					// white is transparent for sprites.
+					// white is transparent for sprites
 					if (col == Display::Color::White)
 					{
 						continue;
 					}
 
-					uint8_t xPix = 7 - static_cast<uint8_t>(tilePixel);
+					uint8_t xPix = 7 - tilePixel;
 
 					uint8_t pixel = xPos + xPix;
 
@@ -301,57 +293,6 @@ namespace GameBoi
 				}
 			}
 		}
-
-		//// TODO clean this up
-		//const ObjectAttributeMemory& oam = mMemory.GetOAM();
-		//
-		//// loop through the 40 sprites in OAM
-		//for (uint8_t spriteIndex = 0; spriteIndex < 40; ++spriteIndex)
-		//{
-		//	const SpriteAttributes& attributes = oam[spriteIndex];
-		//	uint8_t yPos = attributes.PositionY - 16;
-		//	uint8_t xPos = attributes.PositionX - 8;
-		//	uint8_t ySize = GetSpriteHeight();
-		//	//uint8_t xSize = GetSpriteWidth();
-		//
-		//	// check if the scanline covers the sprite
-		//	if (mCurrentScanline < yPos || mCurrentScanline >= yPos + ySize)
-		//	{
-		//		continue;
-		//	}
-		//
-		//	uint8_t line = mCurrentScanline - yPos;
-		//
-		//	if (attributes.FlipY())
-		//	{
-		//		line = ySize - line;
-		//	}
-		//
-		//	line *= 2;
-		//
-		//	uint16_t dataAddress = 0x8000 + (attributes.TileNumber << 4) + line;
-		//	uint8_t data1 = mMemory.ReadByte(dataAddress);
-		//	uint8_t data2 = mMemory.ReadByte(dataAddress + 1);
-		//
-		//	// read from right to left since pixel 0 is bit 7
-		//	for (uint8_t tilePixel = 0; tilePixel < 8; ++tilePixel)
-		//	{
-		//		uint8_t colorBit = attributes.FlipX() ? 7 - tilePixel : tilePixel;
-		//		uint8_t colorNum = (Utilities::GetBit(data2, colorBit) << 1) | Utilities::GetBit(data1, colorBit);
-		//
-		//		Display::Color color = attributes.GetPalletNumber() == 0 ?
-		//								   mSpritePallet0.GetPalletColor(colorNum) :
-		//								   mSpritePallet1.GetPalletColor(colorNum);
-		//
-		//		uint8_t xPix = 7 - tilePixel;
-		//		uint8_t pixel = xPos + xPix;
-		//
-		//		if (color != Display::Color::White)
-		//		{
-		//			mDisplay.SetPixel(mCurrentScanline, pixel, color);
-		//		}
-		//	}
-		//}
 	}
 
 	void GPU::DrawDebug()

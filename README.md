@@ -13,6 +13,8 @@ Check out my Dev Diaries!
 * [Week 4](docs/DevDiaries/Week4.md)
 * [Week 5](docs/DevDiaries/Week5.md)
 * [Week 6](docs/DevDiaries/Week6.md)
+* [Week 7](docs/DevDiaries/Week7.md)
+* [Week 8](docs/DevDiaries/Week8.md)
 
 ## Schedule
 This is the currently predicted schedule. The bold line is the current week.
@@ -21,10 +23,10 @@ This is the currently predicted schedule. The bold line is the current week.
 * Week 3 - Implement opcodes
 * Week 4 - Create debugger first pass
 * Weeks 5-6 - Interrupts, Timers, Input, and first-pass GPU
-* **Weeks 7 - Final pass on graphics and GPU**
-* Week 8 - Implement audio
-* Week 9 - Add full support for MBC1, MBC2, and MBC3 cartridges
-* Weeks 10-11 - Other Advanced features
+* Week 7 - Final pass on graphics and GPU
+* Week 8 - Hunt down and kill various breaking bugs
+* **Week 9 - Add full support for MBC cartridges, bug fix, and polish**
+* Possible future additions (not part of PPP)
   * Game Boy Color support
   * Super Game Boy features if time permits
 
