@@ -15,6 +15,7 @@ Check out my Dev Diaries!
 * [Week 6](docs/DevDiaries/Week6.md)
 * [Week 7](docs/DevDiaries/Week7.md)
 * [Week 8](docs/DevDiaries/Week8.md)
+* [Week 9](docs/DevDiaries/Week9.md)
 
 ## Schedule
 This is the currently predicted schedule. The bold line is the current week.
