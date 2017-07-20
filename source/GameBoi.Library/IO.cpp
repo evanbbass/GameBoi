@@ -71,8 +71,7 @@ namespace GameBoi
 
 			// timer registers
 			case Timer::DividerAddress:
-				// Writing to the divider always sets it to 0
-				mTimer.SetDivider(0);
+				mTimer.SetDivider(value);
 				break;
 			case Timer::TimerAddress:
 				mTimer.SetTimer(value);

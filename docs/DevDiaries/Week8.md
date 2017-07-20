@@ -2,6 +2,8 @@
 
 [Back to Week 7](Week7.md)
 
+[Next to Week 9](Week9.md)
+
 ## 7/19/2017
 This week was a whole lot of debugging and investigation, along with a great deal of self-loathing as I found all of the stupid mistakes I made along the way.
 

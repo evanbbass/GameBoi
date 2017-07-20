@@ -27,6 +27,7 @@ This is the currently predicted schedule. The bold line is the current week.
 * Week 8 - Hunt down and kill various breaking bugs
 * **Week 9 - Add full support for MBC cartridges, bug fix, and polish**
 * Possible future additions (not part of PPP)
+  * Audio
   * Game Boy Color support
   * Super Game Boy features if time permits
 

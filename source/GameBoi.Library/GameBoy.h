@@ -25,7 +25,7 @@ namespace GameBoi
 	private:
 		CPU mCPU;
 		MemoryMap mMemory;
-		Timer mTimer;
+		Timer& mTimer;
 		GPU& mGPU;
 	};
 }

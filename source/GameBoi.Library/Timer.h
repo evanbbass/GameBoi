@@ -54,7 +54,7 @@ namespace GameBoi
 
 		static const int32_t TimerFrequencyMap[4];
 		static const int32_t DividerFrequency;
-		static const uint8_t TimerEnabledBit = 0b00000100;
-		static const uint8_t TimerFrequencyBits = 0b00000011;
+		static const uint8_t TimerEnabledBit = 2;
+		static const uint8_t TimerFrequencyMask = 0b00000011;
 	};
 }

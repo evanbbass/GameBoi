@@ -224,11 +224,11 @@ namespace GameBoi
 			uint8_t data2 = mMemory.ReadByte(tileLocation + line + 1);
 
 			// color bit is the current x position in the tile, measured from the left
-			uint8_t colourBit = 7 - (xPos % 8);
+			uint8_t colorBit = 7 - (xPos % 8);
 
 			// get the color (before the pallet) from the two bytes
 			// TODO possibly comment this more to explain
-			uint8_t colorNumber = (Utilities::GetBit(data2, colourBit) << 1) | Utilities::GetBit(data1, colourBit);
+			uint8_t colorNumber = (Utilities::GetBit(data2, colorBit) << 1) | Utilities::GetBit(data1, colorBit);
 
 			// get the actual color to draw from the pallet
 			Display::Color color = mBackgroundPallet.GetPalletColor(colorNumber);
@@ -262,18 +262,19 @@ namespace GameBoi
 
 				line <<= 1;
 
-				uint8_t data1 = mMemory.ReadByte((0x8000 + (attributes.TileNumber << 4)) + line);
-				uint8_t data2 = mMemory.ReadByte((0x8000 + (attributes.TileNumber << 4)) + line + 1);
+				// get sprite pixel data. Sprites are 16 bytes, so offset by tile number * 16, then offset by the line number
+				uint8_t data1 = mMemory.ReadByte((MemoryMap::VRAM_START + (attributes.TileNumber << 4)) + line);
+				uint8_t data2 = mMemory.ReadByte((MemoryMap::VRAM_START + (attributes.TileNumber << 4)) + line + 1);
 
 				// loop through each column of the sprite and set the corresponding pixels for the current row
 				for (uint8_t tilePixel = 0; tilePixel < 8; ++tilePixel)
 				{
-					uint8_t colourbit = attributes.FlipX() ? 7 - tilePixel : tilePixel;
-					uint8_t colourNum = (Utilities::GetBit(data2, colourbit) << 1) | Utilities::GetBit(data1, colourbit);
+					uint8_t colorBit = attributes.FlipX() ? 7 - tilePixel : tilePixel;
+					uint8_t colorNumber = (Utilities::GetBit(data2, colorBit) << 1) | Utilities::GetBit(data1, colorBit);
 
 					Display::Color col = attributes.GetPalletNumber() == 1 ?
-						mSpritePallet1.GetPalletColor(colourNum) :
-						mSpritePallet0.GetPalletColor(colourNum);
+						mSpritePallet1.GetPalletColor(colorNumber) :
+						mSpritePallet0.GetPalletColor(colorNumber);
 
 					// white is transparent for sprites
 					if (col == Display::Color::White)
@@ -286,7 +287,7 @@ namespace GameBoi
 					uint8_t pixel = xPos + xPix;
 
 					// check if pixel is hidden behind background
-					if (attributes.IsAboveBackground() && mDisplay.GetPixel(mCurrentScanline, pixel) == Display::Color::White)
+					if (attributes.IsAboveBackground() || mDisplay.GetPixel(mCurrentScanline, pixel) == Display::Color::White)
 					{
 						mDisplay.SetPixel(mCurrentScanline, pixel, col);
 					}

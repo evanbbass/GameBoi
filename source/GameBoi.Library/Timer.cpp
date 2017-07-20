@@ -52,56 +52,6 @@ namespace GameBoi
 		}
 	}
 
-	uint8_t Timer::GetDivider() const
-	{
-		return mDivider;
-	}
-
-	uint8_t Timer::GetTimer() const
-	{
-		return mTimer;
-	}
-
-	uint8_t Timer::GetTimerModulator() const
-	{
-		return mTimerModulator;
-	}
-
-	uint8_t Timer::GetTimerController() const
-	{
-		return mTimerController;
-	}
-
-	void Timer::SetDivider(uint8_t value)
-	{
-		mDivider = value;
-	}
-
-	void Timer::SetTimer(uint8_t value)
-	{
-		mTimer = value;
-	}
-
-	void Timer::SetTimerModulator(uint8_t value)
-	{
-		mTimerModulator = value;
-	}
-
-	void Timer::SetTimerController(uint8_t value)
-	{
-		mTimerController = value;
-	}
-
-	bool Timer::IsEnabled() const
-	{
-		return (GetTimerController() & TimerEnabledBit) != 0;
-	}
-
-	int32_t Timer::GetTimerFrequency() const
-	{
-		return TimerFrequencyMap[GetTimerController() & TimerFrequencyBits];
-	}
-
 	void Timer::StepDivider(int32_t cpuCycles)
 	{
 		mDividerCounter += cpuCycles;
@@ -122,5 +72,56 @@ namespace GameBoi
 			mTimerCounter = 0;
 			mCurrentFrequency = newFrequency;
 		}
+	}
+
+	bool Timer::IsEnabled() const
+	{
+		return Utilities::TestBit(mTimerController, TimerEnabledBit);
+	}
+
+	int32_t Timer::GetTimerFrequency() const
+	{
+		return TimerFrequencyMap[mTimerController & TimerFrequencyMask];
+	}
+
+	uint8_t Timer::GetDivider() const
+	{
+		return mDivider;
+	}
+
+	uint8_t Timer::GetTimer() const
+	{
+		return mTimer;
+	}
+
+	uint8_t Timer::GetTimerModulator() const
+	{
+		return mTimerModulator;
+	}
+
+	uint8_t Timer::GetTimerController() const
+	{
+		return mTimerController;
+	}
+
+	void Timer::SetDivider(uint8_t)
+	{
+		// Writing to the divider always sets it to 0
+		mDivider = 0;
+	}
+
+	void Timer::SetTimer(uint8_t value)
+	{
+		mTimer = value;
+	}
+
+	void Timer::SetTimerModulator(uint8_t value)
+	{
+		mTimerModulator = value;
+	}
+
+	void Timer::SetTimerController(uint8_t value)
+	{
+		mTimerController = value;
 	}
 }
