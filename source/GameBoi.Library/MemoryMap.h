@@ -11,15 +11,15 @@ namespace GameBoi
 	// -------------------------- - FFFF
 	// Internal (High) RAM
 	// -------------------------- - FF80
-	// I / O ports
+	// I/O ports
 	// -------------------------- - FF00
-	// Empty but unusable for I / O
+	// Empty but unusable for I/O
 	// -------------------------- - FEA0
-	// Sprite Attrib MemoryMap(OAM)
+	// Sprite Attribute Memory (OAM)
 	// -------------------------- - FE00
 	// Echo of 8kB Internal RAM
 	// -------------------------- - E000
-	// 8kB Internal RAM
+	// 8kB Internal (Working) RAM
 	// -------------------------- - C000 --
 	// 8kB Switchable RAM bank            |= on Cartridge, if any
 	// -------------------------- - A000 --

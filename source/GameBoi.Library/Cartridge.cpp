@@ -36,13 +36,13 @@ namespace GameBoi
 	};
 
 	Cartridge::Cartridge() :
-	    mSwitchableRomBankIndex(1)
+		mSwitchableRomBankIndex(1), mSwitchableRamBankIndex(0), mRamEnabled(false), mRomModeSelected(true)
 	{
 		Reset();
 	}
 
 	Cartridge::Cartridge(const string& filename) :
-		mSwitchableRomBankIndex(1)
+		mSwitchableRomBankIndex(1), mSwitchableRamBankIndex(0), mRamEnabled(false), mRomModeSelected(true)
 	{
 		ReadFromFile(filename);
 	}
@@ -117,8 +117,15 @@ namespace GameBoi
 			rom.seekg(0x149);
 			uint8_t ramSizeKey;
 			rom.read(reinterpret_cast<char*>(&ramSizeKey), 1);
-			// don't know what to do with this yet...
-			ramSizeKey = ramSizeKey;
+			int32_t numRomBanks = RamSizeMap.at(ramSizeKey);
+
+			// read the rom banks into memory
+			mRamBanks.resize(numRomBanks);
+			for (array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
+			{
+				// TODO for save games, this probably needs to read from file too
+				bank.fill(0);
+			}
 		}
 	}
 
@@ -135,20 +142,15 @@ namespace GameBoi
 
 	uint8_t Cartridge::ReadByte(uint16_t address) const
 	{
-		if (address < ROM_BANK_SIZE)
+		if (address < (ROM_BANK_SIZE * 2))
 		{
-			return mRomBanks[0][address];
-		}
-		else if (address < (ROM_BANK_SIZE * 2))
-		{
-			return mRomBanks[mSwitchableRomBankIndex][address - ROM_BANK_SIZE];
+			return ReadByteRom(address);
 		}
 		else if (address >= MemoryMap::SRAM_START && address < MemoryMap::SRAM_END)
 		{
-			if (mRamBanks.size() == 0)
+			if (!mRamEnabled || mRamBanks.size() == 0)
 			{
 				return 0;
-				//throw exception("No external RAM available.");
 			}
 
 			return mRamBanks[mSwitchableRamBankIndex][address - MemoryMap::SRAM_START];
@@ -167,10 +169,9 @@ namespace GameBoi
 		}
 		else if (address >= MemoryMap::SRAM_START && address < MemoryMap::SRAM_END)
 		{
-			if (mRamBanks.size() == 0)
+			if (!mRamEnabled || mRamBanks.size() == 0)
 			{
 				return;
-				//throw exception("No external RAM available.");
 			}
 
 			mRamBanks[mSwitchableRamBankIndex][address - MemoryMap::SRAM_START] = value;
@@ -181,35 +182,131 @@ namespace GameBoi
 		}
 	}
 
-	void Cartridge::SetSwitchableRomBankIndex(uint32_t index)
+	uint8_t Cartridge::ReadByteRom(uint16_t address) const
 	{
-		if (index < 1)
+		if (address < ROM_BANK_SIZE)
 		{
-			index = 1;
+			return mRomBanks[0][address];
 		}
-		else if (index >= mRomBanks.size())
+		else if (address < (ROM_BANK_SIZE * 2))
 		{
-			throw exception("Index not valid.");
+			return mRomBanks[mSwitchableRomBankIndex][address - ROM_BANK_SIZE];
 		}
-
-		mSwitchableRomBankIndex = index;
+		else
+		{
+			throw exception("Address out of ROM range.");
+		}
 	}
 
-	void Cartridge::SetSwitchableRamBankIndex(uint32_t index)
+	uint8_t Cartridge::ReadByteRam(uint16_t address) const
 	{
-		if (index >= mRamBanks.size())
-		{
-			throw exception("Index not valid.");
-		}
-
-		mSwitchableRamBankIndex = index;
+		return mRamBanks[mSwitchableRamBankIndex][address];
 	}
 
 	void Cartridge::HandleBankSwitching(uint16_t address, uint8_t value)
 	{
-		address;
-		value;
-		// TODO
+		if (address < 0x2000)
+		{
+			// RAM Enable
+			if (!Utilities::TestBit(address & 0xFF, 4))
+			{
+				mRamEnabled = ((value & 0x0F) == 0x0A);
+			}
+		}
+		else if (address < 0x4000)
+		{
+			HandleRomBankSwitchingLo(value);
+		}
+		else if (address < 0x6000)
+		{
+			if (mRomModeSelected)
+			{
+				HandleRomBankSwitchingHi(value);
+			}
+			else
+			{
+				HandleRamBankSwitching(value);
+			}
+		}
+		else if (address < 0x8000)
+		{
+			if (IsMBC1())
+			{
+				mRomModeSelected = value == 0;
+
+				if (mRomModeSelected)
+				{
+					mSwitchableRamBankIndex = 0;
+				}
+				else
+				{
+					mSwitchableRomBankIndex &= 0b00011111;
+				}
+			}
+			else if (IsMBC3())
+			{
+				
+			}
+		}
+	}
+
+	void Cartridge::HandleRomBankSwitchingLo(uint8_t value)
+	{
+		if (IsMBC1())
+		{
+			// ROM Bank Number
+			uint8_t bankLowerBits = value & 0b00011111; // lower 5 bits change
+			if (bankLowerBits == 0)
+			{
+				// For MBC1, this has the side effect of blocking 0x20, 0x40, and 0x60 as well
+				bankLowerBits = 1;
+			}
+
+			uint8_t bankUpperBits = mSwitchableRomBankIndex & 0b11100000; // upper 3 bits stay the same
+
+			mSwitchableRomBankIndex = (bankUpperBits | bankLowerBits);
+		}
+		else if (IsMBC2())
+		{
+			mSwitchableRomBankIndex = value & 0x0F;
+			if (mSwitchableRomBankIndex == 0)
+			{
+				mSwitchableRomBankIndex += 1;
+			}
+		}
+		else if (IsMBC3())
+		{
+			// TODO
+		}
+	}
+
+	void Cartridge::HandleRomBankSwitchingHi(uint8_t value)
+	{
+		// Note: This isn't used for MBC2
+		if (IsMBC1())
+		{
+			// ROM Bank Number
+			uint8_t bankLowerBits = mSwitchableRomBankIndex & 0b00011111; // lower 5 bits stay the same
+			uint8_t bankUpperBits = (value & 0b11) << 5; // upper 3 bits change
+			mSwitchableRomBankIndex = bankUpperBits | bankLowerBits;
+		}
+		else if (IsMBC3())
+		{
+			// TODO
+		}
+	}
+
+	void Cartridge::HandleRamBankSwitching(uint8_t value)
+	{
+		// Note: This isn't used for MBC2
+		if (IsMBC1())
+		{
+			mSwitchableRamBankIndex = value & 0b11;
+		}
+		else if (IsMBC3())
+		{
+			// TODO
+		}
 	}
 
 	const string& Cartridge::GetGameTitle() const
@@ -230,6 +327,46 @@ namespace GameBoi
 	bool Cartridge::GetSuperSupport() const
 	{
 		return mSuperSupport;
+	}
+
+	bool Cartridge::IsMBC1() const
+	{
+		switch (mCartType)
+		{
+			case CartridgeType::ROM_MBC1:
+			case CartridgeType::ROM_MBC1_RAM:
+			case CartridgeType::ROM_MBC1_RAM_BATT:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	bool Cartridge::IsMBC2() const
+	{
+		switch (mCartType)
+		{
+			case CartridgeType::ROM_MBC2:
+			case CartridgeType::ROM_MBC2_BATTERY:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	bool Cartridge::IsMBC3() const
+	{
+		switch (mCartType)
+		{
+			case CartridgeType::ROM_MBC3_TIMER_BATT:
+			case CartridgeType::ROM_MBC3_TIMER_RAM_BATT:
+			case CartridgeType::ROM_MBC3:
+			case CartridgeType::ROM_MBC3_RAM:
+			case CartridgeType::ROM_MBC3_RAM_BATT:
+				return true;
+			default:
+				return false;
+		}
 	}
 
 	string Cartridge::DisassembleRom(uint16_t startAddress, uint16_t length) const

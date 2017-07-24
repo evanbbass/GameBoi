@@ -98,7 +98,7 @@ namespace GameBoi
 		int32_t mScanlineCounter;
 		uint8_t mCurrentScanline;
 		uint8_t mLCDStatusRegister;
-		LCDControl mLCDControlRegister;
+		LCDControl mLCDControl;
 		uint8_t mCoincidenceRegister;
 		uint8_t mScrollY;
 		uint8_t mScrollX;

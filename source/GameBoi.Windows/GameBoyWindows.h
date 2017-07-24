@@ -23,6 +23,8 @@ namespace GameBoiWindows
 		sf::Sprite mLCDScreen;
 		sf::Text mFPS;
 
+		bool mShowFPS;
+
 		void HandleKeyPress();
 		void DrawFPS();
 

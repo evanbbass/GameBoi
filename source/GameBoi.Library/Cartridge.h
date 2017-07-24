@@ -57,20 +57,29 @@ namespace GameBoi
 		bool GetColorSupport() const;
 		bool GetSuperSupport() const;
 
+		bool IsMBC1() const;
+		bool IsMBC2() const;
+		bool IsMBC3() const;
+
 		std::string DisassembleRom(uint16_t startAddress, uint16_t length) const;
 		void DisassebleRomToFile(const std::string& filename, uint16_t startAddress, uint16_t length) const;
 
 	private:
-		void SetSwitchableRomBankIndex(uint32_t index);
-		void SetSwitchableRamBankIndex(uint32_t index);
+		uint8_t ReadByteRom(uint16_t address) const;
+		uint8_t ReadByteRam(uint16_t address) const;
 		void HandleBankSwitching(uint16_t address, uint8_t value);
+		void HandleRomBankSwitchingLo(uint8_t value);
+		void HandleRomBankSwitchingHi(uint8_t value);
+		void HandleRamBankSwitching(uint8_t value);
 
 		// Cartridge ROM has 32k of address space and can have multiple 16kB ROM banks
 		std::vector<std::array<uint8_t, ROM_BANK_SIZE>> mRomBanks;
-		uint32_t mSwitchableRomBankIndex;
+		uint8_t mSwitchableRomBankIndex;
 		// Cartridge may also have multiple 8kB RAM banks
 		std::vector<std::array<uint8_t, RAM_BANK_SIZE>> mRamBanks;
-		uint32_t mSwitchableRamBankIndex;
+		uint8_t mSwitchableRamBankIndex;
+		bool mRamEnabled;
+		bool mRomModeSelected;
 
 		std::string mGameTitle;
 		CartridgeType mCartType;

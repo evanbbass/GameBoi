@@ -8,7 +8,7 @@ using namespace GameBoi;
 namespace GameBoiWindows
 {
 	GameBoyWindows::GameBoyWindows(const string& cartridgeName) :
-		mWindow(VideoMode(GPU::ScreenWidth * 3, GPU::ScreenHeight * 3), "GameBoi")
+		mWindow(VideoMode(GPU::ScreenWidth * 3, GPU::ScreenHeight * 3), "GameBoi"), mShowFPS(false)
 	{
 		mFont.loadFromFile("Calibri.ttf");
 		mFPS.setFont(mFont);
@@ -68,7 +68,10 @@ namespace GameBoiWindows
 			mTexture.update(mDisplay.GetPixels());
 			mWindow.draw(mLCDScreen);
 
-			DrawFPS();
+			if (mShowFPS)
+			{
+				DrawFPS();
+			}
 
 			mWindow.display();
 		}
@@ -76,6 +79,11 @@ namespace GameBoiWindows
 
 	void GameBoyWindows::HandleKeyPress()
 	{
+		if (!mWindow.hasFocus())
+		{
+			return;
+		}
+
 		Keypad& keypad = mGameBoy.GetMemoryMap().GetIO().GetKeypad();
 
 		keypad.SetButtonAPressed(Keyboard::isKeyPressed(Keyboard::Z));
@@ -87,6 +95,11 @@ namespace GameBoiWindows
 		keypad.SetDirectionDownPressed(Keyboard::isKeyPressed(Keyboard::Down));
 		keypad.SetDirectionLeftPressed(Keyboard::isKeyPressed(Keyboard::Left));
 		keypad.SetDirectionRightPressed(Keyboard::isKeyPressed(Keyboard::Right));
+
+		if (Keyboard::isKeyPressed(Keyboard::F))
+		{
+			mShowFPS = !mShowFPS;
+		}
 	}
 
 	void GameBoyWindows::DrawFPS()

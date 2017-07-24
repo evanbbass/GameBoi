@@ -8,7 +8,7 @@ namespace GameBoi
 	struct LCDControl
 	{
 		LCDControl() :
-			mRegister(0)
+			mRegister(0x91)
 		{
 		}
 

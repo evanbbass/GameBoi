@@ -20,7 +20,8 @@ namespace GameBoi
 
 		if (mHalted)
 		{
-			return 0;
+			// keep the CPU "running" so the other components are still updated
+			return 4;
 		}
 
 		uint8_t opcode = 0x00;
@@ -59,7 +60,7 @@ namespace GameBoi
 				mRegisters.PC += 2;
 			}
 
-			if (pc == 0x27E9)
+			if (pc == 0x3ce)
 			{
 				volatile int x = 0;
 				x;

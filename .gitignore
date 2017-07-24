@@ -259,3 +259,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# Game Boy ROM files (don't want copyright issues if I accidentally push one up)
+*.gb
+*.gbc

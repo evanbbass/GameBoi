@@ -13,11 +13,14 @@ namespace GameBoi
 		mMemory(memory), mScanlineCounter(0), mCurrentScanline(0), mLCDStatusRegister(0), mCoincidenceRegister(0),
 		mScrollY(0), mScrollX(0), mWindowY(0), mWindowX(0)
 	{
+		mBackgroundPallet.SetPallet(0xFC);
+		mSpritePallet0.SetPallet(0xFF);
+		mSpritePallet1.SetPallet(0xFF);
 	}
 
 	void GPU::StepGPU(int32_t cpuCycles)
 	{
-		if (!mLCDControlRegister.LCDEnabled())
+		if (!mLCDControl.LCDEnabled())
 		{
 			// while the LCD is disabled, reset the scanline and set the mode to VBlank
 			mScanlineCounter = 0;
@@ -63,7 +66,7 @@ namespace GameBoi
 
 	uint8_t GPU::GetLCDControlRegister() const
 	{
-		return mLCDControlRegister.GetRegister();
+		return mLCDControl.GetRegister();
 	}
 
 	uint8_t GPU::GetCoincidenceRegister() const
@@ -138,7 +141,7 @@ namespace GameBoi
 
 	void GPU::SetLCDControlRegister(uint8_t value)
 	{
-		mLCDControlRegister.SetRegister(value);
+		mLCDControl.SetRegister(value);
 	}
 
 	void GPU::SetCoincidenceRegister(uint8_t value)
@@ -168,12 +171,12 @@ namespace GameBoi
 
 	void GPU::DrawScanLine()
 	{
-		if (mLCDControlRegister.BackgroundEnabled())
+		if (mLCDControl.BackgroundEnabled())
 		{
 			RenderTiles();
 		}
 
-		if (mLCDControlRegister.SpriteEnabled())
+		if (mLCDControl.SpriteEnabled())
 		{
 			RenderSprites();
 		}
@@ -186,37 +189,44 @@ namespace GameBoi
 		uint8_t windowY = mWindowY;
 		uint8_t windowX = mWindowX - 7;
 
-		bool usingWindow = mLCDControlRegister.WindowEnabled() && windowY <= mCurrentScanline;
+		bool isWindowRow = mLCDControl.WindowEnabled() && windowY <= mCurrentScanline;
 
 		// which tile data are we using?
-		uint16_t tileData = mLCDControlRegister.GetWindowTileDataAddress();
+		uint16_t tileData = mLCDControl.GetWindowTileDataAddress();
 
-		uint16_t backgroundMemory = usingWindow ?
-			mLCDControlRegister.GetWindowTileMapDisplayAddress() :
-			mLCDControlRegister.GetBackgroundTileMapDisplayAddress();
+		uint16_t backgroundMemory = isWindowRow ?
+			mLCDControl.GetWindowTileMapDisplayAddress() :
+			mLCDControl.GetBackgroundTileMapDisplayAddress();
 
-		uint8_t yPos = usingWindow ? mCurrentScanline - windowY : scrollY + mCurrentScanline;
+		uint8_t yPos = isWindowRow ? mCurrentScanline - windowY : scrollY + mCurrentScanline;
 
 		uint16_t tileRow = (yPos >> 3) << 5;
 
 		// for each column in the current row of pixels
 		for (uint8_t pixel = 0; pixel < ScreenWidth; ++pixel)
 		{
-			uint8_t xPos = pixel + scrollX;
+			bool isWindowCol = mLCDControl.WindowEnabled() && pixel >= windowX;
 
-			if (usingWindow)
+			uint8_t xPos = pixel;
+
+			if (isWindowRow)
 			{
-				if (pixel >= windowX)
+				if (isWindowCol)
 				{
 					xPos = pixel - windowX;
 				}
+			}
+			else
+			{
+				xPos += scrollX;
 			}
 
 			uint16_t tileCol = (xPos >> 3);
 
 			uint8_t tileNum = mMemory.ReadByte(backgroundMemory + tileRow + tileCol);
 
-			uint16_t tileLocation = tileData + ((mLCDControlRegister.TileIdentifiersAreUnsigned() ? tileNum : reinterpret_cast<int8_t&>(tileNum) + 128) << 4);
+			uint16_t tileLocation = tileData +
+				((mLCDControl.TileIdentifiersAreUnsigned() ? tileNum : reinterpret_cast<int8_t&>(tileNum) + 128) << 4);
 
 			// line is the current y position in the tile (y position mod the height of the tile, 8), times 2 bytes per tile
 			uint8_t line = (yPos % 8) << 1;
@@ -248,7 +258,7 @@ namespace GameBoi
 			uint8_t yPos = attributes.PositionY - 16;
 			uint8_t xPos = attributes.PositionX - 8;
 
-			uint8_t ysize = mLCDControlRegister.GetSpriteHeight();
+			uint8_t ysize = mLCDControl.GetSpriteHeight();
 
 			// if the current scanline intersects the sprite, draw the appropriate line from the sprite
 			if ((mCurrentScanline >= yPos) && (mCurrentScanline < (yPos + ysize)))
@@ -272,19 +282,25 @@ namespace GameBoi
 					uint8_t colorBit = attributes.FlipX() ? 7 - tilePixel : tilePixel;
 					uint8_t colorNumber = (Utilities::GetBit(data2, colorBit) << 1) | Utilities::GetBit(data1, colorBit);
 
+					if (colorNumber == 0)
+					{
+					// white is transparent for sprites
+						continue;
+					}
+
 					Display::Color col = attributes.GetPalletNumber() == 1 ?
 						mSpritePallet1.GetPalletColor(colorNumber) :
 						mSpritePallet0.GetPalletColor(colorNumber);
 
-					// white is transparent for sprites
-					if (col == Display::Color::White)
-					{
-						continue;
-					}
-
 					uint8_t xPix = 7 - tilePixel;
 
 					uint8_t pixel = xPos + xPix;
+
+					// make sure sprite is in bounds (y bounds are already checked)
+					if (pixel < 0 || pixel >= ScreenWidth)
+					{
+						continue;
+					}
 
 					// check if pixel is hidden behind background
 					if (attributes.IsAboveBackground() || mDisplay.GetPixel(mCurrentScanline, pixel) == Display::Color::White)

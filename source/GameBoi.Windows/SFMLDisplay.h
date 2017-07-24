@@ -1,6 +1,7 @@
 #pragma once
 #include <array>
 #include <cstdint>
+#include <SFML/Graphics.hpp>
 #include "GPU.h"
 #include "Display.h"
 #include "Helpers.h"
@@ -42,6 +43,16 @@ namespace GameBoiWindows
 		void SetBlackColor(const sf::Color& color)
 		{
 			mBlackColor = color;
+		}
+
+		const sf::Color& GetWhiteColor() const
+		{
+			return mWhiteColor;
+		}
+
+		void SetWhiteColor(const sf::Color& color)
+		{
+			mWhiteColor = color;
 		}
 
 		const uint8_t* GetPixels() const
