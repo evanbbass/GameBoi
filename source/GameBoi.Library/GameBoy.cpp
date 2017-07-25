@@ -34,6 +34,11 @@ namespace GameBoi
 		return cpuCycles;
 	}
 
+	void GameBoy::WriteSaveFile() const
+	{
+		mMemory.GetCartridge().WriteSaveFile();
+	}
+
 	CPU& GameBoy::GetCPU()
 	{
 		return mCPU;

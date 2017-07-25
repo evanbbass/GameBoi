@@ -14,6 +14,7 @@ namespace GameBoi
 		~GameBoy() = default;
 
 		void LoadCartridge(const std::string& fileName);
+		void WriteSaveFile() const;
 		void Reset();
 		int32_t Update();
 

@@ -49,6 +49,13 @@ namespace GameBoi
 
 	void Cartridge::ReadFromFile(const string& filename)
 	{
+		mFileName = filename;
+
+		//if (mFileName.substr(mFileName.find_last_of("."), mFileName.size()) != ".gb")
+		//{
+		//	throw exception("Invalid file extension specified");
+		//}
+
 		ifstream rom(filename, ios::in | ios::binary | ios::ate);
 		if (!rom)
 		{
@@ -117,15 +124,47 @@ namespace GameBoi
 			rom.seekg(0x149);
 			uint8_t ramSizeKey;
 			rom.read(reinterpret_cast<char*>(&ramSizeKey), 1);
-			int32_t numRomBanks = RamSizeMap.at(ramSizeKey);
+			int32_t numRamBanks = RamSizeMap.at(ramSizeKey);
 
 			// read the rom banks into memory
-			mRamBanks.resize(numRomBanks);
-			for (array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
+			mRamBanks.resize(numRamBanks);
+
+			string saveFileName = mFileName.substr(0, mFileName.find_last_of(".")) + ".sav";
+			ifstream saveFile(saveFileName, ios::in | ios::binary | ios::ate);
+			streamoff saveSize = saveFile.tellg();
+
+			if (HasBattery() && saveFile.good())
 			{
-				// TODO for save games, this probably needs to read from file too
-				bank.fill(0);
+				// check the file size against the number of rom banks
+				if (static_cast<size_t>(saveSize) != RAM_BANK_SIZE * numRamBanks)
+				{
+					throw exception("Save file size mismatch!");
+				}
+
+				saveFile.seekg(ios::beg);
+				for (array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
+				{
+					saveFile.read(reinterpret_cast<char*>(bank.data()), RAM_BANK_SIZE);
+				}
 			}
+			else
+			{
+				for (array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
+				{
+					bank.fill(0);
+				}
+			}
+		}
+	}
+
+	void Cartridge::WriteSaveFile() const
+	{
+		string saveFileName = mFileName.substr(0, mFileName.find_last_of(".")) + ".sav";
+		ofstream saveFile(saveFileName, ios::out | ios::binary);
+
+		for (const array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
+		{
+			saveFile.write(reinterpret_cast<const char*>(bank.data()), RAM_BANK_SIZE);
 		}
 	}
 
@@ -335,7 +374,7 @@ namespace GameBoi
 		{
 			case CartridgeType::ROM_MBC1:
 			case CartridgeType::ROM_MBC1_RAM:
-			case CartridgeType::ROM_MBC1_RAM_BATT:
+			case CartridgeType::ROM_MBC1_RAM_BATTERY:
 				return true;
 			default:
 				return false;
@@ -358,11 +397,112 @@ namespace GameBoi
 	{
 		switch (mCartType)
 		{
-			case CartridgeType::ROM_MBC3_TIMER_BATT:
-			case CartridgeType::ROM_MBC3_TIMER_RAM_BATT:
+			case CartridgeType::ROM_MBC3_TIMER_BATTERY:
+			case CartridgeType::ROM_MBC3_TIMER_RAM_BATTERY:
 			case CartridgeType::ROM_MBC3:
 			case CartridgeType::ROM_MBC3_RAM:
-			case CartridgeType::ROM_MBC3_RAM_BATT:
+			case CartridgeType::ROM_MBC3_RAM_BATTERY:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	bool Cartridge::IsMBC4() const
+	{
+		switch (mCartType)
+		{
+			case CartridgeType::ROM_MBC4:
+			case CartridgeType::ROM_MBC4_RAM:
+			case CartridgeType::ROM_MBC4_RAM_BATTERY:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	bool Cartridge::IsMBC5() const
+	{
+		switch (mCartType)
+		{
+			case CartridgeType::ROM_MBC5:
+			case CartridgeType::ROM_MBC5_RAM:
+			case CartridgeType::ROM_MBC5_RAM_BATTERY:
+			case CartridgeType::ROM_MBC5_RUMBLE:
+			case CartridgeType::ROM_MBC5_RUMBLE_RAM:
+			case CartridgeType::ROM_MBC5_RUMBLE_RAM_BATTERY:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	bool Cartridge::HasRAM() const
+	{
+		switch (mCartType)
+		{
+			case CartridgeType::ROM_MBC1_RAM:
+			case CartridgeType::ROM_MBC1_RAM_BATTERY:
+			case CartridgeType::ROM_RAM:
+			case CartridgeType::ROM_RAM_BATTERY:
+			case CartridgeType::ROM_MMM01_RAM:
+			case CartridgeType::ROM_MMM01_RAM_BATTERY:
+			case CartridgeType::ROM_MBC3_TIMER_RAM_BATTERY:
+			case CartridgeType::ROM_MBC3_RAM:
+			case CartridgeType::ROM_MBC3_RAM_BATTERY:
+			case CartridgeType::ROM_MBC4_RAM:
+			case CartridgeType::ROM_MBC4_RAM_BATTERY:
+			case CartridgeType::ROM_MBC5_RAM:
+			case CartridgeType::ROM_MBC5_RAM_BATTERY:
+			case CartridgeType::ROM_MBC5_RUMBLE_RAM:
+			case CartridgeType::ROM_MBC5_RUMBLE_RAM_BATTERY:
+			case CartridgeType::Hudson_HuC_1:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	bool Cartridge::HasTimer() const
+	{
+		switch (mCartType)
+		{
+			case CartridgeType::ROM_MBC3_TIMER_BATTERY:
+			case CartridgeType::ROM_MBC3_TIMER_RAM_BATTERY:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	bool Cartridge::HasRumble() const
+	{
+		switch (mCartType)
+		{
+			case CartridgeType::ROM_MBC5_RUMBLE:
+			case CartridgeType::ROM_MBC5_RUMBLE_RAM:
+			case CartridgeType::ROM_MBC5_RUMBLE_RAM_BATTERY:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	bool Cartridge::HasBattery() const
+	{
+		switch (mCartType)
+		{
+			case CartridgeType::ROM_MBC1_RAM_BATTERY:
+			case CartridgeType::ROM_MBC2_BATTERY:
+			case CartridgeType::ROM_RAM_BATTERY:
+			case CartridgeType::ROM_MMM01_RAM_BATTERY:
+			case CartridgeType::ROM_MBC3_TIMER_BATTERY:
+			case CartridgeType::ROM_MBC3_TIMER_RAM_BATTERY:
+			case CartridgeType::ROM_MBC3_RAM_BATTERY:
+			case CartridgeType::ROM_MBC4_RAM_BATTERY:
+			case CartridgeType::ROM_MBC5_RAM_BATTERY:
+			case CartridgeType::ROM_MBC5_RUMBLE_RAM_BATTERY:
+			case CartridgeType::Hudson_HuC_1:
 				return true;
 			default:
 				return false;

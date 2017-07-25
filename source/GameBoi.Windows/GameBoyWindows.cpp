@@ -75,6 +75,8 @@ namespace GameBoiWindows
 
 			mWindow.display();
 		}
+
+		mGameBoy.WriteSaveFile();
 	}
 
 	void GameBoyWindows::HandleKeyPress()
