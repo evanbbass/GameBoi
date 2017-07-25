@@ -36,13 +36,13 @@ namespace GameBoi
 	};
 
 	Cartridge::Cartridge() :
-		mSwitchableRomBankIndex(1), mSwitchableRamBankIndex(0), mRamEnabled(false), mRomModeSelected(true)
+		mSwitchableRomBankIndex(1), mSwitchableRamBankIndex(0), mRamEnabled(false), mRamModeSelected(false)
 	{
 		Reset();
 	}
 
 	Cartridge::Cartridge(const string& filename) :
-		mSwitchableRomBankIndex(1), mSwitchableRamBankIndex(0), mRamEnabled(false), mRomModeSelected(true)
+		mSwitchableRomBankIndex(1), mSwitchableRamBankIndex(0), mRamEnabled(false), mRamModeSelected(false)
 	{
 		ReadFromFile(filename);
 	}
@@ -135,6 +135,7 @@ namespace GameBoi
 
 			if (HasBattery() && saveFile.good())
 			{
+				// TODO apparently this isn't right but I can't find any sources on how it should work
 				// check the file size against the number of rom banks
 				if (static_cast<size_t>(saveSize) != RAM_BANK_SIZE * numRamBanks)
 				{
@@ -162,9 +163,12 @@ namespace GameBoi
 		string saveFileName = mFileName.substr(0, mFileName.find_last_of(".")) + ".sav";
 		ofstream saveFile(saveFileName, ios::out | ios::binary);
 
-		for (const array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
+		if (HasBattery() && mRamBanks.size() > 0 && saveFile.good())
 		{
-			saveFile.write(reinterpret_cast<const char*>(bank.data()), RAM_BANK_SIZE);
+			for (const array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
+			{
+				saveFile.write(reinterpret_cast<const char*>(bank.data()), RAM_BANK_SIZE);
+			}
 		}
 	}
 
@@ -247,7 +251,7 @@ namespace GameBoi
 		if (address < 0x2000)
 		{
 			// RAM Enable
-			if (!Utilities::TestBit(address & 0xFF, 4))
+			if (!IsMBC2() || !Utilities::TestBit(address, 9))
 			{
 				mRamEnabled = ((value & 0x0F) == 0x0A);
 			}
@@ -258,28 +262,28 @@ namespace GameBoi
 		}
 		else if (address < 0x6000)
 		{
-			if (mRomModeSelected)
+			if (mRamModeSelected)
 			{
-				HandleRomBankSwitchingHi(value);
+				HandleRamBankSwitching(value);
 			}
 			else
 			{
-				HandleRamBankSwitching(value);
+				HandleRomBankSwitchingHi(value);
 			}
 		}
 		else if (address < 0x8000)
 		{
 			if (IsMBC1())
 			{
-				mRomModeSelected = value == 0;
+				mRamModeSelected = value != 0;
 
-				if (mRomModeSelected)
+				if (mRamModeSelected)
 				{
-					mSwitchableRamBankIndex = 0;
+					mSwitchableRomBankIndex &= 0b00011111;
 				}
 				else
 				{
-					mSwitchableRomBankIndex &= 0b00011111;
+					mSwitchableRamBankIndex = 0;
 				}
 			}
 			else if (IsMBC3())

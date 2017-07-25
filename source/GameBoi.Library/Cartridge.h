@@ -91,7 +91,8 @@ namespace GameBoi
 		std::vector<std::array<uint8_t, RAM_BANK_SIZE>> mRamBanks;
 		uint8_t mSwitchableRamBankIndex;
 		bool mRamEnabled;
-		bool mRomModeSelected;
+		bool mRamModeSelected;
+		bool mRtcModeSelected;
 
 		std::string mGameTitle;
 		CartridgeType mCartType;
