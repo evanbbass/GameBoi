@@ -18,6 +18,9 @@ namespace GameBoiWindows
 		mFPS.setOutlineThickness(1.0f);
 
 		mGameBoy.LoadCartridge(cartridgeName);
+		string windowTitle = "GameBoi - ";
+		windowTitle += mGameBoy.GetMemoryMap().GetCartridge().GetGameTitle();
+		mWindow.setTitle(windowTitle);
 
 		mWindow.setFramerateLimit(60);
 		mView.reset(FloatRect(0.0f, 0.0f, static_cast<float>(GPU::ScreenWidth), static_cast<float>(GPU::ScreenHeight)));

@@ -28,11 +28,11 @@ namespace GameBoi
 	const map<int32_t, int32_t> Cartridge::RamSizeMap =
 	{
 		{ 0x00, 0 },
-		{ 0x01, 2 },
-		{ 0x02, 8 },
-		{ 0x03, 32 }, // 4 banks of 8kB
-		{ 0x04, 128 }, // 16 banks of 8kB
-		{ 0x05, 64 } // 8 banks of 8kB
+		{ 0x01, 1 }, // 2kB, which is 1/4 of a bank (0xA000 - 0xA7FF)
+		{ 0x02, 1 },
+		{ 0x03, 4 }, // 4 banks of 8kB
+		{ 0x04, 16 }, // 16 banks of 8kB
+		{ 0x05, 8 } // 8 banks of 8kB
 	};
 
 	Cartridge::Cartridge() :
@@ -135,7 +135,6 @@ namespace GameBoi
 
 			if (HasBattery() && saveFile.good())
 			{
-				// TODO apparently this isn't right but I can't find any sources on how it should work
 				// check the file size against the number of rom banks
 				if (static_cast<size_t>(saveSize) != RAM_BANK_SIZE * numRamBanks)
 				{
@@ -266,9 +265,13 @@ namespace GameBoi
 			{
 				HandleRamBankSwitching(value);
 			}
-			else
+			else if (IsMBC1())
 			{
 				HandleRomBankSwitchingHi(value);
+			}
+			else if (IsMBC3() && HasTimer())
+			{
+				// RTC register select
 			}
 		}
 		else if (address < 0x8000)
@@ -286,9 +289,9 @@ namespace GameBoi
 					mSwitchableRamBankIndex = 0;
 				}
 			}
-			else if (IsMBC3())
+			else if (IsMBC3() && HasTimer())
 			{
-				
+				// latch RTC
 			}
 		}
 	}
@@ -319,7 +322,12 @@ namespace GameBoi
 		}
 		else if (IsMBC3())
 		{
-			// TODO
+			mSwitchableRomBankIndex = value & 0b01111111;
+
+			if (mSwitchableRomBankIndex == 0)
+			{
+				mSwitchableRomBankIndex++;
+			}
 		}
 	}
 
