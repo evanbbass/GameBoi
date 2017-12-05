@@ -23,33 +23,34 @@
     <ProjectGuid>{8463DC84-458B-413A-A748-C0BC36743727}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GameBoiLibrary</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -151,8 +152,10 @@
     <ClInclude Include="GameBoy.h" />
     <ClInclude Include="GPU.h" />
     <ClInclude Include="LCDControl.h" />
+    <ClInclude Include="MemoryBankController.h" />
     <ClInclude Include="ObjectAttributeMemory.h" />
     <ClInclude Include="Pallet.h" />
+    <ClInclude Include="RealTimeClock.h" />
     <ClInclude Include="SpriteAttributes.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Instruction.h" />
@@ -169,6 +172,7 @@
     <ClCompile Include="CPU.Instructions.cpp" />
     <ClCompile Include="GameBoy.cpp" />
     <ClCompile Include="GPU.cpp" />
+    <ClCompile Include="MemoryBankController.cpp" />
     <ClCompile Include="MemoryMap.cpp" />
     <ClCompile Include="Cartridge.cpp" />
     <ClCompile Include="ObjectAttributeMemory.cpp" />
@@ -178,6 +182,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="RealTimeClock.cpp" />
     <ClCompile Include="Registers.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>

@@ -60,11 +60,11 @@ namespace GameBoi
 				mRegisters.PC += 2;
 			}
 
-			if (pc == 0x3ce)
-			{
-				volatile int x = 0;
-				x;
-			}
+			//if (pc == 0xC36F)
+			//{
+			//	volatile int x = 0;
+			//	x;
+			//}
 
 			// execute instruction
 			invoke(instruction.Function, this, operand);

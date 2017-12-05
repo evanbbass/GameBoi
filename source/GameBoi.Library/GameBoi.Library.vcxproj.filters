@@ -37,6 +37,12 @@
     <ClCompile Include="ObjectAttributeMemory.cpp">
       <Filter>Hardware\GPU</Filter>
     </ClCompile>
+    <ClCompile Include="MemoryBankController.cpp">
+      <Filter>Hardware\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="RealTimeClock.cpp">
+      <Filter>Hardware\Memory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cartridge.h">
@@ -89,6 +95,12 @@
     </ClInclude>
     <ClInclude Include="LCDControl.h">
       <Filter>Hardware\GPU</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryBankController.h">
+      <Filter>Hardware\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="RealTimeClock.h">
+      <Filter>Hardware\Memory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

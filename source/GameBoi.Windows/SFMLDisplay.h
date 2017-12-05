@@ -12,7 +12,8 @@ namespace GameBoiWindows
 	{
 	public:
 		SFMLDisplay() :
-			mBlackColor(sf::Color::Black), mWhiteColor(sf::Color::White)
+			// steal BGB's LCD Green color scheme
+			mBlackColor(sf::Color(8, 24, 32)), mWhiteColor(sf::Color(231, 255, 214))
 		{
 			mPixels.fill(0x00);
 		}

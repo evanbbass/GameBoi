@@ -5,6 +5,17 @@ This is a work in progress. Below is a list of Developer Diaries for each week, 
 
 Note that the Dev Diaries are not intended to explain the Game Boy hardware; links for that can be found in the referenes section. This is intended to describe my process for creating the emulator and any obstacles I ran into along the way.
 
+## Notes for Visitors
+This is more or less the final version of this project. Anyone should be able to download the source and build it. Here are some notes you might need to follow:
+* The solution file is located in [builds/GameBoi.sln](https://github.com/evanbbass/GameBoi/tree/master/builds).
+* Project files are located in their respective folders under the source folder.
+* Due to SFML version requirements, **this project must be built in Visual Studio 2015**.
+* SFML itself does not need to be installed anywhere as NuGet will automatically download it when building.
+* Unfortunately the unit test project must be built with Visual Studio 2017, although there isn't really a reason for anyone else to need to build that project.
+* I uploaded a [pre-built version](Final Build/Final Build.zip) for anyone who doesn't want to deal with building. Instructions on how to run it are included in the .zip file.
+
+The Dev Diaries below document my process through development of the emulator. Included is a link to my final presentation slides showing the final state of the project.
+
 ## Dev Diaries
 Check out my Dev Diaries!
 * [Week 1](docs/DevDiaries/Week1.md)
@@ -16,9 +27,10 @@ Check out my Dev Diaries!
 * [Week 7](docs/DevDiaries/Week7.md)
 * [Week 8](docs/DevDiaries/Week8.md)
 * [Week 9](docs/DevDiaries/Week9.md)
+* [Final Presentation Slides (.pptx)](docs/Resources/Final.pptx)
 
 ## Schedule
-This is the currently predicted schedule. The bold line is the current week.
+This was the final schedule.
 * Week 1 - Set up memory map, registers, and basic CPU hardware structures
 * Week 2 - Set up opcode interpreter/disassembler
 * Week 3 - Implement opcodes
@@ -26,7 +38,7 @@ This is the currently predicted schedule. The bold line is the current week.
 * Weeks 5-6 - Interrupts, Timers, Input, and first-pass GPU
 * Week 7 - Final pass on graphics and GPU
 * Week 8 - Hunt down and kill various breaking bugs
-* **Week 9 - Add full support for MBC cartridges, bug fix, and polish**
+* Week 9 - Add full support for MBC cartridges, bug fix, and polish
 * Possible future additions (not part of PPP)
   * Audio
   * Game Boy Color support
