@@ -5,18 +5,18 @@
 namespace GameBoi
 {
 	Registers::Registers() :
-		AF(0x01B0), BC(0x0013), DE(0x00D8), HL(0x014D), SP(0xFFFE), PC(0x100)
+		AF(0x01B0), BC(0x0013), DE(0x00D8), HL(0x014D), SP(0xFFFE), PC(0x0100)
 	{
 	}
 
 	void Registers::Reset()
 	{
-		AF = 0;
-		BC = 0;
-		DE = 0;
-		HL = 0;
+		AF = 0x01B0;
+		BC = 0x0013;
+		DE = 0x00D8;
+		HL = 0x014D;
 		SP = 0xFFFE;
-		PC = 0x100;
+		PC = 0x0100;
 	}
 
 	bool Registers::GetZeroFlag() const
