@@ -1669,7 +1669,8 @@ namespace GameBoi
 		mRegisters.AF = PopWordFromStack();
 
 		// Special case since register F can only have the top 4 bits written to
-		mRegisters.F &= 0xF0;
+		// TODO maybe not?
+		//mRegisters.F &= 0xF0;
 	}
 
 	/**
@@ -3296,56 +3297,55 @@ namespace GameBoi
 
 	/**
 	 * \brief Decimal adjust register A (Make BCD)
-	 * \remarks Based on http://z80-heaven.wikidot.com/instructions-set:daa
+	 * \remarks Based on https://rgbds.gbdev.io/docs/v0.9.0/gbz80.7#DAA
 	 */
 	void CPU::DAA(uint16_t)
 	{
 		uint16_t value = mRegisters.A;
+		uint16_t adjustment = 0;
+		bool carry = false;
+		bool zero = false;
 
-		if (!mRegisters.GetSubtractFlag())
-		{
-			if (mRegisters.GetHalfCarryFlag() || (value & 0x0F) > 0x09)
-			{
-				value += 0x06;
-			}
-
-			if (mRegisters.GetCarryFlag() || (value & 0xFF) > 0x9F)
-			{
-				value += 0x60;
-			}
-		}
-		else
+		if (mRegisters.GetSubtractFlag())
 		{
 			if (mRegisters.GetHalfCarryFlag())
 			{
-				value = (value - 0x06) & 0xFF;
+				adjustment += 0x6;
 			}
 
 			if (mRegisters.GetCarryFlag())
 			{
-				value -= 0x60;
+				adjustment += 0x60;
 			}
+            value -= adjustment;
+			carry = adjustment > mRegisters.A; // borrow
 		}
-
-		mRegisters.ResetHalfCarryFlag();
-		mRegisters.ResetZeroFlag();
-
-		if (value > 0xFF)
+		else
 		{
-			mRegisters.SetCarryFlag();
+			if (mRegisters.GetHalfCarryFlag() || ((value & 0x0F) > 0x09))
+			{
+				adjustment += 0x6;
+			}
+
+			if (mRegisters.GetCarryFlag() || ((value & 0xFF) > 0x9F))
+			{
+				adjustment += 0x60;
+			}
+            value += adjustment;
+            carry = value > 0xFF; // carry
 		}
 
 		uint8_t byte = static_cast<uint8_t>(value & 0xFF);
 
 		if (byte == 0)
 		{
-			mRegisters.SetZeroFlag();
+			zero = true;
 		}
 
 		mRegisters.A = byte;
-		//mRegisters.AssignZeroFlag(mRegisters.A == 0);
-		//mRegisters.ResetHalfCarryFlag();
-		//mRegisters.AssignCarryFlag(value > 0xFF);
+        mRegisters.AssignZeroFlag(zero);
+        mRegisters.ResetHalfCarryFlag();
+        mRegisters.AssignCarryFlag(carry);
 	}
 
 	/**

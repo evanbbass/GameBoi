@@ -224,7 +224,7 @@ namespace GameBoi
 		void SUB_aHL(uint16_t operand);
 		void SUB_n(uint16_t operand);
 
-		// ADC A,n
+		// SBC A,n
 		void SBC_A_A(uint16_t operand);
 		void SBC_A_B(uint16_t operand);
 		void SBC_A_C(uint16_t operand);
