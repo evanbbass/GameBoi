@@ -6,7 +6,8 @@
 
 using namespace GameBoiWindows;
 
-int APIENTRY WinMain(HINSTANCE, HINSTANCE, PSTR, int)
+_Use_decl_annotations_
+int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int)
 {
 	if (__argc <= 1)
 	{
