@@ -3,7 +3,6 @@
 #include "Registers.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using namespace std;
 using namespace GameBoi;
 
 namespace GameBoiLibraryTest
@@ -16,24 +15,24 @@ namespace GameBoiLibraryTest
 		{
 			Registers reg;
 
-			uint8_t zeroByte = 0;
-			uint16_t zeroWord = 0;
+			//uint8_t zeroByte = 0;
+			//uint16_t zeroWord = 0;
 
-			// test registers are initialized to zero
-			Assert::IsTrue(zeroByte == reg.A);
-			Assert::IsTrue(zeroByte == reg.Accumulator);
-			Assert::IsTrue(zeroByte == reg.F);
-			Assert::IsTrue(zeroByte == reg.Flags);
-			Assert::IsTrue(zeroWord == reg.AF);
-			Assert::IsTrue(zeroByte == reg.B);
-			Assert::IsTrue(zeroByte == reg.C);
-			Assert::IsTrue(zeroWord == reg.BC);
-			Assert::IsTrue(zeroByte == reg.D);
-			Assert::IsTrue(zeroByte == reg.E);
-			Assert::IsTrue(zeroWord == reg.DE);
-			Assert::IsTrue(zeroByte == reg.H);
-			Assert::IsTrue(zeroByte == reg.L);
-			Assert::IsTrue(zeroWord == reg.HL);
+			// test registers are initialized to zero (NOT TRUE ANYMORE)
+			//Assert::IsTrue(zeroByte == reg.A);
+			//Assert::IsTrue(zeroByte == reg.Accumulator);
+			//Assert::IsTrue(zeroByte == reg.F);
+			//Assert::IsTrue(zeroByte == reg.Flags);
+			//Assert::IsTrue(zeroWord == reg.AF);
+			//Assert::IsTrue(zeroByte == reg.B);
+			//Assert::IsTrue(zeroByte == reg.C);
+			//Assert::IsTrue(zeroWord == reg.BC);
+			//Assert::IsTrue(zeroByte == reg.D);
+			//Assert::IsTrue(zeroByte == reg.E);
+			//Assert::IsTrue(zeroWord == reg.DE);
+			//Assert::IsTrue(zeroByte == reg.H);
+			//Assert::IsTrue(zeroByte == reg.L);
+			//Assert::IsTrue(zeroWord == reg.HL);
 
 			// test setting the full 16-bit register also sets the 8-bit registers
 			uint16_t value = 0xABCD;
@@ -85,16 +84,16 @@ namespace GameBoiLibraryTest
 		TEST_METHOD(TestRegistersFlags)
 		{
 			Registers reg;
-			static const uint8_t ZERO_FLAG = 0b10000000;
-			static const uint8_t SUBTRACT_FLAG = 0b01000000;
-			static const uint8_t HALF_CARRY_FLAG = 0b00100000;
-			static const uint8_t CARRY_FLAG = 0b00010000;
+			static constexpr uint8_t ZERO_FLAG = 0b10000000;
+			static constexpr uint8_t SUBTRACT_FLAG = 0b01000000;
+			static constexpr uint8_t HALF_CARRY_FLAG = 0b00100000;
+			static constexpr uint8_t CARRY_FLAG = 0b00010000;
 
-			// values should initialize to 0 (false)
-			Assert::IsFalse(reg.GetZeroFlag());
+			// values should initialize to 0b1011 (subtract not set, everything else set)
+			Assert::IsTrue (reg.GetZeroFlag());
 			Assert::IsFalse(reg.GetSubtractFlag());
-			Assert::IsFalse(reg.GetHalfCarryFlag());
-			Assert::IsFalse(reg.GetCarryFlag());
+			Assert::IsTrue (reg.GetHalfCarryFlag());
+			Assert::IsTrue (reg.GetCarryFlag());
 
 			// test setting flags
 			reg.SetZeroFlag();

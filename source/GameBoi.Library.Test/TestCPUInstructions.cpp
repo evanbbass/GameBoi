@@ -3,7 +3,6 @@
 #include "CPU.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using namespace std;
 using namespace GameBoi;
 
 namespace GameBoiLibraryTest
@@ -14,18 +13,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_LD_nn_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+            MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+            CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			cpu.LD_B_n(value);
@@ -44,18 +38,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_LD_r1_r2)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint16_t wramAddress = 0xD000;
@@ -212,18 +201,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_LD_A_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint16_t wramAddress = 0xD000;
@@ -293,18 +277,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_LD_n_A)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint16_t wramAddress = 0xD000;
@@ -370,18 +349,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_LD_A_aC)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint16_t wramAddress = 0xFF80;
@@ -402,18 +376,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_LD_A_HLDI)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint16_t wramAddress = 0xD000;
@@ -449,18 +418,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_LDH_A_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint16_t wramAddress = 0xFF80;
@@ -479,18 +443,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_LD_n_nn)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint16_t value = 0xABCD;
 
@@ -513,18 +472,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_LD_SP_HL)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint16_t value = 0xABCD;
 			int8_t offset = 12;
@@ -545,18 +499,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_LD_nn_SP)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint16_t value = 0xABCD;
 			uint16_t wramAddress = 0xD000;
@@ -569,18 +518,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_PUSH_POP)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint16_t value = 0xABCD;
 			uint16_t stackAddress = 0xFFFE;
@@ -621,25 +565,20 @@ namespace GameBoiLibraryTest
 			Assert::IsTrue(memory.ReadWord(registers.SP) == value);
 			Assert::IsTrue(registers.SP == stackAddress - 2);
 			cpu.POP_AF(0);
-			Assert::IsTrue(registers.AF == value);
+			Assert::IsTrue(registers.AF == (value & 0xFFF0)); // SPECIAL CASE
 			Assert::IsTrue(registers.SP == stackAddress);
 			registers.Reset();
 		}
 
 		TEST_METHOD(TestCPUInstructions_ADD_A_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint8_t addMe = 0x12;
@@ -703,18 +642,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_ADC_A_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint8_t addMe = 0x12;
@@ -786,18 +720,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_SUB_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint8_t subMe = 0x12;
@@ -861,18 +790,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_SBC_A_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint8_t subMe = 0x12;
@@ -945,18 +869,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_AND_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0x0F;
 			uint8_t andMe = 0xF0;
@@ -1021,18 +940,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_OR_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0x0F;
 			uint8_t orMe = 0xF0;
@@ -1097,18 +1011,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_XOR_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0x0F;
 			uint8_t xorMe = 0xF0;
@@ -1173,18 +1082,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_CP_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint8_t notValue = 0xBA;
@@ -1271,18 +1175,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_INC_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint16_t wramAddress = 0xD000;
@@ -1333,18 +1232,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_DEC_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint16_t wramAddress = 0xD000;
@@ -1395,18 +1289,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_ADD_HL_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint16_t value = 0xABCD;
 			uint16_t addMe = 0x1234;
@@ -1439,18 +1328,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_ADD_SP_n)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint16_t value = 0xABCD;
 			int8_t addMe = 12;
@@ -1465,18 +1349,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_INC_nn)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint16_t value = 0xABCD;
 
@@ -1505,18 +1384,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_DEC_nn)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint16_t value = 0xABCD;
 
@@ -1545,18 +1419,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_SWAP)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint8_t swapped = ((value & 0x0F) << 4) | ((value & 0xF0) >> 4);
@@ -1607,46 +1476,41 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_DAA)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
-
-			// TODO I still don't know what's going on here
-			uint8_t value = 0x0F;
-			uint8_t daaVal = 0x15;
+			uint8_t value = 0x15;
+			uint8_t addMe = 0x05;
+			uint8_t hexValue = value + addMe; // hex result of 0x15+0x05 (intermediate result)
+            uint8_t daaVal = 0x20;
 
 			// TODO test flags for all of this
 
+            // First do an add. A and B are BCD, so 15 + 5 = 20 (instead of 0x1A)
 			registers.A = value;
-			cpu.DAA(0);
+			registers.B = addMe;
+			cpu.ADD_A_B(0);
+			Assert::IsTrue(registers.A == hexValue); // Result is 0x1A for now
+
+            cpu.DAA(0); // This should correct the result to 0x20
 			Assert::IsTrue(registers.A == daaVal);
 			registers.Reset();
 		}
 
 		TEST_METHOD(TestCPUInstructions_CPL)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			uint8_t value = 0xAB;
 			uint8_t complement = ~value;
@@ -1661,18 +1525,13 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestCPUInstructions_CF)
 		{
-			MemoryMap memory;
-			CPU cpu(memory);
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& memory = *memoryPtr;
+			std::unique_ptr<CPU> cpuPtr = std::make_unique<CPU>(memory);
+			CPU& cpu = *cpuPtr;
 			Registers& registers = cpu.GetRegisters();
 
 			registers.Reset();
-			Assert::IsTrue(registers.A == 0u);
-			Assert::IsTrue(registers.B == 0u);
-			Assert::IsTrue(registers.C == 0u);
-			Assert::IsTrue(registers.D == 0u);
-			Assert::IsTrue(registers.E == 0u);
-			Assert::IsTrue(registers.H == 0u);
-			Assert::IsTrue(registers.L == 0u);
 
 			registers.ResetCarryFlag();
 			cpu.CCF(0);

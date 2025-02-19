@@ -3,7 +3,6 @@
 #include "MemoryMap.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using namespace std;
 using namespace GameBoi;
 
 namespace GameBoiLibraryTest

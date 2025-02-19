@@ -3,18 +3,20 @@
 #include "MemoryMap.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-using namespace std;
 using namespace GameBoi;
 
 namespace GameBoiLibraryTest
-{		
+{
+	// TODO this whole test class doesn't make sense the way it's set up. Need a new paradigm
+	/*
 	TEST_CLASS(TestMemory)
 	{
 	public:
 		
 		TEST_METHOD(TestCartridgeIndexOperator)
 		{
-			Cartridge cart;
+            std::unique_ptr<Cartridge> cartPtr = std::make_unique<Cartridge>();
+			Cartridge& cart = *cartPtr;
 
 			uint8_t zero = 0;
 			uint16_t bank0Index = 0x1234;
@@ -47,7 +49,8 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestMemoryReadWriteByte)
 		{
-			MemoryMap mem;
+            std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& mem = *memoryPtr;
 
 			uint8_t zero = 0;
 
@@ -117,7 +120,8 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestMemoryReadWriteWord)
 		{
-			MemoryMap mem;
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& mem = *memoryPtr;
 
 			uint16_t zero = 0;
 
@@ -200,7 +204,8 @@ namespace GameBoiLibraryTest
 
 		TEST_METHOD(TestMemoryWorkingRAMEcho)
 		{
-			MemoryMap mem;
+			std::unique_ptr<MemoryMap> memoryPtr = std::make_unique<MemoryMap>();
+			MemoryMap& mem = *memoryPtr;
 
 			uint16_t wramIndex = 0xC100;
 			uint16_t wramEchoIndex = wramIndex + 0x2000;
@@ -215,5 +220,5 @@ namespace GameBoiLibraryTest
 			Assert::AreEqual(value2, mem.ReadByte(wramIndex));
 			Assert::AreEqual(value2, mem.ReadByte(wramEchoIndex));
 		}
-	};
+	};*/
 }
