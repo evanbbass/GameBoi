@@ -4,12 +4,11 @@
 #include "pch.h"
 #include "GameBoyWindows.h"
 
-using namespace std;
 using namespace GameBoiWindows;
 
-int main(int argc, char* argv[])
+int APIENTRY WinMain(HINSTANCE, HINSTANCE, PSTR, int)
 {
-	if (argc <= 1)
+	if (__argc <= 1)
 	{
 		if (MessageBoxA(nullptr, "Please specify a .gb file", "Error!", MB_OK) == IDOK)
 		{
@@ -17,9 +16,9 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	string cartridgeFileName = argv[1];
-	GameBoyWindows gb(cartridgeFileName);
-	gb.Run();
+	std::string cartridgeFileName = __argv[1];
+	std::unique_ptr<GameBoyWindows> gb = std::make_unique<GameBoyWindows>(cartridgeFileName);
+	gb->Run();
 
 	return 0;
 }

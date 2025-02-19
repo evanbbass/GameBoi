@@ -12,7 +12,4 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="GameBoyWindows.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
 </Project>
