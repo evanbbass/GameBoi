@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "CPUManaged.h"
 
-using namespace std;
 using namespace System;
 using namespace GameBoi;
 
@@ -28,7 +27,7 @@ namespace GameBoiManaged
 		{
 			mCPU->StepCPU();
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -70,7 +69,7 @@ namespace GameBoiManaged
 		{
 			return CPU::GetOperandLength(opcode);
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -82,7 +81,7 @@ namespace GameBoiManaged
 		{
 			return gcnew String(CPU::GetDisassembly(opcode).c_str());
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -94,7 +93,7 @@ namespace GameBoiManaged
 		{
 			return gcnew String(CPU::GetDisassembly(opcode, operand).c_str());
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}

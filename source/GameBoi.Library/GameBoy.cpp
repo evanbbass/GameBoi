@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "GameBoy.h"
 
-using namespace std;
-
 namespace GameBoi
 {
 	GameBoy::GameBoy() :
@@ -10,13 +8,13 @@ namespace GameBoi
 	{
 	}
 
-	GameBoy::GameBoy(const string& cartridgeFileName) :
+	GameBoy::GameBoy(const std::string& cartridgeFileName) :
 		mCPU(mMemory), mTimer(mMemory.GetIO().GetTimer()), mGPU(mMemory.GetIO().GetGPU())
 	{
 		LoadCartridge(cartridgeFileName);
 	}
 
-	void GameBoy::LoadCartridge(const string& fileName)
+	void GameBoy::LoadCartridge(const std::string& fileName)
 	{
 		mMemory.LoadCartridgeFromFile(fileName);
 	}

@@ -2,8 +2,6 @@
 #include "ObjectAttributeMemory.h"
 #include "MemoryMap.h"
 
-using namespace std;
-
 namespace GameBoi
 {
 	uint8_t ObjectAttributeMemory::ReadByte(uint16_t address) const
@@ -52,7 +50,7 @@ namespace GameBoi
 	{
 		if (index < 0 || index >= static_cast<int32_t>(mSpriteAttributes.size()))
 		{
-			throw exception("Index out of range!");
+			throw std::exception("Index out of range!");
 		}
 
 		return mSpriteAttributes[index];
@@ -62,7 +60,7 @@ namespace GameBoi
 	{
 		if (index < 0 || index >= static_cast<int32_t>(mSpriteAttributes.size()))
 		{
-			throw exception("Index out of range!");
+			throw std::exception("Index out of range!");
 		}
 
 		return mSpriteAttributes[index];

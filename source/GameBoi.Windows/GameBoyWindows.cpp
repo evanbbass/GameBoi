@@ -1,30 +1,28 @@
 #include "pch.h"
 #include "GameBoyWindows.h"
 
-using namespace std;
-using namespace sf;
 using namespace GameBoi;
 
 namespace GameBoiWindows
 {
-	GameBoyWindows::GameBoyWindows(const string& cartridgeName) :
-		mWindow(VideoMode(GPU::ScreenWidth * 3, GPU::ScreenHeight * 3), "GameBoi"), mShowFPS(false)
+	GameBoyWindows::GameBoyWindows(const std::string& cartridgeName) :
+		mWindow(sf::VideoMode(GPU::ScreenWidth * 3, GPU::ScreenHeight * 3), "GameBoi"), mShowFPS(false)
 	{
 		mFont.loadFromFile("Calibri.ttf");
 		mFPS.setFont(mFont);
 		mFPS.setCharacterSize(12);
-		mFPS.setFillColor(Color::White);
-		mFPS.setOutlineColor(Color::Black);
+		mFPS.setFillColor(sf::Color::White);
+		mFPS.setOutlineColor(sf::Color::Black);
 		mFPS.setOutlineThickness(1.0f);
 
 		mGameBoy.LoadCartridge(cartridgeName);
-		string windowTitle = "GameBoi - ";
+		std::string windowTitle = "GameBoi - ";
 		windowTitle += mGameBoy.GetMemoryMap().GetCartridge().GetGameTitle();
 		mWindow.setTitle(windowTitle);
 
 		mWindow.setFramerateLimit(60);
-		mView.reset(FloatRect(0.0f, 0.0f, static_cast<float>(GPU::ScreenWidth), static_cast<float>(GPU::ScreenHeight)));
-		mView.setViewport(FloatRect(0.0f, 0.0f, 1.0f, 1.0f));
+		mView.reset(sf::FloatRect(0.0f, 0.0f, static_cast<float>(GPU::ScreenWidth), static_cast<float>(GPU::ScreenHeight)));
+		mView.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 1.0f));
 		mWindow.setView(mView);
 
 		mTexture.create(GPU::ScreenWidth, GPU::ScreenHeight);
@@ -35,16 +33,16 @@ namespace GameBoiWindows
 	{
 		while (mWindow.isOpen())
 		{
-			Event e;
+			sf::Event e;
 			while (mWindow.pollEvent(e))
 			{
-				if (e.type == Event::Closed || (mWindow.hasFocus() && Keyboard::isKeyPressed(Keyboard::Escape)))
+				if (e.type == sf::Event::Closed || (mWindow.hasFocus() && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)))
 				{
 					mWindow.close();
 				}
 			}
 
-			mWindow.clear(Color::Black);
+			mWindow.clear(sf::Color::Black);
 
 			// update gameboy
 			int32_t cpuCycles = 0;
@@ -55,7 +53,7 @@ namespace GameBoiWindows
 				{
 					cpuCycles += mGameBoy.Update();
 				}
-				catch (exception& ex)
+				catch (const std::exception& ex)
 				{
 					if (MessageBoxA(mWindow.getSystemHandle(), ex.what(), "Error!", MB_OK) == IDOK)
 					{
@@ -91,17 +89,17 @@ namespace GameBoiWindows
 
 		Keypad& keypad = mGameBoy.GetMemoryMap().GetIO().GetKeypad();
 
-		keypad.SetButtonAPressed(Keyboard::isKeyPressed(Keyboard::Z));
-		keypad.SetButtonBPressed(Keyboard::isKeyPressed(Keyboard::X));
-		keypad.SetButtonStartPressed(Keyboard::isKeyPressed(Keyboard::Return));
-		keypad.SetButtonSelectPressed(Keyboard::isKeyPressed(Keyboard::Space));
+		keypad.SetButtonAPressed(sf::Keyboard::isKeyPressed(sf::Keyboard::Z));
+		keypad.SetButtonBPressed(sf::Keyboard::isKeyPressed(sf::Keyboard::X));
+		keypad.SetButtonStartPressed(sf::Keyboard::isKeyPressed(sf::Keyboard::Return));
+		keypad.SetButtonSelectPressed(sf::Keyboard::isKeyPressed(sf::Keyboard::Space));
 
-		keypad.SetDirectionUpPressed(Keyboard::isKeyPressed(Keyboard::Up));
-		keypad.SetDirectionDownPressed(Keyboard::isKeyPressed(Keyboard::Down));
-		keypad.SetDirectionLeftPressed(Keyboard::isKeyPressed(Keyboard::Left));
-		keypad.SetDirectionRightPressed(Keyboard::isKeyPressed(Keyboard::Right));
+		keypad.SetDirectionUpPressed(sf::Keyboard::isKeyPressed(sf::Keyboard::Up));
+		keypad.SetDirectionDownPressed(sf::Keyboard::isKeyPressed(sf::Keyboard::Down));
+		keypad.SetDirectionLeftPressed(sf::Keyboard::isKeyPressed(sf::Keyboard::Left));
+		keypad.SetDirectionRightPressed(sf::Keyboard::isKeyPressed(sf::Keyboard::Right));
 
-		if (Keyboard::isKeyPressed(Keyboard::F))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 		{
 			mShowFPS = !mShowFPS;
 		}
@@ -109,7 +107,7 @@ namespace GameBoiWindows
 
 	void GameBoyWindows::DrawFPS()
 	{
-		static Clock clock;
+		static sf::Clock clock;
 		static float lastTime = 0.0f;
 	
 		float currentTime = clock.getElapsedTime().asSeconds();
@@ -118,7 +116,7 @@ namespace GameBoiWindows
 			float fps = 1.0f / (currentTime - lastTime);
 			clock.restart();
 			lastTime = 0;
-			mFPS.setString(to_string(fps));
+			mFPS.setString(std::to_string(fps));
 		}
 		else
 		{

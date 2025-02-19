@@ -2,11 +2,9 @@
 #include "MemoryMap.h"
 #include "Utilities.h"
 
-using namespace std;
-
 namespace GameBoi
 {
-	const array<uint8_t, MemoryMap::BIOS_SIZE> MemoryMap::BIOS =
+	const std::array<uint8_t, MemoryMap::BIOS_SIZE> MemoryMap::BIOS =
 	{
 		0x31, 0xFE, 0xFF, 0xAF, 0x21, 0xFF, 0x9F, 0x32, 0xCB, 0x7C, 0x20, 0xFB, 0x21, 0x26, 0xFF, 0x0E,
 		0x11, 0x3E, 0x80, 0x32, 0xE2, 0x0C, 0x3E, 0xF3, 0xE2, 0x32, 0x3E, 0x77, 0x77, 0x3E, 0xFC, 0xE0,
@@ -156,7 +154,7 @@ namespace GameBoi
 		}
 	}
 
-	void MemoryMap::LoadCartridgeFromFile(const string& fileName)
+	void MemoryMap::LoadCartridgeFromFile(const std::string& fileName)
 	{
 		mCart.ReadFromFile(fileName);
 	}

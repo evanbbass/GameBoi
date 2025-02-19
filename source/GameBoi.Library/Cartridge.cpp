@@ -5,11 +5,9 @@
 #include <iomanip>
 #include <sstream>
 
-using namespace std;
-
 namespace GameBoi
 {
-	const map<int32_t, int32_t> Cartridge::RomSizeMap =
+	const std::map<int32_t, int32_t> Cartridge::RomSizeMap =
 	{
 		{ 0x00, 2 },
 		{ 0x01, 4 },
@@ -25,7 +23,7 @@ namespace GameBoi
 		{ 0x54, 96 }
 	};
 
-	const map<int32_t, int32_t> Cartridge::RamSizeMap =
+	const std::map<int32_t, int32_t> Cartridge::RamSizeMap =
 	{
 		{ 0x00, 0 },
 		{ 0x01, 1 }, // 2kB, which is 1/4 of a bank (0xA000 - 0xA7FF)
@@ -41,13 +39,13 @@ namespace GameBoi
 		Reset();
 	}
 
-	Cartridge::Cartridge(const string& filename) :
+	Cartridge::Cartridge(const std::string& filename) :
 		mSwitchableRomBankIndex(1), mSwitchableRamBankIndex(0), mRamEnabled(false), mRamModeSelected(false)
 	{
 		ReadFromFile(filename);
 	}
 
-	void Cartridge::ReadFromFile(const string& filename)
+	void Cartridge::ReadFromFile(const std::string& filename)
 	{
 		mFileName = filename;
 
@@ -56,12 +54,12 @@ namespace GameBoi
 		//	throw exception("Invalid file extension specified");
 		//}
 
-		ifstream rom(filename, ios::in | ios::binary | ios::ate);
+		std::ifstream rom(filename, std::ios::in | std::ios::binary | std::ios::ate);
 		if (!rom)
 		{
-			throw exception("Input file not valid.");
+			throw std::exception("Input file not valid.");
 		}
-		streamoff fileSize = rom.tellg();
+		std::streamoff fileSize = rom.tellg();
 
 		// read title of game
 		{
@@ -107,13 +105,13 @@ namespace GameBoi
 			// check the file size against the number of rom banks
 			if (static_cast<size_t>(fileSize) != ROM_BANK_SIZE * numRomBanks)
 			{
-				throw exception("File size mismatch!");
+				throw std::exception("File size mismatch!");
 			}
 
 			// read the rom banks into memory
-			rom.seekg(0, ios::beg);
+			rom.seekg(0, std::ios::beg);
 			mRomBanks.resize(numRomBanks);
-			for (array<uint8_t, ROM_BANK_SIZE>& bank : mRomBanks)
+			for (std::array<uint8_t, ROM_BANK_SIZE>& bank : mRomBanks)
 			{
 				rom.read(reinterpret_cast<char*>(bank.data()), ROM_BANK_SIZE);
 			}
@@ -129,27 +127,27 @@ namespace GameBoi
 			// read the rom banks into memory
 			mRamBanks.resize(numRamBanks);
 
-			string saveFileName = mFileName.substr(0, mFileName.find_last_of(".")) + ".sav";
-			ifstream saveFile(saveFileName, ios::in | ios::binary | ios::ate);
-			streamoff saveSize = saveFile.tellg();
+			std::string saveFileName = mFileName.substr(0, mFileName.find_last_of(".")) + ".sav";
+			std::ifstream saveFile(saveFileName, std::ios::in | std::ios::binary | std::ios::ate);
+			std::streamoff saveSize = saveFile.tellg();
 
 			if (HasBattery() && saveFile.good())
 			{
 				// check the file size against the number of rom banks
 				if (static_cast<size_t>(saveSize) != RAM_BANK_SIZE * numRamBanks)
 				{
-					throw exception("Save file size mismatch!");
+					throw std::exception("Save file size mismatch!");
 				}
 
-				saveFile.seekg(ios::beg);
-				for (array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
+				saveFile.seekg(std::ios::beg);
+				for (std::array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
 				{
 					saveFile.read(reinterpret_cast<char*>(bank.data()), RAM_BANK_SIZE);
 				}
 			}
 			else
 			{
-				for (array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
+				for (std::array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
 				{
 					bank.fill(0);
 				}
@@ -159,12 +157,12 @@ namespace GameBoi
 
 	void Cartridge::WriteSaveFile() const
 	{
-		string saveFileName = mFileName.substr(0, mFileName.find_last_of(".")) + ".sav";
-		ofstream saveFile(saveFileName, ios::out | ios::binary);
+		std::string saveFileName = mFileName.substr(0, mFileName.find_last_of(".")) + ".sav";
+		std::ofstream saveFile(saveFileName, std::ios::out | std::ios::binary);
 
 		if (HasBattery() && mRamBanks.size() > 0 && saveFile.good())
 		{
-			for (const array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
+			for (const std::array<uint8_t, RAM_BANK_SIZE>& bank : mRamBanks)
 			{
 				saveFile.write(reinterpret_cast<const char*>(bank.data()), RAM_BANK_SIZE);
 			}
@@ -175,7 +173,7 @@ namespace GameBoi
 	{
 		// default to 2 banks
 		mRomBanks.resize(2);
-		for (array<uint8_t, ROM_BANK_SIZE>& bank : mRomBanks)
+		for (std::array<uint8_t, ROM_BANK_SIZE>& bank : mRomBanks)
 		{
 			bank.fill(0);
 		}
@@ -199,7 +197,7 @@ namespace GameBoi
 		}
 		else
 		{
-			throw exception("Address out of Cartridge range.");
+			throw std::exception("Address out of Cartridge range.");
 		}
 	}
 
@@ -220,7 +218,7 @@ namespace GameBoi
 		}
 		else
 		{
-			throw exception("Address out of Cartridge range.");
+			throw std::exception("Address out of Cartridge range.");
 		}
 	}
 
@@ -236,7 +234,7 @@ namespace GameBoi
 		}
 		else
 		{
-			throw exception("Address out of ROM range.");
+			throw std::exception("Address out of ROM range.");
 		}
 	}
 
@@ -360,7 +358,7 @@ namespace GameBoi
 		}
 	}
 
-	const string& Cartridge::GetGameTitle() const
+	const std::string& Cartridge::GetGameTitle() const
 	{
 		return mGameTitle;
 	}
@@ -521,21 +519,21 @@ namespace GameBoi
 		}
 	}
 
-	string Cartridge::DisassembleRom(uint16_t startAddress, uint16_t length) const
+	std::string Cartridge::DisassembleRom(uint16_t startAddress, uint16_t length) const
 	{
-		stringstream disassembly;
-		disassembly << hex << uppercase << setfill('0');
+		std::stringstream disassembly;
+		disassembly << std::hex << std::uppercase << std::setfill('0');
 
 		uint16_t programCounter = startAddress;
 		uint16_t endAddress = programCounter + length;
 
 		while (programCounter < endAddress)
 		{
-			disassembly << "0x" << setw(4) << programCounter << ": ";
+			disassembly << "0x" << std::setw(4) << programCounter << ": ";
 
 			uint8_t opcode = ReadByte(programCounter++);
 			int32_t operandLength = -1;
-			disassembly << setw(2) << static_cast<int>(opcode) << " ";
+			disassembly << std::setw(2) << static_cast<int>(opcode) << " ";
 
 			try
 			{
@@ -548,14 +546,14 @@ namespace GameBoi
 
 			if (operandLength == 0)
 			{
-				string dis = CPU::GetDisassembly(opcode);
+				std::string dis = CPU::GetDisassembly(opcode);
 				disassembly << "       " << dis;
 			}
 			else if (operandLength == 1)
 			{
 				uint8_t operand = ReadByte(programCounter++);
-				string dis = CPU::GetDisassembly(opcode, operand);
-				disassembly << setw(2) << static_cast<int>(operand) << "     " << dis;
+				std::string dis = CPU::GetDisassembly(opcode, operand);
+				disassembly << std::setw(2) << static_cast<int>(operand) << "     " << dis;
 			}
 			else if (operandLength == 2)
 			{
@@ -563,19 +561,19 @@ namespace GameBoi
 				programCounter += 2;
 				uint8_t operand_l = (operand & 0x00FF);
 				uint8_t operand_h = (operand & 0xFF00) >> 8;
-				string dis = CPU::GetDisassembly(opcode, operand);
-				disassembly << setw(2) << static_cast<int>(operand_l) << " " << setw(2) << static_cast<int>(operand_h) << "  " << dis;
+				std::string dis = CPU::GetDisassembly(opcode, operand);
+				disassembly << std::setw(2) << static_cast<int>(operand_l) << " " << std::setw(2) << static_cast<int>(operand_h) << "  " << dis;
 			}
 
-			disassembly << endl;
+			disassembly << std::endl;
 		}
 
 		return disassembly.str();
 	}
 
-	void Cartridge::DisassebleRomToFile(const string& filename, uint16_t startAddress, uint16_t length) const
+	void Cartridge::DisassebleRomToFile(const std::string& filename, uint16_t startAddress, uint16_t length) const
 	{
-		ofstream file(filename);
+		std::ofstream file(filename);
 
 		if (file.good())
 		{

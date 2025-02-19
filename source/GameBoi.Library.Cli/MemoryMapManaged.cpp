@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "MemoryMapManaged.h"
 
-using namespace std;
 using namespace System;
 using namespace GameBoi;
 
@@ -33,7 +32,7 @@ namespace GameBoiManaged
 		{
 			return mMemoryMap->ReadByte(address);
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -45,7 +44,7 @@ namespace GameBoiManaged
 		{
 			return mMemoryMap->ReadWord(address);
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -57,7 +56,7 @@ namespace GameBoiManaged
 		{
 			mMemoryMap->WriteByte(address, value);
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -69,7 +68,7 @@ namespace GameBoiManaged
 		{
 			mMemoryMap->WriteWord(address, value);
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}

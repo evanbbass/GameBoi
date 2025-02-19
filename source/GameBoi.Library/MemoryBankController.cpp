@@ -2,8 +2,6 @@
 #include "MemoryBankController.h"
 #include "Utilities.h"
 
-using namespace std;
-
 namespace GameBoi
 {
 	MemoryBankController::MemoryBankController() :
@@ -11,25 +9,25 @@ namespace GameBoi
 	{
 	}
 
-	unique_ptr<MemoryBankController> MemoryBankController::CreateMBC(Cartridge::CartridgeType type)
+	std::unique_ptr<MemoryBankController> MemoryBankController::CreateMBC(Cartridge::CartridgeType type)
 	{
 		switch (type)
 		{
 			case Cartridge::CartridgeType::ROM_MBC1:
 			case Cartridge::CartridgeType::ROM_MBC1_RAM:
 			case Cartridge::CartridgeType::ROM_MBC1_RAM_BATTERY:
-				return make_unique<MBC1>();
+				return std::make_unique<MBC1>();
 
 			case Cartridge::CartridgeType::ROM_MBC2:
 			case Cartridge::CartridgeType::ROM_MBC2_BATTERY:
-				return make_unique<MBC2>();
+				return std::make_unique<MBC2>();
 
 			case Cartridge::CartridgeType::ROM_MBC3_TIMER_BATTERY:
 			case Cartridge::CartridgeType::ROM_MBC3_TIMER_RAM_BATTERY:
 			case Cartridge::CartridgeType::ROM_MBC3:
 			case Cartridge::CartridgeType::ROM_MBC3_RAM:
 			case Cartridge::CartridgeType::ROM_MBC3_RAM_BATTERY:
-				return make_unique<MBC3>();
+				return std::make_unique<MBC3>();
 
 			case Cartridge::CartridgeType::ROM_MBC4:
 			case Cartridge::CartridgeType::ROM_MBC4_RAM:

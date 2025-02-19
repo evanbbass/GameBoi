@@ -3,8 +3,6 @@
 #include "MemoryMap.h"
 #include "Utilities.h"
 
-using namespace std;
-
 // TODO I go lazy and stopped getting rid of magic numbers, probably should fix that
 
 namespace GameBoi

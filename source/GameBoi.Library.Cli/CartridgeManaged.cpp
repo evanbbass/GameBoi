@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "CartridgeManaged.h"
 
-using namespace std;
 using namespace System;
 using namespace GameBoi;
 
@@ -33,7 +32,7 @@ namespace GameBoiManaged
 		{
 			mCartridge->ReadFromFile(msclr::interop::marshal_as<std::string>(filename));
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -50,7 +49,7 @@ namespace GameBoiManaged
 		{
 			return mCartridge->ReadByte(address);
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -62,7 +61,7 @@ namespace GameBoiManaged
 		{
 			return mCartridge->ReadWord(address);
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -74,7 +73,7 @@ namespace GameBoiManaged
 		{
 			mCartridge->WriteByte(address, value);
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -86,7 +85,7 @@ namespace GameBoiManaged
 		{
 			mCartridge->WriteWord(address, value);
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -118,7 +117,7 @@ namespace GameBoiManaged
 		{
 			return gcnew String(mCartridge->DisassembleRom(startAddress, length).c_str());
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}
@@ -130,7 +129,7 @@ namespace GameBoiManaged
 		{
 			mCartridge->DisassebleRomToFile(msclr::interop::marshal_as<std::string>(filename), startAddress, length);
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			throw gcnew Exception(gcnew String(ex.what()));
 		}

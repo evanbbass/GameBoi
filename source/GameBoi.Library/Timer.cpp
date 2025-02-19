@@ -2,8 +2,6 @@
 #include "Timer.h"
 #include "CPU.h"
 
-using namespace std;
-
 namespace GameBoi
 {
 	// frequency in Hz

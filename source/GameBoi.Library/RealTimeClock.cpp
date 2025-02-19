@@ -2,8 +2,6 @@
 #include "RealTimeClock.h"
 #include "Utilities.h"
 
-using namespace std;
-
 namespace GameBoi
 {
 	RealTimeClock::RealTimeClock() :

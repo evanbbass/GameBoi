@@ -2,11 +2,9 @@
 #include "CPU.h"
 #include "Utilities.h"
 
-using namespace std;
-
 namespace GameBoi
 {
-	const map<uint8_t, Instruction> CPU::OpcodeInstructionMap
+	const std::map<uint8_t, Instruction> CPU::OpcodeInstructionMap
 	{
 		#pragma region 8-bit Loads
 
@@ -516,7 +514,7 @@ namespace GameBoi
 		#pragma endregion
 	};
 
-	const map<uint8_t, Instruction> CPU::OpcodeInstructionMap_PrefixCB
+	const std::map<uint8_t, Instruction> CPU::OpcodeInstructionMap_PrefixCB
 	{
 		#pragma region Swap
 
@@ -816,25 +814,25 @@ namespace GameBoi
 			return 1;
 		}
 
-		map<uint8_t, Instruction>::const_iterator it = OpcodeInstructionMap.find(opcode);
+		std::map<uint8_t, Instruction>::const_iterator it = OpcodeInstructionMap.find(opcode);
 		if (it == OpcodeInstructionMap.end())
 		{
-			throw exception("Opcode not found!");
+			throw std::exception("Opcode not found!");
 		}
 
 		return it->second.OperandLength;
 	}
 
-	string CPU::GetDisassembly(uint8_t opcode, uint16_t operand)
+	std::string CPU::GetDisassembly(uint8_t opcode, uint16_t operand)
 	{
-		map<uint8_t, Instruction>::const_iterator it;
+		std::map<uint8_t, Instruction>::const_iterator it;
 
 		if (opcode == 0xCB)
 		{
 			it = OpcodeInstructionMap_PrefixCB.find(static_cast<uint8_t>(operand));
 			if (it == OpcodeInstructionMap_PrefixCB.end())
 			{
-				throw exception("Opcode not found!");
+				throw std::exception("Opcode not found!");
 			}
 		}
 		else
@@ -842,7 +840,7 @@ namespace GameBoi
 			it = OpcodeInstructionMap.find(opcode);
 			if (it == OpcodeInstructionMap.end())
 			{
-				throw exception("Opcode not found!");
+				throw std::exception("Opcode not found!");
 			}
 		}
 
@@ -866,7 +864,7 @@ namespace GameBoi
 
 	void CPU::UnimplementedInstruction(uint16_t)
 	{
-		throw exception("Unimplemented instruction!");
+		throw std::exception("Unimplemented instruction!");
 	}
 
 	#pragma region 8-Bit Loads

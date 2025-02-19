@@ -2,8 +2,6 @@
 #include "CPU.h"
 #include "Utilities.h"
 
-using namespace std;
-
 namespace GameBoi
 {
 	CPU::CPU(MemoryMap& memory) :
@@ -67,7 +65,7 @@ namespace GameBoi
 			//}
 
 			// execute instruction
-			invoke(instruction.Function, this, operand);
+			std::invoke(instruction.Function, this, operand);
 
 			if (disableInterrupts)
 			{
@@ -80,11 +78,11 @@ namespace GameBoi
 
 			return instruction.Cycles;
 		}
-		catch (exception& ex)
+		catch (const std::exception& ex)
 		{
 			char message[100];
 			sprintf_s(message, sizeof(message), "Error executing instruction 0x%02X at memory location 0x%04X:\n%s", opcode, pc, ex.what());
-			throw exception(message);
+			throw std::exception(message);
 		}
 	}
 
