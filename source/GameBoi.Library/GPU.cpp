@@ -4,11 +4,27 @@
 #include "Utilities.h"
 
 // TODO I go lazy and stopped getting rid of magic numbers, probably should fix that
+namespace
+{
+	constexpr uint8_t CoincidenceBit = 2;
+	constexpr uint8_t HBlankInterruptBit = 3;
+	constexpr uint8_t VBlankInterruptBit = 4;
+	constexpr uint8_t OAMInterruptBit = 5;
+	constexpr uint8_t CoincidenceInterruptBit = 6;
+
+	constexpr int32_t CPUCyclesPerScanline = 456;
+	constexpr int32_t OAMStatusCutoff = 80;
+	constexpr int32_t VRAMStatusCutoff = OAMStatusCutoff + 172;
+
+    constexpr int32_t InvisibleScanlines = 8;
+	constexpr int32_t MaxScanlines = GameBoi::GPU::ScreenHeight + InvisibleScanlines; // 144 visible scanlines and 8 invisible ones
+}
+
 
 namespace GameBoi
 {
 	GPU::GPU(MemoryMap& memory) :
-		mMemory(memory), mScanlineCounter(0), mCurrentScanline(0), mLCDStatusRegister(0), mCoincidenceRegister(0),
+		mMemory(memory), mDisplay(), mScanlineCounter(0), mCurrentScanline(0), mLCDStatusRegister(0), mCoincidenceRegister(0),
 		mScrollY(0), mScrollX(0), mWindowY(0), mWindowX(0)
 	{
 		mBackgroundPallet.SetPallet(0xFC);
@@ -40,131 +56,6 @@ namespace GameBoi
 			UpdateLCDStatus();
 			CheckCoincidence();
 		}
-	}
-
-	Display& GPU::GetDisplay()
-	{
-		return mDisplay;
-	}
-
-	const Display& GPU::GetDisplay() const
-	{
-		return mDisplay;
-	}
-
-	uint8_t GPU::GetCurrentScanline() const
-	{
-		return mCurrentScanline;
-	}
-
-	uint8_t GPU::GetLCDStatusRegister() const
-	{
-		return mLCDStatusRegister;
-	}
-
-	uint8_t GPU::GetLCDControlRegister() const
-	{
-		return mLCDControl.GetRegister();
-	}
-
-	uint8_t GPU::GetCoincidenceRegister() const
-	{
-		return mCoincidenceRegister;
-	}
-
-	uint8_t GPU::GetScrollY() const
-	{
-		return mScrollY;
-	}
-
-	uint8_t GPU::GetScrollX() const
-	{
-		return mScrollX;
-	}
-
-	uint8_t GPU::GetWindowY() const
-	{
-		return mWindowY;
-	}
-
-	uint8_t GPU::GetWindowX() const
-	{
-		return mWindowX;
-	}
-
-	uint8_t GPU::GetBackgroundPallet() const
-	{
-		return mBackgroundPallet.GetPallet();
-	}
-
-	uint8_t GPU::GetSpritePallet0() const
-	{
-		return mSpritePallet0.GetPallet();
-	}
-
-	uint8_t GPU::GetSpritePallet1() const
-	{
-		return mSpritePallet1.GetPallet();
-	}
-
-	void GPU::SetScrollY(uint8_t value)
-	{
-		mScrollY = value;
-	}
-
-	void GPU::SetScrollX(uint8_t value)
-	{
-		mScrollX = value;
-	}
-
-	void GPU::SetWindowY(uint8_t value)
-	{
-		mWindowY = value;
-	}
-
-	void GPU::SetWindowX(uint8_t value)
-	{
-		mWindowX = value;
-	}
-
-	void GPU::SetCurrentScanline(uint8_t value)
-	{
-		mCurrentScanline = value;
-	}
-
-	void GPU::SetLCDStatusRegister(uint8_t value)
-	{
-		mLCDStatusRegister = value;
-	}
-
-	void GPU::SetLCDControlRegister(uint8_t value)
-	{
-		mLCDControl.SetRegister(value);
-	}
-
-	void GPU::SetCoincidenceRegister(uint8_t value)
-	{
-		mCoincidenceRegister = value;
-	}
-
-	void GPU::SetBackgroundPallet(uint8_t value)
-	{
-		mBackgroundPallet.SetPallet(value);
-	}
-
-	void GPU::SetSpritePallet0(uint8_t value)
-	{
-		mSpritePallet0.SetPallet(value);
-	}
-
-	void GPU::SetSpritePallet1(uint8_t value)
-	{
-		mSpritePallet1.SetPallet(value);
-	}
-
-	GPU::LCDStatus GPU::GetLCDStatus() const
-	{
-		return static_cast<LCDStatus>(mLCDStatusRegister & 0b11);
 	}
 
 	void GPU::DrawScanLine()

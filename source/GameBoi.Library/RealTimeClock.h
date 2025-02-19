@@ -19,7 +19,5 @@ namespace GameBoi
 		bool mReadyToLatch;
 
 		void Latch();
-
-		const static uint16_t DaysMask = 0b0000000111111111;
 	};
 }

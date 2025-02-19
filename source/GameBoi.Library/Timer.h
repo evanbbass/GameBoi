@@ -33,10 +33,10 @@ namespace GameBoi
 		void SetTimerModulator(uint8_t value);
 		void SetTimerController(uint8_t value);
 
-		static const uint16_t DividerAddress = 0xFF04;
-		static const uint16_t TimerAddress = 0xFF05;
-		static const uint16_t TimerModulatorAddress = 0xFF06;
-		static const uint16_t TimerControllerAddress = 0xFF07;
+		static constexpr uint16_t DividerAddress = 0xFF04;
+		static constexpr uint16_t TimerAddress = 0xFF05;
+		static constexpr uint16_t TimerModulatorAddress = 0xFF06;
+		static constexpr uint16_t TimerControllerAddress = 0xFF07;
 
 	private:
 		MemoryMap& mMemory;
@@ -51,10 +51,5 @@ namespace GameBoi
 
 		void StepDivider(int32_t cpuCycles);
 		void CheckFrequencyChange();
-
-		static const int32_t TimerFrequencyMap[4];
-		static const int32_t DividerFrequency;
-		static const uint8_t TimerEnabledBit = 2;
-		static const uint8_t TimerFrequencyMask = 0b00000011;
 	};
 }

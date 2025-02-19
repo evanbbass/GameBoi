@@ -66,54 +66,53 @@ namespace GameBoi
 		/// </summary>
 		void DMATransfer(uint8_t value);
 
-		static const uint16_t InterruptEnabledAddress = 0xFFFF;
-		static const uint16_t InterruptFlagAddress = 0xFF0F;
-		static const uint8_t VBlankInterruptBit = 0;
-		static const uint8_t LCDInterruptBit = 1;
-		static const uint8_t TimerInterruptBit = 2;
-		static const uint8_t KeypadInterruptBit = 4;
-		static const uint16_t VBlankISRAddress = 0x0040;
-		static const uint16_t LCDISRAddress = 0x0048;
-		static const uint16_t TimerISRAddress = 0x0050;
-		static const uint16_t KeypadISRAddress = 0x0060;
+		static constexpr uint16_t InterruptEnabledAddress	= 0xFFFF;
+		static constexpr uint16_t InterruptFlagAddress		= 0xFF0F;
+		static constexpr uint8_t  VBlankInterruptBit		= 0;
+		static constexpr uint8_t  LCDInterruptBit			= 1;
+		static constexpr uint8_t  TimerInterruptBit			= 2;
+		static constexpr uint8_t  KeypadInterruptBit		= 4;
+		static constexpr uint16_t VBlankISRAddress			= 0x0040;
+		static constexpr uint16_t LCDISRAddress				= 0x0048;
+		static constexpr uint16_t TimerISRAddress			= 0x0050;
+		static constexpr uint16_t KeypadISRAddress			= 0x0060;
 
-		const static uint16_t BIOS_START = 0x0000;
-		const static uint16_t CARTRIDGE_START = 0x0000;
-		const static uint16_t VRAM_START = 0x8000;
-		const static uint16_t SRAM_START = 0xA000;
-		const static uint16_t WRAM_START = 0xC000;
-		const static uint16_t WRAM_ECHO_START = 0xE000;
-		const static uint16_t OAM_START = 0xFE00;
-		const static uint16_t UNUSABLE_START = 0xFEA0;
-		const static uint16_t IO_START = 0xFF00;
-		const static uint16_t INTERNAL_RAM_START = 0xFF80;
-		const static uint16_t INTERRUPT_ENABLE_START = 0xFFFF;
+		static constexpr uint16_t BIOS_START				= 0x0000;
+		static constexpr uint16_t CARTRIDGE_START			= 0x0000;
+		static constexpr uint16_t VRAM_START				= 0x8000;
+		static constexpr uint16_t SRAM_START				= 0xA000;
+		static constexpr uint16_t WRAM_START				= 0xC000;
+		static constexpr uint16_t WRAM_ECHO_START			= 0xE000;
+		static constexpr uint16_t OAM_START					= 0xFE00;
+		static constexpr uint16_t UNUSABLE_START			= 0xFEA0;
+		static constexpr uint16_t IO_START					= 0xFF00;
+		static constexpr uint16_t INTERNAL_RAM_START		= 0xFF80;
+		static constexpr uint16_t INTERRUPT_ENABLE_START	= 0xFFFF;
 
-		const static uint16_t BIOS_END = 0x0100;
-		const static uint16_t CARTRIDGE_END = VRAM_START;
-		const static uint16_t VRAM_END = SRAM_START;
-		const static uint16_t SRAM_END = WRAM_START;
-		const static uint16_t WRAM_END = WRAM_ECHO_START;
-		const static uint16_t WRAM_ECHO_END = OAM_START;
-		const static uint16_t OAM_END = UNUSABLE_START;
-		const static uint16_t UNUSABLE_END = IO_START;
-		const static uint16_t IO_END = INTERNAL_RAM_START;
-		const static uint16_t INTERNAL_RAM_END = INTERRUPT_ENABLE_START;
+		static constexpr uint16_t BIOS_END					= 0x0100;
+		static constexpr uint16_t CARTRIDGE_END				= VRAM_START;
+		static constexpr uint16_t VRAM_END					= SRAM_START;
+		static constexpr uint16_t SRAM_END					= WRAM_START;
+		static constexpr uint16_t WRAM_END					= WRAM_ECHO_START;
+		static constexpr uint16_t WRAM_ECHO_END				= OAM_START;
+		static constexpr uint16_t OAM_END					= UNUSABLE_START;
+		static constexpr uint16_t UNUSABLE_END				= IO_START;
+		static constexpr uint16_t IO_END					= INTERNAL_RAM_START;
+		static constexpr uint16_t INTERNAL_RAM_END			= INTERRUPT_ENABLE_START;
 
-		const static uint16_t BIOS_SIZE = BIOS_END - BIOS_START;
-		const static uint16_t CARTRIDGE_SIZE = CARTRIDGE_END - CARTRIDGE_START;
-		const static uint16_t VRAM_SIZE = VRAM_END - VRAM_START;
-		const static uint16_t SRAM_SIZE = SRAM_END - SRAM_START;
-		const static uint16_t WRAM_SIZE = WRAM_END - WRAM_START;
-		const static uint16_t WRAM_ECHO_SIZE = WRAM_ECHO_END - WRAM_ECHO_START;
-		const static uint16_t OAM_SIZE = OAM_END - OAM_START;
-		const static uint16_t UNUSABLE_SIZE = UNUSABLE_END - UNUSABLE_START;
-		const static uint16_t IO_SIZE = IO_END - IO_START;
-		const static uint16_t INTERNAL_RAM_SIZE = INTERNAL_RAM_END - INTERNAL_RAM_START;
+		static constexpr uint16_t BIOS_SIZE					= BIOS_END - BIOS_START;
+		static constexpr uint16_t CARTRIDGE_SIZE			= CARTRIDGE_END - CARTRIDGE_START;
+		static constexpr uint16_t VRAM_SIZE					= VRAM_END - VRAM_START;
+		static constexpr uint16_t SRAM_SIZE					= SRAM_END - SRAM_START;
+		static constexpr uint16_t WRAM_SIZE					= WRAM_END - WRAM_START;
+		static constexpr uint16_t WRAM_ECHO_SIZE			= WRAM_ECHO_END - WRAM_ECHO_START;
+		static constexpr uint16_t OAM_SIZE					= OAM_END - OAM_START;
+		static constexpr uint16_t UNUSABLE_SIZE				= UNUSABLE_END - UNUSABLE_START;
+		static constexpr uint16_t IO_SIZE					= IO_END - IO_START;
+		static constexpr uint16_t INTERNAL_RAM_SIZE			= INTERNAL_RAM_END - INTERNAL_RAM_START;
 
 	private:
-		bool mIsInBIOS;
-		const static std::array<uint8_t, BIOS_SIZE> BIOS;		// 0x0000 - 0x0100 if in BIOS
+		bool mIsInBIOS;											// 0x0000 - 0x0100 if in BIOS
 
 		void ResetVBlankInterruptFlag();
 		void ResetLCDInterruptFlag();

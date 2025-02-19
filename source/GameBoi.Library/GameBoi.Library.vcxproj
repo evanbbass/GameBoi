@@ -172,6 +172,7 @@
     <ClCompile Include="CPU.Instructions.cpp" />
     <ClCompile Include="GameBoy.cpp" />
     <ClCompile Include="GPU.cpp" />
+    <ClCompile Include="LCDControl.cpp" />
     <ClCompile Include="MemoryBankController.cpp" />
     <ClCompile Include="MemoryMap.cpp" />
     <ClCompile Include="Cartridge.cpp" />

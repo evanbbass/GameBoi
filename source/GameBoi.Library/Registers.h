@@ -79,12 +79,6 @@ namespace GameBoi
 		void SetCarryFlag();
 		void ResetCarryFlag();
 		void AssignCarryFlag(bool value);
-
-	private:
-		static const uint8_t ZeroBit = 7;
-		static const uint8_t SubtractBit = 6;
-		static const uint8_t HalfCarryBit = 5;
-		static const uint8_t CarryBit = 4;
 	};
 }
 #pragma warning(pop)

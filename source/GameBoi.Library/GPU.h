@@ -30,67 +30,56 @@ namespace GameBoi
 		/// <param name="cpuCycles">Number of CPU clock cycles since the last step.</param>
 		void StepGPU(int32_t cpuCycles);
 
-		Display& GetDisplay();
-		const Display& GetDisplay() const;
+        Display& GetDisplay() { return mDisplay; }
+        const Display& GetDisplay() const { return mDisplay; }
 
-		uint8_t GetCurrentScanline() const;
-		uint8_t GetLCDStatusRegister() const;
-		uint8_t GetLCDControlRegister() const;
-		uint8_t GetCoincidenceRegister() const;
+        uint8_t GetCurrentScanline() const { return mCurrentScanline; }
+        uint8_t GetLCDStatusRegister() const { return mLCDStatusRegister; }
+        uint8_t GetLCDControlRegister() const { return mLCDControl.GetRegister(); }
+        uint8_t GetCoincidenceRegister() const { return mCoincidenceRegister; }
 
-		uint8_t GetScrollY() const;
-		uint8_t GetScrollX() const;
-		uint8_t GetWindowY() const;
-		uint8_t GetWindowX() const;
+        uint8_t GetScrollY() const { return mScrollY; }
+        uint8_t GetScrollX() const { return mScrollX; }
+        uint8_t GetWindowY() const { return mWindowY; }
+        uint8_t GetWindowX() const { return mWindowX; }
 
-		uint8_t GetBackgroundPallet() const;
-		uint8_t GetSpritePallet0() const;
-		uint8_t GetSpritePallet1() const;
+		uint8_t GetBackgroundPallet() const { return mBackgroundPallet.GetPallet(); }
+        uint8_t GetSpritePallet0() const { return mSpritePallet0.GetPallet(); }
+        uint8_t GetSpritePallet1() const { return mSpritePallet1.GetPallet(); }
 
-		void SetCurrentScanline(uint8_t value);
-		void SetLCDStatusRegister(uint8_t value);
-		void SetLCDControlRegister(uint8_t value);
-		void SetCoincidenceRegister(uint8_t value);
+        void SetCurrentScanline(uint8_t value) { mCurrentScanline = value; }
+        void SetLCDStatusRegister(uint8_t value) { mLCDStatusRegister = value; }
+        void SetLCDControlRegister(uint8_t value) { mLCDControl.SetRegister(value); }
+        void SetCoincidenceRegister(uint8_t value) { mCoincidenceRegister = value; }
 
-		void SetScrollY(uint8_t value);
-		void SetScrollX(uint8_t value);
-		void SetWindowY(uint8_t value);
-		void SetWindowX(uint8_t value);
+        void SetScrollY(uint8_t value) { mScrollY = value; }
+        void SetScrollX(uint8_t value) { mScrollX = value; }
+        void SetWindowY(uint8_t value) { mWindowY = value; }
+        void SetWindowX(uint8_t value) { mWindowX = value; }
 
-		void SetBackgroundPallet(uint8_t value);
-		void SetSpritePallet0(uint8_t value);
-		void SetSpritePallet1(uint8_t value);
+        void SetBackgroundPallet(uint8_t value) { mBackgroundPallet.SetPallet(value); }
+        void SetSpritePallet0(uint8_t value) { mSpritePallet0.SetPallet(value); }
+        void SetSpritePallet1(uint8_t value) { mSpritePallet1.SetPallet(value); }
 
-		LCDStatus GetLCDStatus() const;
+        LCDStatus GetLCDStatus() const { return static_cast<LCDStatus>(mLCDStatusRegister & 0b11); }
 
-		static const uint16_t CurrentScanlineAddress = 0xFF44;
-		static const uint16_t LCDStatusRegisterAddress = 0xFF41;
-		static const uint16_t CoincidenceRegisterAddress = 0xFF45;
+		static constexpr uint16_t CurrentScanlineAddress = 0xFF44;
+		static constexpr uint16_t LCDStatusRegisterAddress = 0xFF41;
+		static constexpr uint16_t CoincidenceRegisterAddress = 0xFF45;
 
-		static const uint16_t DMAAddress = 0xFF46;
+		static constexpr uint16_t DMAAddress = 0xFF46;
 
-		static const uint16_t ScrollYAddress = 0xFF42;
-		static const uint16_t ScrollXAddress = 0xFF43;
-		static const uint16_t WindowYAddress = 0xFF4A;
-		static const uint16_t WindowXAddress = 0xFF4B;
+		static constexpr uint16_t ScrollYAddress = 0xFF42;
+		static constexpr uint16_t ScrollXAddress = 0xFF43;
+		static constexpr uint16_t WindowYAddress = 0xFF4A;
+		static constexpr uint16_t WindowXAddress = 0xFF4B;
 
-		static const uint16_t BackgroundPalletAddress = 0xFF47;
-		static const uint16_t SpritePallet0Address = 0xFF48;
-		static const uint16_t SpritePallet1Address = 0xFF49;
+		static constexpr uint16_t BackgroundPalletAddress = 0xFF47;
+		static constexpr uint16_t SpritePallet0Address = 0xFF48;
+		static constexpr uint16_t SpritePallet1Address = 0xFF49;
 
-		static const uint8_t CoincidenceBit = 2;
-		static const uint8_t HBlankInterruptBit = 3;
-		static const uint8_t VBlankInterruptBit = 4;
-		static const uint8_t OAMInterruptBit = 5;
-		static const uint8_t CoincidenceInterruptBit = 6;
-
-		static const int32_t CPUCyclesPerScanline = 456;
-		static const int32_t OAMStatusCutoff = 80;
-		static const int32_t VRAMStatusCutoff = OAMStatusCutoff + 172;
-
-		static const int32_t ScreenWidth = 160;
-		static const int32_t ScreenHeight = 144;
-		static const int32_t MaxScanlines = 153; // 144 visible scanlines and 8 invisible ones
+		static constexpr int32_t ScreenWidth = 160;
+		static constexpr int32_t ScreenHeight = 144;
 
 	private:
 		MemoryMap& mMemory;

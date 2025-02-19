@@ -43,6 +43,9 @@
     <ClCompile Include="RealTimeClock.cpp">
       <Filter>Hardware\Memory</Filter>
     </ClCompile>
+    <ClCompile Include="LCDControl.cpp">
+      <Filter>Hardware\GPU</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cartridge.h">

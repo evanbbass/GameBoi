@@ -6,6 +6,20 @@
 // IMPORTANT NOTE
 // A value of 0 indicates a button is pressed. A value of 1 indicates it is not.
 
+namespace
+{
+	constexpr uint8_t ButtonABit = 0;
+	constexpr uint8_t ButtonBBit = 1;
+	constexpr uint8_t ButtonSelectBit = 2;
+	constexpr uint8_t ButtonStartBit = 3;
+	constexpr uint8_t DirectionRightBit = 0;
+	constexpr uint8_t DirectionLeftBit = 1;
+	constexpr uint8_t DirectionUpBit = 2;
+	constexpr uint8_t DirectionDownBit = 3;
+	constexpr uint8_t DirectionBit = 4;
+	constexpr uint8_t ButtonBit = 5;
+}
+
 namespace GameBoi
 {
 	Keypad::Keypad(MemoryMap& memory) :

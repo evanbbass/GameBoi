@@ -2,19 +2,17 @@
 #include "Timer.h"
 #include "CPU.h"
 
-namespace GameBoi
+namespace
 {
 	// frequency in Hz
-	const int32_t Timer::TimerFrequencyMap[4] =
-	{
-		4096,
-		262144,
-		65536,
-		16384
-	};
+	constexpr int32_t TimerFrequencyMap[4] = { 4096, 262144, 65536, 16384 };
+	constexpr int32_t DividerFrequency = 16382;
+	constexpr uint8_t TimerEnabledBit = 2;
+	constexpr uint8_t TimerFrequencyMask = 0b00000011;
+}
 
-	const int32_t Timer::DividerFrequency = 16382;
-
+namespace GameBoi
+{
 	Timer::Timer(MemoryMap& memory) :
 		mMemory(memory),
 		mTimerCounter(0), mDividerCounter(0), mCurrentFrequency(TimerFrequencyMap[0]),

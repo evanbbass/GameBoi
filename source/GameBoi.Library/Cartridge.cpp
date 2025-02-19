@@ -7,7 +7,7 @@
 
 namespace GameBoi
 {
-	const std::map<int32_t, int32_t> Cartridge::RomSizeMap =
+	const std::map<int32_t, int32_t> RomSizeMap =
 	{
 		{ 0x00, 2 },
 		{ 0x01, 4 },
@@ -23,7 +23,7 @@ namespace GameBoi
 		{ 0x54, 96 }
 	};
 
-	const std::map<int32_t, int32_t> Cartridge::RamSizeMap =
+	const std::map<int32_t, int32_t> RamSizeMap =
 	{
 		{ 0x00, 0 },
 		{ 0x01, 1 }, // 2kB, which is 1/4 of a bank (0xA000 - 0xA7FF)

@@ -2,6 +2,14 @@
 #include "Registers.h"
 #include "Utilities.h"
 
+namespace
+{
+	constexpr uint8_t ZeroBit = 7;
+	constexpr uint8_t SubtractBit = 6;
+	constexpr uint8_t HalfCarryBit = 5;
+	constexpr uint8_t CarryBit = 4;
+}
+
 namespace GameBoi
 {
 	Registers::Registers() :

@@ -2,6 +2,11 @@
 #include "RealTimeClock.h"
 #include "Utilities.h"
 
+namespace
+{
+	constexpr uint16_t DaysMask = 0b0000000111111111;
+}
+
 namespace GameBoi
 {
 	RealTimeClock::RealTimeClock() :

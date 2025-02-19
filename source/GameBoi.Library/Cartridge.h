@@ -9,8 +9,8 @@ namespace GameBoi
 	class Cartridge final : public IAddressable
 	{
 	public:
-		static const size_t ROM_BANK_SIZE = 0x4000;
-		static const size_t RAM_BANK_SIZE = 0x2000;
+		static constexpr size_t ROM_BANK_SIZE = 0x4000;
+		static constexpr size_t RAM_BANK_SIZE = 0x2000;
 
 		enum class CartridgeType : uint8_t
 		{
@@ -98,8 +98,5 @@ namespace GameBoi
 		CartridgeType mCartType;
 		bool mColorSupport;
 		bool mSuperSupport;
-
-		static const std::map<int32_t, int32_t> RomSizeMap;
-		static const std::map<int32_t, int32_t> RamSizeMap;
 	};
 }
