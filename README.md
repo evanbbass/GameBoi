@@ -12,9 +12,9 @@ I've updated the solution and projects to VS2022 and fixed some errors. SFML hea
 This is more or less the final version of this project. Anyone should be able to download the source and build it. Here are some notes you might need to follow:
 * The solution file is located in [builds/GameBoi.sln](https://github.com/evanbbass/GameBoi/tree/master/builds).
 * Project files are located in their respective folders under the source folder.
-~~* Due to SFML version requirements, **this project must be built in Visual Studio 2015**.~~
-~~* SFML itself does not need to be installed anywhere as NuGet will automatically download it when building.~~
-~~* Unfortunately the unit test project must be built with Visual Studio 2017, although there isn't really a reason for anyone else to need to build that project.~~
+* ~~Due to SFML version requirements, **this project must be built in Visual Studio 2015**.~~
+* ~~SFML itself does not need to be installed anywhere as NuGet will automatically download it when building.~~
+* ~~Unfortunately the unit test project must be built with Visual Studio 2017, although there isn't really a reason for anyone else to need to build that project.~~
 * I uploaded a [pre-built version](Final Build/Final Build.zip) for anyone who doesn't want to deal with building. Instructions on how to run it are included in the .zip file.
 
 The Dev Diaries below document my process through development of the emulator. Included is a link to my final presentation slides showing the final state of the project.
